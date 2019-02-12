@@ -1,48 +1,47 @@
 {% extends 'base/base.html' %}
+{% block title %}购物车{% endblock %}
+{% load staticfiles %}
+{% block css %}
+    <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'basic/css/demo.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/cartstyle.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/optstyle.css' %}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+{% endblock %}
+<script>
+    $(function () {
+        {#减少商品数量按钮点击事件#}
+        $('#reduce').click(function () {
+                        {#获取当前点击标签的下一个兄弟元素值#}
+            let num=parseInt($(this).next().val());
+            if (num > 1) {
+                    num--;
+                    $(this).next().val(num);
+                    {#获取单价#}
+                    $money=$(this).parent().prev().text();
+                    $total=parseInt($money)*num;
+                    $(this).parent().next().text($total);
+                }
+        });
+        {#增加商品数量按钮点击事件#}
+            $('#add').click(function () {
+                let num = parseInt($(this).prev().val());
+                num++;
+                $(this).prev().val(num);
+                {#获取单价#}
+                $money=$(this).parent().prev().text();
+                {#$total=parseInt($money)*num;#}
+                {#计算结果保留2位小数#}
+                $total=parseFloat(($money)*num).toFixed(2);
+                {#获取总额#}
+                $(this).parent().next().text($total);
+            });
+    })
+</script>
 {% block content %}
 
-		<!--顶部导航条 -->
-		<div class="am-container header">
-			<ul class="message-l">
-				<div class="topMessage">
-					<div class="menu-hd">
-						<a href="#" target="_top" class="h">亲，请登录</a>
-						<a href="#" target="_top">免费注册</a>
-					</div>
-				</div>
-			</ul>
-			<ul class="message-r">
-				<div class="topMessage home">
-					<div class="menu-hd"><a href="#" target="_top" class="h">商城首页</a></div>
-				</div>
-				<div class="topMessage my-shangcheng">
-					<div class="menu-hd MyShangcheng"><a href="#" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
-				</div>
-				<div class="topMessage mini-cart">
-					<div class="menu-hd"><a id="mc-menu-hd" href="#" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
-				</div>
-				<div class="topMessage favorite">
-					<div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
-			    </div>
-            </ul>
-			</div>
+{% include 'include/head.html' %}
 
-			<!--悬浮搜索框-->
-
-			<div class="nav white">
-				<div class="logo"><img src="../images/logo.png" /></div>
-				<div class="logoBig">
-					<li><img src="../images/logobig.png" /></li>
-				</div>
-
-				<div class="search-bar pr">
-					<a name="index_none_header_sysc" href="#"></a>
-					<form>
-						<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
-						<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
-					</form>
-				</div>
-			</div>
 
 			<div class="clear"></div>
 
@@ -75,7 +74,7 @@
 					</div>
 					<div class="clear"></div>
 
-					<tr class="item-list">
+    <tr class="item-list">
 						<div class="bundle  bundle-last ">
 							<div class="bundle-hd">
 								<div class="bd-promos">
@@ -88,6 +87,7 @@
 							</div>
 							<div class="clear"></div>
 							<div class="bundle-main">
+                                {% for shop_cart in shop_carts %}
 								<ul class="item-content clearfix">
 									<li class="td td-chk">
 										<div class="cart-checkbox ">
@@ -102,13 +102,13 @@
 										</div>
 										<div class="item-info">
 											<div class="item-basic-info">
-												<a href="#" target="_blank" title="美康粉黛醉美唇膏 持久保湿滋润防水不掉色" class="item-title J_MakePoint" data-point="tbcart.8.11">美康粉黛醉美唇膏 持久保湿滋润防水不掉色</a>
+												<a href="#" target="_blank" title="美康粉黛醉美唇膏 持久保湿滋润防水不掉色" class="item-title J_MakePoint" data-point="tbcart.8.11">{{ shop_cart.title }}</a>
 											</div>
 										</div>
 									</li>
 									<li class="td td-info">
 										<div class="item-props item-props-can">
-											<span class="sku-line">颜色：12#川南玛瑙</span>
+											<span class="sku-line">{{ shop_cart.brand_name }}</span>
 											<span class="sku-line">包装：裸装</span>
 											<span tabindex="0" class="btn-edit-sku theme-login">修改</span>
 											<i class="theme-login am-icon-sort-desc"></i>
@@ -118,10 +118,10 @@
 										<div class="item-price price-promo-promo">
 											<div class="price-content">
 												<div class="price-line">
-													<em class="price-original">78.00</em>
+													<em class="price-original">{{ shop_cart.original_price }}</em>
 												</div>
 												<div class="price-line">
-													<em class="J_Price price-now" tabindex="0">39.00</em>
+													<em class="J_Price price-now" tabindex="0">{{ shop_cart.promote_price }}</em>
 												</div>
 											</div>
 										</div>
@@ -130,9 +130,9 @@
 										<div class="amount-wrapper ">
 											<div class="item-amount ">
 												<div class="sl">
-													<input class="min am-btn" name="" type="button" value="-" />
-													<input class="text_box" name="" type="text" value="3" style="width:30px;" />
-													<input class="add am-btn" name="" type="button" value="+" />
+													<input id='reduce' class="min am-btn" name="" type="button" value="-" />
+													<input class="text_box" name="" type="text" value="{{ shop_cart.number }}" style="width:30px;" />
+													<input id='add' class="add am-btn" name="" type="button" value="+" />
 												</div>
 											</div>
 										</div>
@@ -151,161 +151,15 @@
 										</div>
 									</li>
 								</ul>
-								
-								
-								
-								
-								<ul class="item-content clearfix">
-									<li class="td td-chk">
-										<div class="cart-checkbox ">
-											<input class="check" id="J_CheckBox_170037950254" name="items[]" value="170037950254" type="checkbox">
-											<label for="J_CheckBox_170037950254"></label>
-										</div>
-									</li>
-									<li class="td td-item">
-										<div class="item-pic">
-											<a href="#" target="_blank" data-title="美康粉黛醉美东方唇膏口红正品 持久保湿滋润防水不掉色护唇彩妆" class="J_MakePoint" data-point="tbcart.8.12">
-												<img src="../images/kouhong.jpg_80x80.jpg" class="itempic J_ItemImg"></a>
-										</div>
-										<div class="item-info">
-											<div class="item-basic-info">
-												<a href="#" target="_blank" title="美康粉黛醉美唇膏 持久保湿滋润防水不掉色" class="item-title J_MakePoint" data-point="tbcart.8.11">美康粉黛醉美唇膏 持久保湿滋润防水不掉色</a>
-											</div>
-										</div>
-									</li>
-									<li class="td td-info">
-										<div class="item-props item-props-can">
-											<span class="sku-line">颜色：12#川南玛瑙</span>
-											<span class="sku-line">包装：裸装</span>
-											<span tabindex="0" class="btn-edit-sku theme-login">修改</span>
-											<i class="theme-login am-icon-sort-desc"></i>
-										</div>
-									</li>
-									<li class="td td-price">
-										<div class="item-price price-promo-promo">
-											<div class="price-content">
-												<div class="price-line">
-													<em class="price-original">78.00</em>
-												</div>
-												<div class="price-line">
-													<em class="J_Price price-now" tabindex="0">39.00</em>
-												</div>
-											</div>
-										</div>
-									</li>
-									<li class="td td-amount">
-										<div class="amount-wrapper ">
-											<div class="item-amount ">
-												<div class="sl">
-													<input class="min am-btn" name="" type="button" value="-" />
-													<input class="text_box" name="" type="text" value="3" style="width:30px;" />
-													<input class="add am-btn" name="" type="button" value="+" />
-												</div>
-											</div>
-										</div>
-									</li>
-									<li class="td td-sum">
-										<div class="td-inner">
-											<em tabindex="0" class="J_ItemSum number">117.00</em>
-										</div>
-									</li>
-									<li class="td td-op">
-										<div class="td-inner">
-											<a title="移入收藏夹" class="btn-fav" href="#">
-                  移入收藏夹</a>
-											<a href="javascript:;" data-point-url="#" class="delete">
-                  删除</a>
-										</div>
-									</li>
-								</ul>
-													
-								
-								
-								
+                                {% endfor %}
 							</div>
 						</div>
 					</tr>
+
+
 					<div class="clear"></div>
 
-					<tr class="item-list">
-						<div class="bundle  bundle-last ">
-							<div class="bundle-hd">
-								<div class="bd-promos">
-									<div class="bd-has-promo">已享优惠:<span class="bd-has-promo-content">省￥19.50</span>&nbsp;&nbsp;</div>
-									<div class="act-promo">
-										<a href="#" target="_blank">第二支半价，第三支免费<span class="gt">&gt;&gt;</span></a>
-									</div>
-									<span class="list-change theme-login">编辑</span>
-								</div>
-							</div>
-							<div class="clear"></div>
-							<div class="bundle-main">
-								<ul class="item-content clearfix">
-									<li class="td td-chk">
-										<div class="cart-checkbox ">
-											<input class="check" id="J_CheckBox_170769542747" name="items[]" value="170769542747" type="checkbox">
-											<label for="J_CheckBox_170769542747"></label>
-										</div>
-									</li>
-									<li class="td td-item">
-										<div class="item-pic">
-											<a href="#" target="_blank" data-title="美康粉黛醉美东方唇膏口红正品 持久保湿滋润防水不掉色护唇彩妆" class="J_MakePoint" data-point="tbcart.8.12">
-												<img src="../images/kouhong.jpg_80x80.jpg" class="itempic J_ItemImg"></a>
-										</div>
-										<div class="item-info">
-											<div class="item-basic-info">
-												<a href="#" target="_blank" title="美康粉黛醉美唇膏 持久保湿滋润防水不掉色" class="item-title J_MakePoint" data-point="tbcart.8.11">美康粉黛醉美唇膏 持久保湿滋润防水不掉色</a>
-											</div>
-										</div>
-									</li>
-									<li class="td td-info">
-										<div class="item-props item-props-can">
-											<span class="sku-line">颜色：10#蜜橘色</span>
-											<span class="sku-line">包装：两支手袋装（送彩带）</span>
-											<span tabindex="0" class="btn-edit-sku theme-login">修改</span>
-											<i class="theme-login am-icon-sort-desc"></i>
-										</div>
-									</li>
-									<li class="td td-price">
-										<div class="item-price price-promo-promo">
-											<div class="price-content">
-												<div class="price-line">
-													<em class="price-original">78.00</em>
-												</div>
-												<div class="price-line">
-													<em class="J_Price price-now" tabindex="0">39.00</em>
-												</div>
-											</div>
-										</div>
-									</li>
-									<li class="td td-amount">
-										<div class="amount-wrapper ">
-											<div class="item-amount ">
-												<div class="sl">
-													<input class="min am-btn" name="" type="button" value="-" />
-													<input class="text_box" name="" type="text" value="3" style="width:30px;" />
-													<input class="add am-btn" name="" type="button" value="+" />
-												</div>
-											</div>
-										</div>
-									</li>
-									<li class="td td-sum">
-										<div class="td-inner">
-											<em tabindex="0" class="J_ItemSum number">117.00</em>
-										</div>
-									</li>
-									<li class="td td-op">
-										<div class="td-inner">
-											<a title="移入收藏夹" class="btn-fav" href="#">
-                  移入收藏夹</a>
-											<a href="javascript:;" data-point-url="#" class="delete">
-                  删除</a>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</tr>
+
 				</div>
 				<div class="clear"></div>
 
@@ -315,7 +169,7 @@
 							<input class="check-all check" id="J_SelectAllCbx2" name="select-all" value="true" type="checkbox">
 							<label for="J_SelectAllCbx2"></label>
 						</div>
-						<span>全选</span>
+						<span id="selectAll">全选</span>
 					</div>
 					<div class="operations">
 						<a href="#" hidefocus="true" class="deleteAll">删除</a>

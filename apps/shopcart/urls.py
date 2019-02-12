@@ -8,5 +8,6 @@ from shopcart import views
 
 
 urlpatterns = [
-    url(r'^$',views.shopcart,name='shopcart'),
+    url(r'^$',views.add_cart,name='add_cart'),
+    url(r'/shopcart',views.shopcart,name='shopcart'),
 ]

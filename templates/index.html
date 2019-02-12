@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% block title %}首页{% endblock %}
 {% load staticfiles %}
 {% block css %}
     <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css'   %}" rel="stylesheet" />
@@ -32,10 +33,10 @@
                       <!--轮播 -->
                     <div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
                         <ul class="am-slides">
-                            <li class="banner1"><a href="introduction.html"><img src="../images/ad5.jpg" /></a></li>
-                            <li class="banner2"><a><img src="../images/ad6.jpg" /></a></li>
-                            <li class="banner3"><a><img src="../images/ad7.jpg" /></a></li>
-                            <li class="banner4"><a><img src="../images/ad8.jpg" /></a></li>
+                            <li class="banner1"><a href="introduction.html"><img src="{% static 'images/ad5.jpg' %}" /></a></li>
+                            <li class="banner2"><a><img src="{% static 'images/ad6.jpg' %}" /></a></li>
+                            <li class="banner3"><a><img src="{% static 'images/ad7.jpg' %}" /></a></li>
+                            <li class="banner4"><a><img src="{% static 'images/ad8.jpg' %}" /></a></li>
                         </ul>
                     </div>
                     <div class="clear"></div>
@@ -49,7 +50,7 @@
                                 {% for first_cate in first_cates %}
                                     <li>
                                         <div class="category-info">
-                                                <h3 class="category-name b-category-name"><i><img src="../images/cake.png"></i><a class="ml-22" title="点心">{{ first_cate.first_cate_name }}</a></h3>
+                                                <h3 class="category-name b-category-name"><i><img src="{% static 'images/cake.png' %}"></i><a class="ml-22" title="点心">{{ first_cate.first_cate_name }}</a></h3>
                                             <em>&gt;</em></div>
                                         <div class="menu-item menu-in top">
                                             <div class="area-in">
@@ -108,32 +109,32 @@
                 <!--小导航 -->
                 <div class="am-g am-g-fixed smallnav">
                     <div class="am-u-sm-3">
-                        <a href="sort.html"><img src="../images/navsmall.jpg" />
+                        <a href="sort.html"><img src="{% static 'images/navsmall.jpg' %}" />
                             <div class="title">商品分类</div>
                         </a>
                     </div>
                     <div class="am-u-sm-3">
-                        <a href="#"><img src="../images/huismall.jpg" />
+                        <a href="#"><img src="{% static 'images/huismall.jpg' %}" />
                             <div class="title">大聚惠</div>
                         </a>
                     </div>
                     <div class="am-u-sm-3">
-                        <a href="#"><img src="../images/mansmall.jpg" />
+                        <a href="#"><img src="{% static 'images/mansmall.jpg' %}" />
                             <div class="title">个人中心</div>
                         </a>
                     </div>
                     <div class="am-u-sm-3">
-                        <a href="#"><img src="../images/moneysmall.jpg" />
+                        <a href="#"><img src="{% static 'images/moneysmall.jpg' %}" />
                             <div class="title">投资理财</div>
                         </a>
                     </div>
                 </div>
             <!--各类活动-->
                 <div class="row">
-                    <li><a><img src="../images/row1.jpg"/></a></li>
-                    <li><a><img src="../images/row2.jpg"/></a></li>
-                    <li><a><img src="../images/row3.jpg"/></a></li>
-                    <li><a><img src="../images/row4.jpg"/></a></li>
+                    <li><a><img src="{% static 'images/row1.jpg' %}"/></a></li>
+                    <li><a><img src="{% static 'images/row2.jpg' %}"/></a></li>
+                    <li><a><img src="{% static 'images/row3.jpg' %}"/></a></li>
+                    <li><a><img src="{% static 'images/row4.jpg' %}"/></a></li>
                 </div>
                 <div class="clear"></div>
                 <!--走马灯 -->
