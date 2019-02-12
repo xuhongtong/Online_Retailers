@@ -1,71 +1,21 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-		<title>商品页面</title>
-
-		<link href="../AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css" />
-		<link href="../AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css" />
-		<link href="../basic/css/demo.css" rel="stylesheet" type="text/css" />
-		<link type="text/css" href="../css/optstyle.css" rel="stylesheet" />
-		<link type="text/css" href="../css/style.css" rel="stylesheet" />
-
-		<script type="text/javascript" src="../basic/js/jquery-1.7.min.js"></script>
-		<script type="text/javascript" src="../basic/js/quick_links.js"></script>
-
-		<script type="text/javascript" src="../AmazeUI-2.4.2/assets/js/amazeui.js"></script>
-		<script type="text/javascript" src="../js/jquery.imagezoom.min.js"></script>
-		<script type="text/javascript" src="../js/jquery.flexslider.js"></script>
-		<script type="text/javascript" src="../js/list.js"></script>
-
-	</head>
-
-	<body>
+{% extends 'base/base.html' %}
 
 
-		<!--顶部导航条 -->
-		<div class="am-container header">
-			<ul class="message-l">
-				<div class="topMessage">
-					<div class="menu-hd">
-						<a href="#" target="_top" class="h">亲，请登录</a>
-						<a href="#" target="_top">免费注册</a>
-					</div>
-				</div>
-			</ul>
-			<ul class="message-r">
-				<div class="topMessage home">
-					<div class="menu-hd"><a href="#" target="_top" class="h">商城首页</a></div>
-				</div>
-				<div class="topMessage my-shangcheng">
-					<div class="menu-hd MyShangcheng"><a href="#" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
-				</div>
-				<div class="topMessage mini-cart">
-					<div class="menu-hd"><a id="mc-menu-hd" href="#" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
-				</div>
-				<div class="topMessage favorite">
-					<div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
-			</ul>
-			</div>
 
-			<!--悬浮搜索框-->
-
-			<div class="nav white">
-				<div class="logo"><img src="../images/logo.png" /></div>
-				<div class="logoBig">
-					<li><img src="../images/logobig.png" /></li>
-				</div>
-				<div class="search-bar pr">
-					<a name="index_none_header_sysc" href="#"></a>
-					<form>
-						<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
-						<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
-					</form>
-				</div>
-			</div>
+{% load staticfiles %}
+{% block css %}
+    <link href="{% static 'basic/css/demo.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/optstyle.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{% static 'basic/js/jquery-1.7.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'basic/js/quick_links.js' %}"></script>
+    <script type="text/javascript" src="{% static 'AmazeUI-2.4.2/assets/js/amazeui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.imagezoom.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/list.js' %}"></script>
+{% endblock %}
+{% block content %}
+{% include 'include/head.html' %}
 
 			<div class="clear"></div>
             <b class="line"></b>
@@ -94,7 +44,26 @@
 					<li class="am-active">内容</li>
 				</ol>
 				<script type="text/javascript">
-					$(function() {});
+					$(function() {
+					    {#加入购物车的点击事件#}
+					    $('#LikBasket').click(function () {
+					        {#获取商品数量和商品id#}
+					        let number=$('#text_box').val();
+                            let shop_id=$(this).attr('shopid');
+                            {#以字典的形式保持商品数量和商品id，并加入跨域攻击#}
+                            data={
+					            number:number,
+                                shop_id:shop_id,
+                                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                            };
+                            {#发送post请求，将商品数量和商品id发给视图进行逻辑处理，并将结果返回#}
+                            $.post('{% url 'shopcart' %}', data, function (result) {
+                                if (result &&result.status==200){
+
+                                }
+                            }
+                        })
+
 					$(window).load(function() {
 						$('.flexslider').flexslider({
 							animation: "slide",
@@ -104,6 +73,8 @@
 						});
 					});
 				</script>
+
+                {#                轮询图片#}
 				<div class="scoll">
 					<section class="slider">
 						<div class="flexslider">
@@ -123,10 +94,8 @@
 				</div>
 
 				<!--放大镜-->
-
 				<div class="item-inform">
 					<div class="clearfixLeft" id="clearcontent">
-
 						<div class="box">
 							<script type="text/javascript">
 								$(document).ready(function() {
@@ -165,24 +134,21 @@
 					</div>
 
 					<div class="clearfixRight">
-
 						<!--规格属性-->
 						<!--名称-->
 						<div class="tb-detail-hd">
-							<h1>	
-				 良品铺子 手剥松子218g 坚果炒货 巴西松子
-	          </h1>
+							<h1>{{ shop.title }}</h1>
 						</div>
 						<div class="tb-detail-list">
 							<!--价格-->
 							<div class="tb-detail-price">
 								<li class="price iteminfo_price">
 									<dt>促销价</dt>
-									<dd><em>¥</em><b class="sys_item_price">56.90</b>  </dd>                                 
+									<dd><em>¥</em><b class="sys_item_price">{{ shop.promote_price }}</b></dd>
 								</li>
 								<li class="price iteminfo_mktprice">
 									<dt>原价</dt>
-									<dd><em>¥</em><b class="sys_item_mktprice">98.00</b></dd>									
+									<dd><em>¥</em><b class="sys_item_mktprice">{{ shop.original_price }}</b></dd>
 								</li>
 								<div class="clear"></div>
 							</div>
@@ -215,13 +181,13 @@
 							<!--销量-->
 							<ul class="tm-ind-panel">
 								<li class="tm-ind-item tm-ind-sellCount canClick">
-									<div class="tm-indcon"><span class="tm-label">月销量</span><span class="tm-count">1015</span></div>
+									<div class="tm-indcon"><span class="tm-label">月销量</span><span class="tm-count">{{ shop.month_sales }}</span></div>
 								</li>
 								<li class="tm-ind-item tm-ind-sumCount canClick">
-									<div class="tm-indcon"><span class="tm-label">累计销量</span><span class="tm-count">6015</span></div>
+									<div class="tm-indcon"><span class="tm-label">累计销量</span><span class="tm-count">{{ shop.total_sales }}</span></div>
 								</li>
 								<li class="tm-ind-item tm-ind-reviewCount canClick tm-line3">
-									<div class="tm-indcon"><span class="tm-label">累计评价</span><span class="tm-count">640</span></div>
+									<div class="tm-indcon"><span class="tm-label">累计评价</span><span class="tm-count">{{ shop.total_evaluates }}</span></div>
 								</li>
 							</ul>
 							<div class="clear"></div>
@@ -241,9 +207,7 @@
 										</div>
 										<div class="theme-popbod dform">
 											<form class="theme-signin" name="loginform" action="" method="post">
-
 												<div class="theme-signin-left">
-
 													<div class="theme-options">
 														<div class="cart-title">口味</div>
 														<ul>
@@ -263,16 +227,12 @@
 													</div>
 													<div class="theme-options">
 														<div class="cart-title number">数量</div>
-														<dd>
 															<input id="min" class="am-btn am-btn-default" name="" type="button" value="-" />
 															<input id="text_box" name="" type="text" value="1" style="width:30px;" />
 															<input id="add" class="am-btn am-btn-default" name="" type="button" value="+" />
-															<span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
-														</dd>
-
-													</div>
+															<span id="Stock" class="tb-hidden">库存<span class="stock">{{ shop.stock }}</span>件</span>
+													    </div>
 													<div class="clear"></div>
-
 													<div class="btn-op">
 														<div class="btn am-btn am-btn-warning">确认</div>
 														<div class="btn close am-btn am-btn-warning">取消</div>
@@ -287,7 +247,6 @@
 														<span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
 													</div>
 												</div>
-
 											</form>
 										</div>
 									</div>
@@ -330,7 +289,7 @@
 							</li>
 							<li>
 								<div class="clearfix tb-btn tb-btn-basket theme-login">
-									<a id="LikBasket" title="加入购物车" href="#"><i></i>加入购物车</a>
+									<a id="LikBasket" title="加入购物车" href="#" shopid="{{ shop.shop_id }}"><i></i>加入购物车</a>
 								</div>
 							</li>
 						</div>
@@ -372,6 +331,7 @@
 							
 				<!-- introduce-->
 
+{#                看了又看#}
 				<div class="introduce">
 					<div class="browse">
 					    <div class="mc"> 
@@ -1325,7 +1285,4 @@
 					</div>
 				</div>
 			</div>
-
-	</body>
-
-</html>
+{% endblock %}

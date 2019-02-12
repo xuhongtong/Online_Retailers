@@ -13,10 +13,10 @@ class JdShop(models.Model):
     img_url = models.CharField(max_length=256)
     month_sales = models.IntegerField()
     total_sales = models.IntegerField()
+    stock=models.IntegerField()
     total_evaluates = models.IntegerField()
     third_cate_id = models.ForeignKey(to=JdThirdCate, on_delete=models.CASCADE, db_column='third_cate_id')
-    # brand_name = models.ForeignKey(to=JdBrand, on_delete=models.CASCADE, db_column='brand_name')
-    brand_name=models.CharField(max_length=64)
+    brand_name=models.CharField(max_length=64,default='')
 
     class Meta:
         db_table = 'jd_shop'

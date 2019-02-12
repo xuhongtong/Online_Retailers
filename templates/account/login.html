@@ -1,5 +1,11 @@
 {% extends 'base/base.html' %}
+
 <title>{% block title %}登陆{% endblock %}</title>
+{% load staticfiles %}
+{% block css %}
+    <link href="{% static 'css/dlstyle.css' %}" rel="stylesheet"  />
+    <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet"  type="text/css"/>
+{% endblock %}
 
 {% block content %}
 

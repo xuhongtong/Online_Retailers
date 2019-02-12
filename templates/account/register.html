@@ -1,5 +1,12 @@
 {% extends 'base/base.html' %}
 <title>{% block title %}注册{% endblock %}</title>
+{% load staticfiles %}
+{% block css %}
+    <link href="{% static 'css/dlstyle.css' %}" rel="stylesheet"  />
+    <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.min.css'   %}" rel="stylesheet" />
+    <script type="text/javascript" src="{% static 'AmazeUI-2.4.2/assets/js/jquery.min.js' %}../"></script>
+    <script type="text/javascript" src="{% static 'AmazeUI-2.4.2/assets/js/amazeui.js' %}"></script>
+{% endblock %}
 {% block content %}
     <div class="login-boxtitle">
         <a href="home/demo.html"><img alt="" src="../images/logobig.png" /></a>

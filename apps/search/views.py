@@ -14,6 +14,7 @@ def search(request):
     id=request.GET.get('id')
     id = int(request.GET.get('id'))
     brand_name = request.GET.get('brand_name')
+    sort=request.GET.get('sort')
 
     # 展示所有商品数据
     shop_list = JdShop.objects.all()
@@ -26,9 +27,8 @@ def search(request):
     brand_list = JdBrand.objects.filter(third_cate_id=id)
 
     # 排序
-
-    shop_list=shop_list.order_by('total_sales')
-
+    if sort:
+        shop_list=shop_list.order_by(sort)
     context = {
         'brand_list': brand_list,
         'shop_list': shop_list,
