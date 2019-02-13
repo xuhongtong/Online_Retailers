@@ -32,6 +32,7 @@ def login_view(request):
             print(user.password)
             print(hash_code(password))
             if user.password == hash_code(password):
+                request.session['userid']=user.uid
                 request.session['is_login'] = True
                 request.session['email'] = email
                 return redirect('index')
