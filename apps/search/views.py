@@ -7,7 +7,7 @@ from main.models import JdThirdCate
 from search.models import JdBrand
 from shop.models import JdShop
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-
+# 搜索功能
 def search(request):
     request.encoding = 'utf8'
     id=request.GET.get('id')
@@ -33,6 +33,7 @@ def search(request):
         'shop_list': shop_list,
     }
     return render(request, 'search/search.html', context)
+# 分类功能
 @login_required
 def page_divide(request):
     phone_name_list=JdShop.objects.all()
