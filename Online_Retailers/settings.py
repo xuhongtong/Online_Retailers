@@ -162,4 +162,5 @@ EMAIL_USE_TLS = True
 # EMAIL_TIMEOUT =
 # 默认邮件
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# ======================================
 # ===============发送邮箱配置 end ==========
