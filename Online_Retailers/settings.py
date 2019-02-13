@@ -162,5 +162,6 @@ EMAIL_USE_TLS = True
 # 发送超时时间
 # EMAIL_TIMEOUT =
 # 默认邮件
+#11111
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # ===============发送邮箱配置 end ==========

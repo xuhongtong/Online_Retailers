@@ -13,7 +13,7 @@ def search(request):
     id=request.GET.get('id')
     keyword=request.GET.get('keyword')
     # id = int(request.GET.get('id'))
-    # brand_name = request.GET.get('brand_name')
+    brand_name = request.GET.get('brand_name')
     sort=request.GET.get('sort')
 
     # 展示所有商品数据
@@ -22,7 +22,6 @@ def search(request):
     # 展示指定品牌商品数据
     if keyword:
         shop_list = JdShop.objects.filter(brand_name__contains=keyword)
-
     # 展示所有品牌
     brand_list = JdBrand.objects.filter(third_cate_id=id)
     # 排序
