@@ -50,6 +50,7 @@ def shopcart(request):
         shop_cart.brand_name=JdShop.objects.filter(id=shop_cart.shop_id).values_list('brand_name').first()[0]
         shop_cart.promote_price = JdShop.objects.filter(id=shop_cart.shop_id).values_list('promote_price').first()[0]
         shop_cart.original_price = JdShop.objects.filter(id=shop_cart.shop_id).values_list('original_price').first()[0]
+        shop_cart.img = JdShop.objects.filter(id=shop_cart.shop_id).values_list('img_url').first()[0]
     # 前端需要渲染的数据
     context={
         'shop_carts':shop_carts,
