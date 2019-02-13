@@ -95,9 +95,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'online_retailers',
-        'USER': 'root',
+        'USER': 'tom',
         'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
+        'HOST': '192.168.50.7',
         'PORT': '3306',
     }
 }
@@ -142,3 +142,24 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+
+# ===============发送邮箱配置==========
+# 发送邮件的服务器地址
+EMAIL_HOST = 'smtp.163.com'
+# 发送邮件端口
+EMAIL_PORT = 25
+# 发送邮件默认的名称
+EMAIL_HOST_USER = 'yinyaowhy@163.com'
+# 授权码
+EMAIL_HOST_PASSWORD = 'python1805'
+# 是否启用tls安全协议
+EMAIL_USE_TLS = True
+
+# 是否启用SSL安全协议
+# EMAIL_USE_SSL = True
+# 发送超时时间
+# EMAIL_TIMEOUT =
+# 默认邮件
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# ===============发送邮箱配置 end ==========
