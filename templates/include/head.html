@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <div class="hmtop">
     <!--顶部导航条 -->
     <div class="am-container header">
@@ -40,9 +41,9 @@
     </div>
         <!--悬浮搜索框-->
     <div class="nav white">
-        <div class="logo"><img src="../images/logo.png" /></div>
+        <div class="logo"><img src="{% static 'images/logo.png' %}" /></div>
         <div class="logoBig">
-            <li><img src="../images/logobig.png" /></li>
+            <li><img src="{% static 'images/logobig.png' %}" /></li>
         </div>
         <div class="search-bar pr">
             <a name="index_none_header_sysc" href="#"></a>
