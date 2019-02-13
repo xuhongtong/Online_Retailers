@@ -16,6 +16,5 @@ class ShopCart(models.Model):
     # shop_id = models.ForeignKey(to=JdShop, on_delete=models.CASCADE, db_column='shop_id')
     is_valid = models.BooleanField(default=1)
     is_delete = models.BooleanField(default=1)
-
     class Meta:
         db_table = 'Jd_ShopCart'

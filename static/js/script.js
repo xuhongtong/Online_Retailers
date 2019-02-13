@@ -16,7 +16,7 @@ $(document).ready(function() {
           else{
           	$(".theme-popover-mask").height(0);
 			$(".theme-popover").css("position", "static");
-			$(this).next("div").slideUp("slow");;
+			$(this).next("div").slideUp("slow");
           }
 
 		})

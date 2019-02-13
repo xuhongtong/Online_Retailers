@@ -10,11 +10,8 @@
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 {% endblock %}
 
-
 {% block content %}
 {% include 'include/head.html' %}
-
-
 
 			<div class="clear"></div>
 			<b class="line"></b>
@@ -24,7 +21,7 @@
 					   <div class="long-title"><span class="all-goods">全部分类</span></div>
 					   <div class="nav-cont">
 							<ul>
-								<li class="index"><a href="#">首页</a></li>
+								<li class="index"><a href="{% url 'index' %}">首页</a></li>
                                 <li class="qc"><a href="#">闪购</a></li>
                                 <li class="qc"><a href="#">限时抢</a></li>
                                 <li class="qc"><a href="#">团购</a></li>
@@ -158,17 +155,20 @@
 
 							</div>
 							<div class="clear"></div>
-							<!--分页 -->
+							<!--分页功能 -->
 							<ul class="am-pagination am-pagination-right">
-								<li class="am-disabled"><a href="#">&laquo;</a></li>
-								<li class="am-active"><a href="#">1</a></li>
+                            {% if page_num.has_previous %}
+								<li class="am-disabled"><a href="{% url "paginator" %}/?page={{ page_num.previous_page_number }}">&laquo;</a></li>
+                            {% endif %}
+								<li class="am-active"><a href="{% url "paginator" %}/?page={{ page_num.previous_page_number }}">1</a></li>
 								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
+								<li><a href="{{ page_num.number }}">3</a></li>
+								<li><a href="{{ page_num.number }}">4</a></li>
+								<li><a href="{{ page_num.number }}">5</a></li>
+                            {% if page_num.has_next %}
 								<li><a href="#">&raquo;</a></li>
+                            {% endif %}
 							</ul>
-
 						</div>
 					</div>
 					<div class="footer">

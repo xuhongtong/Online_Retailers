@@ -4,7 +4,7 @@ __date__ = '2019/1/24 19:42'
 
 
 from django.conf.urls import url
-from shopcart import views
+from apps.shopcart import views
 
 
 urlpatterns = [

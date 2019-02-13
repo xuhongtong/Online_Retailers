@@ -1,5 +1,11 @@
 {% extends 'base/base.html' %}
+<<<<<<< Updated upstream
 {% block title %}详情页{% endblock %}
+=======
+
+
+
+>>>>>>> Stashed changes
 {% load staticfiles %}
 {% block css %}
     <link href="{% static 'AmazeUI-2.4.2/assets/css/admin.css' %}" rel="stylesheet" type="text/css" />
@@ -25,7 +31,7 @@
 					   <div class="long-title"><span class="all-goods">全部分类</span></div>
 					   <div class="nav-cont">
 							<ul>
-								<li class="index"><a href="#">首页</a></li>
+								<li class="index"><a href="{% url 'index' %}">首页</a></li>
                                 <li class="qc"><a href="#">闪购</a></li>
                                 <li class="qc"><a href="#">限时抢</a></li>
                                 <li class="qc"><a href="#">团购</a></li>
@@ -90,6 +96,7 @@
 						<div class="flexslider">
 							<ul class="slides">
 								<li>
+<<<<<<< Updated upstream
 									<img src="{% static 'images/01.jpg' %}" title="pic" />
 								</li>
 								<li>
@@ -97,6 +104,15 @@
 								</li>
 								<li>
 									<img src="{% static 'images/03.jpg' %}" />
+=======
+									<img src="../images/01.jpg" title="pic" />
+								</li>
+								<li>
+									<img src="../images/02.jpg" />
+								</li>
+								<li>
+									<img src="../images/03.jpg" />
+>>>>>>> Stashed changes
 								</li>
 							</ul>
 						</div>

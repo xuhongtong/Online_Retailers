@@ -51,6 +51,7 @@ CUSTOM_APPS = [
     'search',
     'shop',
     'shopcart',
+    'comment',
 ]
 
 # 拼接apps
@@ -95,9 +96,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'online_retailers',
-        'USER': 'tom',
+        'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': '192.168.50.7',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
@@ -161,6 +162,6 @@ EMAIL_USE_TLS = True
 # 发送超时时间
 # EMAIL_TIMEOUT =
 # 默认邮件
+
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# ======================================
 # ===============发送邮箱配置 end ==========

@@ -106,10 +106,13 @@ venv.bak/
 .mypy_cache/
 
 .gitignore
-.idea/
+.idea/inspectionProfiles/
+.idea/workspace.xml
 Online_Retailers/__pycache__/
 apps/account/__pycache__/
 apps/account/migrations/__pycache__/
+apps/comment/__pycache__/
+apps/comment/migrations/__pycache__/
 apps/main/__pycache__/
 apps/main/migrations/__pycache__/
 apps/search/__pycache__/
