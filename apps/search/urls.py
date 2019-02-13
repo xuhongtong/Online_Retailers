@@ -7,4 +7,5 @@ from search import views
 
 urlpatterns = [
     url(r'', views.search, name='search'),
+    url(r'',views.page_divide,name='paginator')
 ]

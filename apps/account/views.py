@@ -17,11 +17,6 @@ def hash_code(s, salt='account'):
     s += salt
     h.update(s.encode())
     return h.hexdigest()
-
-
-
-
-
 # 登陆账号
 def login_view(request):
     if request.session.get('is_login'):  # 不允许重复登陆
@@ -64,13 +59,10 @@ def register(request):
             users.save()
             return redirect('login')
 
-
 # 注销账号
 def logout(request):
     request.session.flush()
     return redirect('login')
-
-
 def reset_passwd(request):
     pass
 

@@ -12,6 +12,5 @@ class ShopCart(models.Model):
     shop_id = models.IntegerField()
     is_valid = models.BooleanField(default=1)
     is_delete = models.BooleanField(default=1)
-
     class Meta:
         db_table = 'Jd_ShopCart'

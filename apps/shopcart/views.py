@@ -1,11 +1,9 @@
 from django.db.models import F
 from django.http import JsonResponse
 from django.shortcuts import render
-
 # Create your views here.
 from shopcart.context_processors import count
 from shopcart.models import ShopCart
-
 
 def shopcart(request):
     result = {'status': 200, 'msg': 'ok'}
@@ -25,10 +23,8 @@ def shopcart(request):
             shop.save()
         shop_num = ShopCart.objects.values_list('shop_id', flat=True).count()
         data = count(request)
-
         result.update(data)
         return JsonResponse(result)
     except Exception as e:
         result = {'status': 400, 'msg': '添加失败'}
-
     return render(request,'shopcart/shopcart.html')

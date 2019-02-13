@@ -1,7 +1,4 @@
 {% extends 'base/base.html' %}
-
-
-
 {% load staticfiles %}
 {% block css %}
     <link href="{% static 'AmazeUI-2.4.2/assets/css/admin.css' %}" rel="stylesheet" type="text/css" />
@@ -81,15 +78,17 @@
 					<section class="slider">
 						<div class="flexslider">
 							<ul class="slides">
+
 								<li>
-									<img src="../images/01.jpg" title="pic" />
+									<img src="{{ shop.image_url }}" title="pic" />
 								</li>
 								<li>
-									<img src="../images/02.jpg" />
+									<img src="{{ shop.image_url }}" />
 								</li>
 								<li>
-									<img src="../images/03.jpg" />
+									<img src="{{ shop.image_url }}" />
 								</li>
+
 							</ul>
 						</div>
 					</section>
