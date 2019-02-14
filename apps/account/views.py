@@ -1,10 +1,10 @@
-import hashlib
+
 from datetime import datetime
 
 from captcha.helpers import captcha_image_url
 from captcha.models import CaptchaStore
 from django.core.cache import cache
-from django.core.mail import send_mail
+
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponse
@@ -12,24 +12,29 @@ from django.template import loader
 from itsdangerous import URLSafeSerializer
 
 from Online_Retailers import settings
+from account.hash_secret import hash_code
 from account.models import User
 
 
-# from account.task import send_active_mail
+'''
+功能点
+登录
+注册
+异步邮件
+验证码
+改密
+'''
 
 # hash加密功能
 from account.task import send_active_mail
 
-
-def hash_code(s, salt='account'):
-    h = hashlib.sha256()
-    s += salt
-    h.update(s.encode())
-    return h.hexdigest()
-
-
-# 登陆账号
 def login_view(request):
+    '''
+    登录,
+    验证码
+    :param request:
+    :return:
+    '''
     if request.session.get('is_login'):  # 不允许重复登陆
         return redirect("index")
     if request.method == 'GET':
@@ -89,8 +94,13 @@ def login_view(request):
                           {'capt_error': '账号或密码或验证码不能为空', 'img_url': img_url, 'key': key, 'next1': next1})
 
 
-# 修改密码
+
 def update_view(request):
+    '''
+    更改密码
+    :param request:
+    :return:
+    '''
     try:
         if request.method == 'GET':
             return render(request, 'account/update.html')
@@ -122,8 +132,14 @@ def update_view(request):
         return render(request, 'account/404.html', {'msg': e})
 
 
-# 注册账号
+
 def register(request):
+    '''
+    注册账号
+    异步发送邮件
+    :param request:
+    :return:
+    '''
     if request.method == 'GET':
         return render(request, 'account/register.html')
     if request.method == 'POST':
@@ -160,6 +176,11 @@ def register(request):
 
 # xxx/active/?token=afsfsdfs
 def active_account(request):
+    '''
+    账号激活
+    :param request:
+    :return:
+    '''
     token = request.GET.get('tooken')
     uid = cache.get(token)
     if uid:
@@ -171,8 +192,13 @@ def active_account(request):
         return redirect('/')
 
 
-# 注销账号
+
 def logout_view(request):
+    '''
+    退出登录
+    :param request:
+    :return:
+    '''
     request.session.flush()
     return redirect('login')
 
@@ -186,8 +212,12 @@ def logout_view(request):
 #               )
 
 
-# 刷新验证码
 def refresh_code(request):
+    '''
+    刷新验证码
+    :param request:
+    :return:
+    '''
     key = CaptchaStore.generate_key()
     img_url = captcha_image_url(key)
     return JsonResponse({'key': key, 'img_url': img_url})

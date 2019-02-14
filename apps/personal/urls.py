@@ -15,21 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
-from account import views
-from main import views
-import xadmin
-from xadmin.plugins import xversion
-xversion.register_models()
+from personal import views
 
 urlpatterns = [
-    # url('admin/', admin.site.urls),
-    url(r'^xadmin/',include(xadmin.site.urls)),
-    url(r'^account/',include('account.urls')),
-    url(r'',include('main.urls')),
-    url(r'^search',include('search.urls')),
-    url(r'^shop/',include('shop.urls')),
-    url(r'^shopcart/',include('shopcart.urls')),
-    url(r'^order/',include('order.urls')),
-    url(r'^captcha/',include('captcha.urls')),
-    url(r'^personal/',include('personal.urls')),
+    url(r'^personal/',views.person_center,name='personal'),
 ]
