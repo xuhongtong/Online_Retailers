@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from account import views
 from main import views
+import xadmin
+from xadmin.plugins import xversion
+xversion.register_models()
 
 urlpatterns = [
     # url('admin/', admin.site.urls),
+    url(r'^xadmin/',include(xadmin.site.urls)),
     url(r'^account/',include('account.urls')),
     url(r'',include('main.urls')),
     url(r'^search',include('search.urls')),
