@@ -255,138 +255,74 @@
 
             <div class="f2">
 
-					<!--坚果-->
 					<div class="am-container ">
 						<div class="shopTitle ">
-							<h4 class="floor-title">坚果</h4>
-							<div class="floor-subtitle"><em class="am-icon-caret-left"></em><h3>酥酥脆脆，回味无穷</h3></div>
+							<h4 class="floor-title">手机</h4>
+							<div class="floor-subtitle"><em class="am-icon-caret-left"></em><h3>尽在“掌握”</h3></div>
 							<div class="today-brands " style="right:0px ;top:13px">
-								<a href="# ">腰果</a>|
-								<a href="# ">松子</a>|
-								<a href="# ">夏威夷果 </a>|
-								<a href="# ">碧根果</a>|
-								<a href="# ">开心果</a>|
-								<a href="# ">核桃仁</a>
+                                {% for brand in brands %}
+								    <a href="{% url 'search' %}?keyword={{ brand.brand_name }}">{{ brand.brand_name }}</a>|
+                                {% endfor %}
 							</div>
 						</div>
 					</div>
 					<div class="am-g am-g-fixed floodSeven">
 						<div class="am-u-sm-5 am-u-md-4 text-one list ">
 							<div class="word">
-								<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-								<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-								<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-								<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-								<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-								<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-								<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-								<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-								<a class="outer" href="#"><span class="inner"><b class="text">核桃</b></span></a>
-							</div>
-							<a href="# ">
+                                {% for brand in brands %}
+								<a class="outer" href="{% url 'search' %}?keyword={{ brand.brand_name }}"><span class="inner"><b class="text">{{ brand.brand_name }}</b></span></a>
+							    {% endfor %}
+                            </div>
+                            {% for sp1 in shop1 %}
+							<a href="{% url 'detail' %}?id={{ sp1.id }}">
 								<div class="outer-con ">
 									<div class="title ">
-									零食大礼包开抢啦！
+									限时大优惠
 									</div>
 									<div class="sub-title ">
-										零食大礼包
+										抢购
 									</div>
 								</div>
-                                  <img src="{% static 'images/11.jpg' %}" />
+                                  <img src="{{ sp1.img_url }}" />
 							</a>
+                            {% endfor %}
 							<div class="triangle-topright"></div>
 						</div>
 
 							<div class="am-u-sm-7 am-u-md-4 text-two big">
-
-								<div class="outer-con ">
-									<div class="title ">
-										雪之恋和风大福
-									</div>
-									<div class="sub-title ">
-										¥13.8
-									</div>
-
-								</div>
-								<a href="# "><img src="{% static 'images/act2.png' %}" /></a>
-
-							</div>
-
-                        <li>
-							<div class="am-u-sm-7 am-u-md-4 text-two">
-								<div class="boxLi"></div>
-								<div class="outer-con ">
-									<div class="title ">
-										雪之恋和风大福
-									</div>
-									<div class="sub-title ">
-										¥13.8
-									</div>
-
-								</div>
-								<a href="# "><img src="{% static 'images/6.jpg' %}" /></a>
-							</div>
-                        </li>
-                        <li>
-						<div class="am-u-sm-3 am-u-md-2 text-three sug">
-							<div class="boxLi"></div>
-							<div class="outer-con ">
-								<div class="title ">
-									小优布丁
-								</div>
-								<div class="sub-title ">
-									¥4.8
-								</div>
+                                {% for sp1 in shop1 %}
+                                    <a href="{% url 'detail' %}?id={{ sp1.id }}">
+                                    <div class="outer-con ">
+                                        <div class="title ">
+                                            {{ sp1.title }}
+                                        </div>
+                                        <div class="sub-title ">
+                                            ￥{{ sp1.promote_price }}
+                                        </div>
+                                    </div>
+                                    <img src="{{ sp1.img_url }}" />
+                                    </a>
+                                {% endfor %}
 
 							</div>
-							<a href="# "><img src="{% static 'images/7.jpg' %}" /></a>
-						</div>
-                        </li>
-                        <li>
-						<div class="am-u-sm-3 am-u-md-2 text-three big">
-							<div class="boxLi"></div>
-							<div class="outer-con ">
-								<div class="title ">
-									小优布丁
-								</div>
-								<div class="sub-title ">
-									¥4.8
-								</div>
-
-							</div>
-							<a href="# "><img src="{% static 'images/10.jpg' %}" /></a>
-						</div>
-                        </li>
-                        <li>
-						<div class="am-u-sm-3 am-u-md-2 text-three ">
-							<div class="boxLi"></div>
-							<div class="outer-con ">
-								<div class="title ">
-									小优布丁
-								</div>
-								<div class="sub-title ">
-									¥4.8
-								</div>
-
-							</div>
-							<a href="# "><img src="{% static 'images/8.jpg' %}" /></a>
-						</div>
-                        </li>
-                        <li>
-						<div class="am-u-sm-3 am-u-md-2 text-three ">
-							<div class="boxLi"></div>
-							<div class="outer-con ">
-								<div class="title ">
-									小优布丁
-								</div>
-								<div class="sub-title ">
-									¥4.8
-								</div>
-
-							</div>
-							<a href="# "><img src="{% static 'images/9.jpg' %}" /></a>
-						</div>
-						</li>
+                        {% for shop in shops %}
+                            <a href="{% url 'detail' %}?id={{ shop.id }}">
+                                <li>
+                                <div class="am-u-sm-7 am-u-md-4 text-two">
+                                    <div class="boxLi"></div>
+                                    <div class="outer-con ">
+                                        <div class="title ">
+                                            {{ shop.brand_name }}
+                                        </div>
+                                        <div class="sub-title ">
+                                            ¥{{ shop.promote_price }}
+                                        </div>
+                                    </div>
+                                    <img src="{{ shop.img_url }}" />
+                                </div>
+                                </li>
+                            </a>
+                        {% endfor %}
 					</div>
                  <div class="clear "></div>
             </div>
