@@ -3,23 +3,37 @@
 <title>{% block title %}登陆{% endblock %}</title>
 {% load staticfiles %}
 {% block css %}
-    <link href="{% static 'css/dlstyle.css' %}" rel="stylesheet"  />
-    <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet"  type="text/css"/>
+    <link href="{% static 'css/dlstyle.css' %}" rel="stylesheet"/>
+    <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
-
+{% block script %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            let URL = 'http://127.0.0.1:8000/account/ref/';
+            $('#cap_img').click(function () {
+                $.get(URL, function (result) {
+                    $('#cap_img').attr('src', result.img_url);
+                    $('#cap_key').val(result.key)
+                })
+            })
+        })
+    </script>
+{% endblock %}
 {% block content %}
 
-	<div class="login-boxtitle">
-        <a href="home.html"><img alt="logo" src="{% static 'images/logobig.png' %}" /></a>
+    <div class="login-boxtitle">
+        <a href="home.html"><img alt="logo" src="{% static 'images/logobig.png' %}"/></a>
     </div>
     <div class="login-banner">
         <div class="login-main">
-            <div class="login-banner-bg"><span></span><img src="{% static 'images/big.jpg' %}" /></div>
+            <div class="login-banner-bg"><span></span><img src="{% static 'images/big.jpg' %}"/></div>
             <div class="login-box">
                 <h3 class="title">登录商城</h3>
                 <div class="clear"></div>
                 <div class="login-form">
-                    <form method="post" action="{% url 'login' %}">
+                    <form action="{% url 'login' %}" method="post" data-toggle="validator" role="form">
+                        <input type="hidden" name="next1" value={{ next1 }}>
                         {% csrf_token %}
                         <div class="user-name">
                             <label for="user"><i class="am-icon-user"></i></label>
@@ -28,17 +42,29 @@
                         <div class="user-pass">
                             <label for="password"><i class="am-icon-lock"></i></label>
                             <input type="password" name="password" id="password" placeholder="请输入密码">
+                            {% if login_msg %}
+                                <p style="color: red">{{ login_msg }}</p>
+                            {% endif %}
                         </div>
+                        <div class="form-group">
+                            <img id="cap_img" src="{{ img_url }}">
+                            <input type="text" name="code" placeholder="请输入验证码">
+                            <input id="cap_key" type="hidden" name="key" value="{{ key }}">
+                            {% if capt_error %}
+                                <p style="color: red">{{ capt_error }}</p>
+                            {% endif %}
+                        </div>
+
                         <div class="am-cf">
-                    <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm">
-                </div>
+                            <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm">
+                        </div>
                     </form>
                 </div>
                 <div class="login-links">
                     <label for="remember-me"><input id="remember-me" type="checkbox">记住密码</label>
-                        <a href="{% url 'update' %}" class="am-fr">忘记密码</a>
-                        <a href="{% url 'register' %}" class="zcnext am-fr am-btn-default">注册</a>
-                        <br />
+                    <a href="{% url 'update' %}" class="am-fr">忘记密码</a>
+                    <a href="{% url 'register' %}" class="zcnext am-fr am-btn-default">注册</a>
+                    <br/>
                 </div>
 
                 <div class="partner">

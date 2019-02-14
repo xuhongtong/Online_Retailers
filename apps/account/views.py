@@ -1,8 +1,12 @@
 import hashlib
+from datetime import datetime
 
+from captcha.helpers import captcha_image_url
+from captcha.models import CaptchaStore
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponse
 from django.template import loader
 from itsdangerous import URLSafeSerializer
@@ -14,6 +18,9 @@ from account.models import User
 # from account.task import send_active_mail
 
 # hash加密功能
+from account.task import send_active_mail
+
+
 def hash_code(s, salt='account'):
     h = hashlib.sha256()
     s += salt
@@ -26,27 +33,60 @@ def login_view(request):
     if request.session.get('is_login'):  # 不允许重复登陆
         return redirect("index")
     if request.method == 'GET':
-        return render(request, 'account/login.html')
+        # return render(request,'account/login.html')
+        next1 = request.META.get('HTTP_REFERER', '/')
+
+        # 生成验证码
+        key = CaptchaStore.generate_key()
+        img_url = captcha_image_url(key)
+        return render(request, 'account/login.html', context={'next1': next1, 'img_url': img_url, 'key': key})
     if request.method == 'POST':
+        code = request.POST.get('code')
+        key = request.POST.get('key')
+        img_url = captcha_image_url(key)
+        next1 = request.POST.get('next1', '/')
         usr = request.POST.get('user-name')
         password = request.POST.get('password')
-        # 验证用户是否存在
-        if User.objects.filter(Q(username=usr) | Q(email=usr)).exists():
-            user = User.objects.filter(Q(username=usr) | Q(email=usr)).first()
-            # print(user.password)
-            # print(hash_code(password))
-            if user.active == 1:
+        if usr and password and code :
+            # 验证用户是否存在
+            if User.objects.filter(Q(username=usr) | Q(email=usr)).exists():
+                user = User.objects.filter(Q(username=usr) | Q(email=usr)).first()
+                # print(user.password)
+                # print(hash_code(password))
                 if user.password == hash_code(password):
-                    request.session['userid']=user.uid
-                    request.session['is_login'] = True
-                    request.session['email'] = user.username
-                    return redirect('index')
+                    if user.active:
+                        # 获取对象
+                        cap_obj = CaptchaStore.objects.filter(hashkey=key).first()
+                        # 获取失效时间，与当前时间进行比较
+                        expiration = cap_obj.expiration
+                        # 获取response值
+                        response = cap_obj.response
+                        if datetime.now() < expiration and code.lower() == response:
+                            # 验证码验证成功
+
+                            # 登陆成功，记住登录状态
+                            request.session['userid']=user.uid
+                            request.session['is_login'] = True
+                            request.session['email'] = user.username
+                            return redirect(next1)
+                        else:
+                            # 验证失败，重新刷新验证码
+                            key = CaptchaStore.generate_key()
+                            img_url = captcha_image_url(key)
+
+                        return redirect('index')
+                    else:
+                        return render(request, 'account/login.html',
+                                      {'login_msg': '用户未激活', 'img_url': img_url, 'key': key, 'next1': next1})
                 else:
-                    return HttpResponse('用户名密码错误')
+                    return render(request, 'account/login.html',
+                                  {'login_msg': '账号或密码错误', 'img_url': img_url, 'key': key, 'next1': next1})
             else:
-                return HttpResponse('该用户未激活')
+                return render(request, 'account/login.html',
+                              {'login_msg': '用户不存在', 'img_url': img_url, 'key': key, 'next1': next1})
         else:
-            return HttpResponse('用户名不存在')
+            return render(request, 'account/login.html',
+                          {'capt_error': '账号或密码或验证码不能为空', 'img_url': img_url, 'key': key, 'next1': next1})
 
 
 # 修改密码
@@ -106,13 +146,13 @@ def register(request):
                 auth_s = URLSafeSerializer(settings.SECRET_KEY, 'auth')
                 token = auth_s.dumps({'name': username})
                 cache.set(token, user.uid, timeout=10 * 60)
-                active_url = f'http://127.0.0.1:8800/account/active/?tooken={token}'
+                active_url = f'http://127.0.0.1:8000/account/active/?tooken={token}'
                 content = loader.render_to_string('account/mail.html', request=request,
                                                   context={'username': username, 'active_url': active_url})
                 send_active_mail(subject='手机交易平台激活邮件', content=content, to=[email])
                 return render(request, 'account/active_email.html')
             except Exception as e:
-                print(e)
+                    print(e)
         else:
             pass
         return redirect('/')
@@ -137,10 +177,19 @@ def logout_view(request):
     return redirect('login')
 
 
-def send_active_mail(subject='', content=None, to=None):
-    send_mail(subject=subject,
-              message='',
-              html_message=content,
-              from_email=settings.EMAIL_HOST_USER,
-              recipient_list=to
-              )
+# def send_active_mail(subject='', content=None, to=None):
+#     send_mail(subject=subject,
+#               message='',
+#               html_message=content,
+#               from_email=settings.EMAIL_HOST_USER,
+#               recipient_list=to
+#               )
+
+
+# 刷新验证码
+def refresh_code(request):
+    key = CaptchaStore.generate_key()
+    img_url = captcha_image_url(key)
+    return JsonResponse({'key': key, 'img_url': img_url})
+
+# 异步,验证码,三方登录,手机验证码

@@ -106,8 +106,7 @@ venv.bak/
 .mypy_cache/
 
 .gitignore
-.idea/inspectionProfiles/
-.idea/workspace.xml
+.idea/
 Online_Retailers/__pycache__/
 apps/account/__pycache__/
 apps/account/migrations/__pycache__/
@@ -122,3 +121,13 @@ apps/shop/migrations/__pycache__/
 apps/shopcart/__pycache__/
 apps/shopcart/migrations/__pycache__/
 apps/utils/__pycache__/
+
+xadmin.zip
+apps/captcha01/__init__.py
+apps/captcha01/admin.py
+apps/captcha01/apps.py
+apps/captcha01/models.py
+apps/captcha01/teamplates/
+apps/captcha01/tests.py
+apps/captcha01/urls.py
+apps/captcha01/views.py
