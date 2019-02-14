@@ -42,7 +42,9 @@ SYS_APPS = [
 ]
 
 # 注册第三方app
-EXT_APPS = []
+EXT_APPS = [
+    'captcha',
+]
 
 # 注册自定义app
 CUSTOM_APPS = [
@@ -96,12 +98,23 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'online_retailers',
-        'USER': 'root',
+        'USER': 'tom',
         'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
+        'HOST': '192.168.50.7',
         'PORT': '3306',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'online_retailers',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -166,3 +179,24 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # ===============发送邮箱配置 end ==========
+
+
+
+
+# ============== start 验证码 ===================
+# django_simple_captcha 验证码配置
+# 格式
+CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'
+# 噪点样式
+CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_null', # 没有样式
+    # 'captcha.helpers.noise_arcs', # 线
+    # 'captcha.helpers.noise_dots', # 点
+)
+# 图片大小
+CAPTCHA_IMAGE_SIZE = (100, 25)
+CAPTCHA_BACKGROUND_COLOR = '#ffffff'
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge' # 图片中的文字为随机英文字母，如 mdsh
+# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'    # 图片中的文字为数字表达式，如1+2=</span>
+CAPTCHA_LENGTH = 4 # 字符个数
+CAPTCHA_TIMEOUT = 1 # 超时(minutes)
+# ============== end 验证码 ===================
