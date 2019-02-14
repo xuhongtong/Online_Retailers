@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'',include('main.urls')),
     url(r'^search',include('search.urls')),
     url(r'^shop/',include('shop.urls')),
-    url(r'^shopcart',include('shopcart.urls'))
+    url(r'^shopcart/',include('shopcart.urls')),
+    url(r'^order/',include('order.urls'))
 ]
