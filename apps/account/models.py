@@ -39,9 +39,3 @@ class User(models.Model):
 
 
 
-
-# class JdBrand(models.Model):
-#     brand_id=models.AutoField(primary_key=True)
-#     title=
-
-

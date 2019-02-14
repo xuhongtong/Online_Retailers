@@ -67,7 +67,7 @@
 											<dd class="select-all selected"><a href="#">全部</a></dd>
 
                                              {% for brand in brand_list %}
-                                            <dd><a href="{% url 'search' %}?id={{ brand.third_cate_id.third_cate_id}}&brand_name={{ brand.brand_name }}">{{ brand.brand_name }}</a></dd>
+                                            <dd><a href="{% url 'search' %}?id={{ brand.third_cate_id.third_cate_id}}&keyword={{ brand.brand_name }}">{{ brand.brand_name }}</a></dd>
                                              {% endfor %}
 										 </div>
 						

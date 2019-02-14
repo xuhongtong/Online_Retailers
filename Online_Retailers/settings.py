@@ -95,6 +95,17 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'test214',
+#         'USER': 'root',
+#         'PASSWORD': '123456',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -154,7 +165,6 @@ EMAIL_USE_TLS = True
 # 发送超时时间
 # EMAIL_TIMEOUT =
 # 默认邮件
-
 
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

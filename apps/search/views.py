@@ -27,6 +27,7 @@ def search(request):
     # 排序
     if sort:
         shop_list=shop_list.order_by(sort)
+
     context = {
         'brand_list': brand_list,
         'shop_list': shop_list,
