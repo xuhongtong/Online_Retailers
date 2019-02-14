@@ -56,3 +56,4 @@ def shopcart(request):
         'shop_carts':shop_carts,
     }
     return render(request,'shopcart/shopcart.html',context)
+

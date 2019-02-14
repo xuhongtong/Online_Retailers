@@ -32,4 +32,5 @@ urlpatterns = [
     url(r'^order/',include('order.urls')),
     url(r'^captcha/',include('captcha.urls')),
     url(r'^personal/',include('personal.urls')),
+    url(r'^pay/',include('pay.urls')),
 ]

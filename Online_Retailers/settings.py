@@ -174,3 +174,23 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # 验证码
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+
+
+
+# ======================== start 支付模块 ============================
+# 注册应用时支付宝生成的app_id
+APP_ID = '2016092200574031'
+# 支付网关
+ALI_PAY_URL = 'https://openapi.alipaydev.com/gateway.do'
+# 设置自己的私钥
+APP_PRIVATE_STRING  = open(BASE_DIR + '/key/app_private_key.pem').read()
+# 将自己的公钥放在支付宝上
+ALIPAY_PUBLIC_KEY_STRING = open(BASE_DIR + '/key/app_public_key.pem').read()
+# ==========================end 支付宝相关配置 ================
+
+
+
+
+
+
+
