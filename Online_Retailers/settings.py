@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -46,6 +45,7 @@ CUSTOM_APPS = [
     'shop',
     'shopcart',
     'comment',
+
 ]
 
 # 拼接apps
@@ -96,6 +96,17 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'online_retailers',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -138,7 +149,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
 # ===============发送邮箱配置==========
 # 发送邮件的服务器地址
 EMAIL_HOST = 'smtp.163.com'
@@ -160,3 +170,7 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # ===============发送邮箱配置 end ==========
+
+
+# 验证码
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
