@@ -12,4 +12,5 @@ urlpatterns = [
     url('logout/', views.logout_view, name='logout'),
     # url('mail/', views.hello_mail),
     url('active/', views.active_account),
+    url('ref/', views.refresh_code,name='ref'),
 ]

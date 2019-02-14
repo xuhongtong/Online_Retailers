@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -46,6 +45,7 @@ CUSTOM_APPS = [
     'shop',
     'shopcart',
     'comment',
+
 ]
 
 # 拼接apps
@@ -138,7 +138,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
 # ===============发送邮箱配置==========
 # 发送邮件的服务器地址
 EMAIL_HOST = 'smtp.163.com'
@@ -160,3 +159,7 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # ===============发送邮箱配置 end ==========
+
+
+# 验证码
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
