@@ -106,8 +106,7 @@ venv.bak/
 .mypy_cache/
 
 .gitignore
-.idea/inspectionProfiles/
-.idea/workspace.xml
+.idea/
 Online_Retailers/__pycache__/
 apps/account/__pycache__/
 apps/account/migrations/__pycache__/
@@ -122,3 +121,4 @@ apps/shop/migrations/__pycache__/
 apps/shopcart/__pycache__/
 apps/shopcart/migrations/__pycache__/
 apps/utils/__pycache__/
+

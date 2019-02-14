@@ -35,6 +35,7 @@ EXT_APPS = [
     'xadmin',
     'crispy_forms',
     'reversion',
+    'captcha',
 ]
 
 # 注册自定义app
@@ -95,6 +96,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 

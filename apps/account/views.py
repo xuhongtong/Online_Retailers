@@ -1,5 +1,7 @@
 import hashlib
 
+from captcha.helpers import captcha_image_url
+from captcha.models import CaptchaStore
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.db.models import Q
@@ -14,6 +16,9 @@ from account.models import User
 # from account.task import send_active_mail
 
 # hash加密功能
+from account.task import send_active_mail
+
+
 def hash_code(s, salt='account'):
     h = hashlib.sha256()
     s += salt
@@ -26,7 +31,12 @@ def login_view(request):
     if request.session.get('is_login'):  # 不允许重复登陆
         return redirect("index")
     if request.method == 'GET':
-        return render(request, 'account/login.html')
+        return render(request,'account/login.html')
+        # next1 = request.META.get('HTTP_REFERER', '/')
+        # # 生成验证码
+        # key = CaptchaStore.generate_key()
+        # img_url = captcha_image_url(key)
+        # return render(request, 'account/login.html', context={'next1': next1, 'img_url': img_url, 'key': key})
     if request.method == 'POST':
         usr = request.POST.get('user-name')
         password = request.POST.get('password')
@@ -106,7 +116,7 @@ def register(request):
                 auth_s = URLSafeSerializer(settings.SECRET_KEY, 'auth')
                 token = auth_s.dumps({'name': username})
                 cache.set(token, user.uid, timeout=10 * 60)
-                active_url = f'http://127.0.0.1:8800/account/active/?tooken={token}'
+                active_url = f'http://127.0.0.1:8000/account/active/?tooken={token}'
                 content = loader.render_to_string('account/mail.html', request=request,
                                                   context={'username': username, 'active_url': active_url})
                 send_active_mail(subject='手机交易平台激活邮件', content=content, to=[email])
@@ -137,10 +147,13 @@ def logout_view(request):
     return redirect('login')
 
 
-def send_active_mail(subject='', content=None, to=None):
-    send_mail(subject=subject,
-              message='',
-              html_message=content,
-              from_email=settings.EMAIL_HOST_USER,
-              recipient_list=to
-              )
+# def send_active_mail(subject='', content=None, to=None):
+#     send_mail(subject=subject,
+#               message='',
+#               html_message=content,
+#               from_email=settings.EMAIL_HOST_USER,
+#               recipient_list=to
+#               )
+
+
+# 异步,验证码,三方登录,手机验证码
