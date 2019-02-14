@@ -6,10 +6,10 @@ from Online_Retailers import settings
 
 import time
 
-from celery import shared_task
+# from celery import shared_task
 
 
-@shared_task
+# @shared_task
 def send_active_mail(subject='', content=None, to=None):
     send_mail(subject=subject,
               message='',

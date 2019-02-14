@@ -1,7 +1,7 @@
 import hashlib
 
-from captcha.helpers import captcha_image_url
-from captcha.models import CaptchaStore
+# from captcha.helpers import captcha_image_url
+# from captcha.models import CaptchaStore
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.db.models import Q
