@@ -34,7 +34,7 @@ EXT_APPS = [
     'xadmin',
     'crispy_forms',
     'reversion',
-    'captcha',
+    'captcha'
 ]
 
 # 注册自定义app

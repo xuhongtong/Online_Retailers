@@ -4,11 +4,6 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/carts.css' %}">
-{#    <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css" />#}
-{#    <link href="{% static 'basic/css/demo.css' %}" rel="stylesheet" type="text/css" />#}
-{#    <link href="{% static 'css/cartstyle.css' %}" rel="stylesheet" type="text/css" />#}
-{#    <link href="{% static 'css/optstyle.css' %}" rel="stylesheet" type="text/css" />#}
-{#    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>#}
     <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
     <script src="{% static 'js/carts.js' %}"></script>
 {% endblock %}
@@ -48,8 +43,8 @@
                 {% for shop_cart in shop_carts %}
                 <ul class="order_lists">
                     <li class="list_chk">
-                        <input type="checkbox" id="checkbox_2" class="son_check">
-                        <label for="checkbox_2"></label>
+                        <input type="checkbox" id="checkbox_{{ shop_cart.shop_id }}" class="son_check">
+                        <label for="checkbox_{{ shop_cart.shop_id }}"></label>
                     </li>
                     <li class="list_con">
                         <div class="list_img"><a href="javascript:;"><img src="{{ shop_cart.img }}" alt=""></a></div>
@@ -145,7 +140,7 @@
             <div class="bar-right">
                 <div class="piece">已选商品<strong class="piece_num">0</strong>件</div>
                 <div class="totalMoney">共计: <strong class="total_text">0.00</strong></div>
-                <div class="calBtn"><a href="javascript:;">结算</a></div>
+                <div class="calBtn"><a href="{% url 'order' %}">结算</a></div>
             </div>
         </div>
     </section>
