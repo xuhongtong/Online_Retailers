@@ -70,7 +70,7 @@
                         </div>
                     </li>
                     <li class="list_sum">
-                        <p class="sum_price">￥{{ shop_cart.promote_price }}</p>
+                        <p class="sum_price">￥{% widthratio shop_cart.promote_price 1 shop_cart.number %}</p>
                     </li>
                     <li class="list_op">
                         <p class="del"><a href="javascript:;" class="delBtn">移除商品</a></p>
