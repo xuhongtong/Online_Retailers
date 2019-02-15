@@ -1,189 +1,189 @@
 {% extends 'base/base.html' %}
 {% load staticfiles %}
 {% block title %}
-		<title>个人资料</title>
+    <title>个人资料</title>
 {% endblock %}
 {% block css %}
-		<link href="{% static 'AmazeUI-2.4.2/assets/css/admin.css' %}" rel="stylesheet" type="text/css">
-		<link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'AmazeUI-2.4.2/assets/css/admin.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css">
 
-		<link href="{% static 'css/personal.css' %}" rel="stylesheet" type="text/css">
-		<link href="{% static 'css/infstyle.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/personal.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/infstyle.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block script %}
-		<script src="{% static 'AmazeUI-2.4.2/assets/js/jquery.min.js' %}"></script>
-		<script src="{% static 'AmazeUI-2.4.2/assets/js/amazeui.js' %}"></script>
+    <script src="{% static 'AmazeUI-2.4.2/assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'AmazeUI-2.4.2/assets/js/amazeui.js' %}"></script>
 {% endblock %}
 {% block content %}
-		<!--头 -->
-        {% include 'include/head.html' %}
-        {% include 'include/nav_bar.html' %}
-			<b class="line"></b>
-		<div class="center">
-			<div class="col-main">
-				<div class="main-wrap">
+    <!--头 -->
+    {% include 'include/head.html' %}
+    {% include 'include/nav_bar.html' %}
+    <b class="line"></b>
+    <div class="center">
+        <div class="col-main">
+            <div class="main-wrap">
 
-					<div class="user-info">
-						<!--标题 -->
-						<div class="am-cf am-padding">
-							<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">个人资料</strong> / <small>Personal&nbsp;information</small></div>
-						</div>
-						<hr/>
+                <div class="user-info">
+                    <!--标题 -->
+                    <div class="am-cf am-padding">
+                        <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">个人资料</strong> /
+                            <small>Personal&nbsp;information</small>
+                        </div>
+                    </div>
+                    <hr/>
 
-						<!--头像 -->
-						<div class="user-infoPic">
+                    <!--头像 -->
+                    <div class="user-infoPic">
 
-							<div class="filePic">
-								<input type="file" class="inputPic" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*">
-								<img class="am-circle am-img-thumbnail" src="../images/getAvatar.do.jpg" alt="blank" />
-							</div>
+                        <div class="filePic">
+                            <input type="file" class="inputPic" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*">
+                            <img class="am-circle am-img-thumbnail" src="../images/getAvatar.do.jpg" alt="blank"/>
+                        </div>
 
-							<p class="am-form-help">头像</p>
+                        <p class="am-form-help">头像</p>
 
-							<div class="info-m">
-								<div><b>用户名：<i>{{ nickname }}</i></b></div>
-								<div class="vip">
-                                      <span></span><a href="#">会员专享</a>
-								</div>
-							</div>
-						</div>
+                        <div class="info-m">
+                            <div><b>用户名：<i>{{ nickname }}</i></b></div>
+                            <div class="vip">
+                                <span></span><a href="#">会员专享</a>
+                            </div>
+                        </div>
+                    </div>
 
-						<!--个人信息 -->
-						<div class="info-main">
-							<form method="post" action="{% url 'information' %}" class="am-form am-form-horizontal">
-                                {% csrf_token %}
-								<div class="am-form-group">
-									<label for="user-name2" class="am-form-label" >昵称</label>
-									<div class="am-form-content">
-										<input type="text" id="user-name2"  name="nickname"  placeholder="{{ nickname}}">
-                                          <small>昵称长度不能超过40个汉字</small>
-									</div>
-								</div>
+                    <!--个人信息 -->
+                    <div class="info-main">
+                        <form method="post" action="{% url 'information' %}" class="am-form am-form-horizontal">
+                            {% csrf_token %}
+                            <div class="am-form-group">
+                                <label for="user-name2" class="am-form-label">昵称</label>
+                                <div class="am-form-content">
+                                    <input type="text" id="user-name2" name="nickname" placeholder="{{ nickname }}">
+                                    <small>昵称长度不能超过40个汉字</small>
+                                </div>
+                            </div>
 
-								<div class="am-form-group">
-									<label for="user-name" class="am-form-label">姓名</label>
-									<div class="am-form-content">
-										<input type="text" id="user-name2" name="name" placeholder="{{ name }}">
+                            <div class="am-form-group">
+                                <label for="user-name" class="am-form-label">姓名</label>
+                                <div class="am-form-content">
+                                    <input type="text" id="user-name2" name="name" placeholder="{{ name }}">
 
-									</div>
-								</div>
+                                </div>
+                            </div>
+                            {#                            性别#}
+                            <div class="am-form-group">
+                                <label class="am-form-label">性别</label>
 
-								<div class="am-form-group">
-									<label class="am-form-label">性别</label>
-									<div class="am-form-content sex">
-										<label class="am-radio-inline">
-											<input type="radio" name="name" value="male" data-am-ucheck> 男
-										</label>
-										<label class="am-radio-inline">
-											<input type="radio" name="name" value="female"   data-am-ucheck> 女
-										</label>
-										<label class="am-radio-inline">
-											<input type="radio" name="name" value="secret"  data-am-ucheck> 保密
-										</label>
-									</div>
-								</div>
-
-								<div class="am-form-group">
-									<label for="user-birth" class="am-form-label">生日</label>
-									<div class="am-form-content birth">
-										<div class="birth-select">
-											<select data-am-selected>
-												<option value="a">2015</option>
-												<option value="b">1987</option>
-											</select>
-											<em>年</em>
-										</div>
-										<div class="birth-select2">
-											<select data-am-selected>
-												<option value="a">12</option>
-												<option value="b">8</option>
-											</select>
-											<em>月</em></div>
-										<div class="birth-select2">
-											<select data-am-selected>
-												<option value="a">21</option>
-												<option value="b">23</option>
-											</select>
-											<em>日</em></div>
-									</div>
-
-								</div>
-								<div class="am-form-group">
-									<label for="user-phone" class="am-form-label">电话</label>
-									<div class="am-form-content">
-										<input id="user-phone" placeholder="{{ phone }}" name="phone" type="tel">
-
-									</div>
-								</div>
-								<div class="am-form-group">
-									<label for="user-email" class="am-form-label">电子邮件</label>
-									<div class="am-form-content">
-										<input id="user-email" placeholder="{{ email }}" name="email" type="email">
-
-									</div>
-								</div>
-								<div class="am-form-group address">
-									<label for="user-address" class="am-form-label">收货地址</label>
-									<div class="am-form-content address">
-										<a href="address.html">
-											<p class="new-mu_l2cw">
-												<span class="province">湖北</span>省
-												<span class="city">武汉</span>市
-												<span class="dist">洪山</span>区
-												<span class="street">雄楚大道666号(中南财经政法大学)</span>
-												<span class="am-icon-angle-right"></span>
-											</p>
-										</a>
-
-									</div>
-								</div>
-								<div class="am-form-group safety">
-									<label for="user-safety" class="am-form-label">账号安全</label>
-									<div class="am-form-content safety">
-										<a href="safety.html">
-
-											<span class="am-icon-angle-right"></span>
-
-										</a>
-
-									</div>
-								</div>
-								<div class="info-btn">
-									<div class="am-btn am-btn-danger">
-                                        <button type="submit">保存修改</button>
+                                <div class="am-form-content sex">
+                                    <label class="am-radio-inline">
+                                        {% if sex == 'male' %}
+                                            <input type="radio" name="sex" value="male" data-am-ucheck checked> 男
+                                        {% else %}
+                                            <input type="radio" name="sex" value="male" data-am-ucheck> 男
+                                        {% endif %}
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        {% if sex == 'female' %}
+                                            <input type="radio" name="sex" value="female" data-am-ucheck checked> 女
+                                        {% else %}
+                                            <input type="radio" name="sex" value="female" data-am-ucheck> 女
+                                        {% endif %}
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        {% if sex == 'secret' %}
+                                            <input type="radio" name="sex" value="secret" data-am-ucheck checked> 保密
+                                        {% else %}
+                                            <input type="radio" name="sex" value="secret" data-am-ucheck> 保密
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+                            {#                            生日#}
+                            <div class="am-form-group">
+                                <label for="user-birth" class="am-form-label">生日</label>
+                                <div class="am-form-content birth">
+                                    <div class="birth-select">
+                                        <select data-am-selected name="year">
+                                            {% for year in year_list %}
+                                                <option value="{{ year }}">{{ year }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <em>年</em>
                                     </div>
-								</div>
+                                    <div class="birth-select2">
+                                        <select data-am-selected name="month">
+                                            {% for month in month_list %}
+                                                <option value="{{ month }}">{{ month }}</option>
+                                            {% endfor %}
 
-							</form>
-						</div>
 
-					</div>
+                                        </select>
+                                        <em>月</em></div>
+                                    <div class="birth-select2">
+                                        <select data-am-selected name="day">
+                                            {% for day in day_list %}
+                                                <option value="{{ day }}">{{ day }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <em>日</em></div>
+                                </div>
 
-				</div>
-				<!--底部-->
-				<div class="footer">
-					<div class="footer-hd">
-						<p>
-								<b>|</b>
-								<a href="# ">商城首页</a>
-								<b>|</b>
-								<a href="# ">支付宝</a>
-								<b>|</b>
-								<a href="# ">物流</a>
-							</p>
-						</div>
-						<div class="footer-bd ">
-							<p>
-								<a href="# ">合作伙伴</a>
-								<a href="# ">联系我们</a>
-								<a href="# ">网站地图</a>
-							</p>
-					</div>
-				</div>
-			</div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-phone" class="am-form-label">电话</label>
+                                <div class="am-form-content">
+                                    <input id="user-phone" placeholder="{{ phone }}" name="phone" type="tel">
 
-			{% include 'personal/person_base/aside.html' %}
-		</div>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-email" class="am-form-label">电子邮件</label>
+                                <div class="am-form-content">
+                                    <input id="user-email" placeholder="{{ email }}" name="email" type="email">
+
+                                </div>
+                            </div>
+                            <div class="am-form-group address">
+                                <label for="user-address" class="am-form-label">收货地址</label>
+                                <div class="am-form-content address">
+                                    <a href="address.html">
+                                        <p class="new-mu_l2cw">
+                                            <span class="province">湖北</span>省
+                                            <span class="city">武汉</span>市
+                                            <span class="dist">洪山</span>区
+                                            <span class="street">雄楚大道666号(中南财经政法大学)</span>
+                                            <span class="am-icon-angle-right"></span>
+                                        </p>
+                                    </a>
+
+                                </div>
+                            </div>
+                            <div class="am-form-group safety">
+                                <label for="user-safety" class="am-form-label">账号安全</label>
+                                <div class="am-form-content safety">
+                                    <a href="safety.html">
+
+                                        <span class="am-icon-angle-right"></span>
+
+                                    </a>
+
+                                </div>
+                            </div>
+                            <div class="info-btn">
+                                <button type="submit" class="am-btn am-btn-danger">保存修改</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+            <!--底部-->
+            {% include 'include/footer.html' %}
+        </div>
+
+        {% include 'personal/person_base/aside.html' %}
+    </div>
 
 {% endblock %}
 

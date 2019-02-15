@@ -96,46 +96,6 @@ def login_view(request):
             return render(request, 'account/login.html',
                           {'capt_error': '账号或密码或验证码不能为空', 'img_url': img_url, 'key': key, 'next1': next1})
 
-
-
-def update_view(request):
-    '''
-    更改密码
-    :param request:
-    :return:
-    '''
-    try:
-        if request.method == 'GET':
-            return render(request, 'account/update.html')
-        if request.method == 'POST':
-            # 获取页面用户名,锁定数据库用户信息
-            username = request.POST.get('username')
-            user = User.objects.filter(nickname=username).first()
-            if user:
-                oldpassword = user.password
-                password = request.POST.get('password')
-                # 验证旧密码
-                hash = hash_code(password)
-                if oldpassword == hash_code(password):
-                    newpassword = request.POST.get('newpassword')
-                    new_passwd = hash_code(newpassword)
-                    # 验证新旧密码不相同,保存新密码
-                    if new_passwd != oldpassword:
-                        user = User.objects.filter(nickname=username).first()
-                        user.password = new_passwd
-                        user.save()
-                        return redirect('/account/login')
-                    else:
-                        return render(request, 'account/update.html', {'msg': '新密码不能与旧密码相同，修改失败'})
-                else:
-                    return render(request, 'account/update.html', {'msg': '原密码错误，修改失败'})
-            else:
-                return render(request, 'account/update.html', {'msg': '账户不存在，修改失败'})
-    except Exception as e:
-        return render(request, 'account/404.html', {'msg': e})
-
-
-
 def register(request):
     '''
     注册账号

@@ -48,11 +48,11 @@
                         <div class="u-progress-bar-inner"></div>
                     </div>
                 </div>
-                <form class="am-form am-form-horizontal">
+                <form class="am-form am-form-horizontal" action="{% url 'email' %}" method="post">
                     <div class="am-form-group">
                         <label for="user-email" class="am-form-label">验证邮箱</label>
                         <div class="am-form-content">
-                            <input type="email" id="user-email" placeholder="请输入邮箱地址">
+                            <input type="email" id="user-email" name="email" placeholder="请输入邮箱地址">
                         </div>
                     </div>
                     <div class="am-form-group code">
@@ -65,37 +65,14 @@
                         </a>
                     </div>
                     <div class="info-btn">
-                        <div class="am-btn am-btn-danger">保存修改</div>
+                        <button type="submit" class="am-btn am-btn-danger">保存修改</button>
                     </div>
 
                 </form>
 
             </div>
             <!--底部-->
-            <div class="footer">
-                <div class="footer-hd">
-                    <p>
-                        <a href="#">恒望科技</a>
-                        <b>|</b>
-                        <a href="#">商城首页</a>
-                        <b>|</b>
-                        <a href="#">支付宝</a>
-                        <b>|</b>
-                        <a href="#">物流</a>
-                    </p>
-                </div>
-                <div class="footer-bd">
-                    <p>
-                        <a href="#">关于恒望</a>
-                        <a href="#">合作伙伴</a>
-                        <a href="#">联系我们</a>
-                        <a href="#">网站地图</a>
-                        <em>© 2015-2025 Hengwang.com 版权所有. 更多模板 <a href="http://www.cssmoban.com/" target="_blank"
-                                                                   title="模板之家">模板之家</a> - Collect from <a
-                                href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></em>
-                    </p>
-                </div>
-            </div>
+            {% include 'include/footer.html' %}
         </div>
 
 			{% include 'personal/person_base/aside.html' %}
