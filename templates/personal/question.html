@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-<html>
-
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
-
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}
 		<title>安全问题</title>
+{% endblock %}
+{% block css %}
+		<link href="{% static 'AmazeUI-2.4.2/assets/css/admin.css' %}" rel="stylesheet" type="text/css">
+		<link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css">
 
-		<link href="../AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
-		<link href="../AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css">
-
-		<link href="../css/personal.css" rel="stylesheet" type="text/css">
-		<link href="../css/stepstyle.css" rel="stylesheet" type="text/css">
-
-		<script src="../AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
-		<script src="../AmazeUI-2.4.2/assets/js/amazeui.js" type="text/javascript"></script>
-
-	</head>
-
-	<body>
+		<link href="{% static 'css/personal.css' %}" rel="stylesheet" type="text/css">
+		<link href="{% static 'css/stepstyle.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block script %}
+		<script src="{% static 'AmazeUI-2.4.2/assets/js/jquery.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'AmazeUI-2.4.2/assets/js/amazeui.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
 		<!--头 -->
 		<header>
 			<article>
@@ -212,7 +208,7 @@
 						<p><i class="am-icon-tags"></i>我的收藏</p>
 						<ul>
 							<li> <a href="collection.html">收藏</a></li>
-							<li> <a href="foot.html">足迹</a></li>	
+							<li> <a href="foot.html">足迹</a></li>
 						</ul>
 					</li>
 
@@ -220,8 +216,8 @@
 						<p><i class="am-icon-qq"></i>在线客服</p>
 						<ul>
 							<li> <a href="consultation.html">商品咨询</a></li>
-							<li> <a href="suggest.html">意见反馈</a></li>							
-							
+							<li> <a href="suggest.html">意见反馈</a></li>
+
 							<li> <a href="news.html">我的消息</a></li>
 						</ul>
 					</li>
@@ -230,6 +226,4 @@
 			</aside>
 		</div>
 
-	</body>
-
-</html>
+{% endblock %}

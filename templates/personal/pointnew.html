@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html>
-
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
-
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}
 		<title>我的积分</title>
+{% endblock %}
+{% block css %}
+		<link href="{% static 'AmazeUI-2.4.2/assets/css/admin.css' %}" rel="stylesheet" type="text/css">
+		<link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css">
+		<link href="{% static 'css/personal.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
 
-		<link href="../AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
-		<link href="../AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css">
-		<link href="../css/personal.css" rel="stylesheet" type="text/css">
+{% block content %}
 
-		
-	</head>
-
-	<body>
 		<!--头 -->
 		<header>
 			<article>
@@ -97,7 +93,7 @@
 						  <div class="usable">可用积分<span>120</span></div>
 						  <div class="signIn"><a href="#"><i class="am-icon-calendar"></i>每日签到</a></div>
 						</div>
-						<div class="pointshop"><a href="#"><i><img src="../images/u5.png" /></i>积分商城</a></div>						
+						<div class="pointshop"><a href="#"><i><img src="../images/u5.png" /></i>积分商城</a></div>
 						<div class="pointlist" style="padding: 0px 10px;">
 							<div class="pointTitle">
 								<span>积分明细</span>
@@ -114,22 +110,22 @@
 									<td class="pointType">每日签到</td>
 									<td class="pointNum">+5</td>
 									<td class="pointTime">2016-03-12&nbsp07:32</td>
-								</tr>								
+								</tr>
 								<tr>
 									<td class="pointType">每日签到</td>
 									<td class="pointNum">+5</td>
 									<td class="pointTime">2016-03-11&nbsp12:24</td>
-								</tr>								
+								</tr>
 								<tr>
 									<td class="pointType">邮箱验证</td>
 									<td class="pointNum">+50</td>
 									<td class="pointTime">2016-03-10&nbsp16:18</td>
-								</tr>								
+								</tr>
 								<tr>
 									<td class="pointType">手机绑定</td>
 									<td class="pointNum">+100</td>
 									<td class="pointTime">2016-03-10&nbsp15:27</td>
-								</tr>								
+								</tr>
 							  </tbody>
 							</table>
 						</div>
@@ -202,8 +198,8 @@
 						<p><i class="am-icon-qq"></i>在线客服</p>
 						<ul>
 							<li> <a href="consultation.html">商品咨询</a></li>
-							<li> <a href="suggest.html">意见反馈</a></li>							
-							
+							<li> <a href="suggest.html">意见反馈</a></li>
+
 							<li> <a href="news.html">我的消息</a></li>
 						</ul>
 					</li>
@@ -211,7 +207,4 @@
 
 			</aside>
 		</div>
-
-	</body>
-
-</html>
+{% endblock %}

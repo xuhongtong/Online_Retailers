@@ -1,5 +1,6 @@
 import alipay
 from alipay import AliPay
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -13,31 +14,32 @@ from Online_Retailers import settings
     退款功能
     退款查询
 '''
-
+alipay = AliPay(
+    appid=settings.APP_ID,
+    app_notify_url=None,  # 默认回调url
+    app_private_key_string=settings.APP_PRIVATE_STRING,
+    alipay_public_key_string=settings.ALIPAY_PUBLIC_KEY_STRING,
+    # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
+    debug=True  # 默认False  配合沙箱模式使用
+)
+# @login_required(login_url='/account/login')
 def pay_view(request):
     '''
     用于创建用于支付的对象
     :param request:
     :return:
     '''
-    alipay = AliPay(
-        appid=settings.APP_ID,
-        app_notify_url=None,  # 默认回调url
-        app_private_key_string=settings.APP_PRIVATE_STRING,
-        alipay_public_key_string=settings.ALIPAY_PUBLIC_KEY_STRING,
-        # 支付宝的公钥，验证支付宝回传消息使用，不是你自己的公钥,
-        debug=True  # 默认False  配合沙箱模式使用
-    )
+
     # 电脑网站支付，需要跳转到https://openapi.alipay.com/gateway.do? + order_string
     order_string = alipay.api_alipay_trade_page_pay(
     	# 订单号
-        out_trade_no='654321',
+        out_trade_no='5463456',
         # 商品总价
-        total_amount=str(0.01),  # 将Decimal类型转换为字符串交给支付宝
+        total_amount=str(100),  # 将Decimal类型转换为字符串交给支付宝
         # 订单标题
         subject="天猫商城-{}".format(123456),
         # 支付成功之后 前端跳转的界面
-        return_url='https://127.0.0.1:8000/',
+        return_url='http://127.0.0.1:8000',
         # 支付成功后台跳转接口
         notify_url=None  # 可选, 不填则使用默认notify url
     )
@@ -52,7 +54,7 @@ def aliapy_back_url(request):
     :param request:
     :return:
     '''
-    return redirect('index')
+    pass
 
 def cancel_order(out_trade_no:int, cancel_time=None):
     '''

@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html>
-
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
-
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}
 		<title>安全设置</title>
+{% endblock %}
+{% block css %}
+		<link href="{% static 'AmazeUI-2.4.2/assets/css/admin.css' %}" rel="stylesheet" type="text/css">
+		<link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css">
 
-		<link href="../AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
-		<link href="../AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css">
+		<link href="{% static 'css/personal.css' %}" rel="stylesheet" type="text/css">
+		<link href="{% static 'css/infstyle.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
 
-		<link href="../css/personal.css" rel="stylesheet" type="text/css">
-		<link href="../css/infstyle.css" rel="stylesheet" type="text/css">
-	</head>
+{% block content %}
 
-	<body>
 		<!--头 -->
 		<header>
 			<article>
@@ -257,8 +255,8 @@
 						<p><i class="am-icon-qq"></i>在线客服</p>
 						<ul>
 							<li> <a href="consultation.html">商品咨询</a></li>
-							<li> <a href="suggest.html">意见反馈</a></li>							
-							
+							<li> <a href="suggest.html">意见反馈</a></li>
+
 							<li> <a href="news.html">我的消息</a></li>
 						</ul>
 					</li>
@@ -267,6 +265,5 @@
 			</aside>
 		</div>
 
-	</body>
+{% endblock %}
 
-</html>

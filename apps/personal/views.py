@@ -5,5 +5,20 @@ from django.shortcuts import render
 个人中心
 '''
 
-def person_center(request):
-    return render(request,'personal/personal_center.html')
+def bill_view(request):
+    '''
+    账单管理
+    :param request:
+    :return:
+    '''
+    return render(request,'personal/bill.html')
+
+
+def address_view(request):
+    '''
+    地址管理
+    :param request:
+    :return:
+    '''
+    return render(request,'personal/address.html')
+

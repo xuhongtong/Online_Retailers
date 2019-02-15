@@ -18,5 +18,7 @@ from django.conf.urls import url, include
 from personal import views
 
 urlpatterns = [
-    url(r'^personal/',views.person_center,name='personal'),
+    url(r'^address/',views.address_view,name='address'),
+    url(r'^bill/',views.bill_view,name='bill'),
 ]
+

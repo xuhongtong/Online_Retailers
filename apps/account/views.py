@@ -3,6 +3,8 @@ from datetime import datetime
 
 from captcha.helpers import captcha_image_url
 from captcha.models import CaptchaStore
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 
 from django.db.models import Q
@@ -192,15 +194,22 @@ def active_account(request):
         return redirect('/')
 
 
+# @login_required(login_url='/account/login')
+# def logout_view(request):
+#     '''
+#     退出登录
+#     :param request:
+#     :return:
+#     '''
+#     request.session.flush()
+#     return redirect('login')
 
+@login_required(login_url='/account/login')
 def logout_view(request):
-    '''
-    退出登录
-    :param request:
-    :return:
-    '''
-    request.session.flush()
-    return redirect('login')
+    # 表示登出
+    next1 = request.META.get('HTTP_REFERER', '/')
+    logout(request)
+    return redirect(next1)
 
 
 # def send_active_mail(subject='', content=None, to=None):
