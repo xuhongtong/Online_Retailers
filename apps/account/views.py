@@ -52,12 +52,12 @@ def login_view(request):
         key = request.POST.get('key')
         img_url = captcha_image_url(key)
         next1 = request.POST.get('next1', '/')
-        usr = request.POST.get('user-name')
+        usr = request.POST.get('nickname')
         password = request.POST.get('password')
         if usr and password and code :
             # 验证用户是否存在
-            if User.objects.filter(Q(username=usr) | Q(email=usr)).exists():
-                user = User.objects.filter(Q(username=usr) | Q(email=usr)).first()
+            if User.objects.filter(Q(nickname=usr) | Q(email=usr)).exists():
+                user = User.objects.filter(Q(nickname=usr) | Q(email=usr)).first()
                 # print(user.password)
                 # print(hash_code(password))
                 if user.password == hash_code(password):
@@ -74,7 +74,8 @@ def login_view(request):
                             # 登陆成功，记住登录状态
                             request.session['userid']=user.uid
                             request.session['is_login'] = True
-                            request.session['email'] = user.username
+                            request.session['email'] = user.nickname
+
                             return redirect(next1)
                         else:
                             # 验证失败，重新刷新验证码
@@ -109,7 +110,7 @@ def update_view(request):
         if request.method == 'POST':
             # 获取页面用户名,锁定数据库用户信息
             username = request.POST.get('username')
-            user = User.objects.filter(username=username).first()
+            user = User.objects.filter(nickname=username).first()
             if user:
                 oldpassword = user.password
                 password = request.POST.get('password')
@@ -120,7 +121,7 @@ def update_view(request):
                     new_passwd = hash_code(newpassword)
                     # 验证新旧密码不相同,保存新密码
                     if new_passwd != oldpassword:
-                        user = User.objects.filter(username=username).first()
+                        user = User.objects.filter(nickname=username).first()
                         user.password = new_passwd
                         user.save()
                         return redirect('/account/login')
@@ -150,7 +151,7 @@ def register(request):
         # phone = request.POST.get('phone')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
-        is_user = User.objects.filter(username=username)
+        is_user = User.objects.filter(nickname=username)
         if is_user:
             return HttpResponse('用户名已存在')
         if password1 == password2:
@@ -158,7 +159,7 @@ def register(request):
             # password1 = hash_code(password1)
             # 保存用户到数据库
 
-            user = User(email=email, username=username, password=hash_code(password1))
+            user = User(email=email, nickname=username, password=hash_code(password1))
             user.save()
             try:
                 auth_s = URLSafeSerializer(settings.SECRET_KEY, 'auth')
@@ -194,22 +195,22 @@ def active_account(request):
         return redirect('/')
 
 
-# @login_required(login_url='/account/login')
-# def logout_view(request):
-#     '''
-#     退出登录
-#     :param request:
-#     :return:
-#     '''
-#     request.session.flush()
-#     return redirect('login')
 
-@login_required(login_url='/account/login')
 def logout_view(request):
-    # 表示登出
-    next1 = request.META.get('HTTP_REFERER', '/')
-    logout(request)
-    return redirect(next1)
+    '''
+    退出登录
+    :param request:
+    :return:
+    '''
+    request.session.flush()
+    return redirect('/')
+
+# @login_required(login_url='login')
+# def logout_view(request):
+#     # 表示登出
+#     next1 = request.META.get('HTTP_REFERER', '/')
+#     logout(request)
+#     return redirect(next1)
 
 
 # def send_active_mail(subject='', content=None, to=None):

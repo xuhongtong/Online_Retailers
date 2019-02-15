@@ -23,10 +23,12 @@ from Online_Retailers import settings
 class User(models.Model):
     uid = models.AutoField(primary_key=True, verbose_name="用户ID")
     name = models.CharField(max_length=255,null=True,verbose_name='用户姓名')
+    sex = models.CharField(max_length=11,choices=(('male','男'),('female','女'),('secret','保密')),null=False,verbose_name='性别')
+    birthday = models.DateField(verbose_name='生日',default='1970-10-10')
     nickname = models.CharField(max_length=16, unique=True, verbose_name="用户昵称")
     password = models.CharField(max_length=256, verbose_name="密码")
     email = models.CharField(max_length=64, unique=True, verbose_name="邮箱地址")
-    phone = models.CharField(max_length=11,unique=True)
+    phone = models.IntegerField(unique=True)
     active = models.BooleanField(default=0, verbose_name="活跃状态")
     is_delete = models.BooleanField(default=0, verbose_name="是否删除")
 

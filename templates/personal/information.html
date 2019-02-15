@@ -41,7 +41,7 @@
 							<p class="am-form-help">头像</p>
 
 							<div class="info-m">
-								<div><b>用户名：<i>小叮当</i></b></div>
+								<div><b>用户名：<i>{{ nickname }}</i></b></div>
 								<div class="vip">
                                       <span></span><a href="#">会员专享</a>
 								</div>
@@ -50,12 +50,12 @@
 
 						<!--个人信息 -->
 						<div class="info-main">
-							<form class="am-form am-form-horizontal">
-
+							<form method="post" action="{% url 'information' %}" class="am-form am-form-horizontal">
+                                {% csrf_token %}
 								<div class="am-form-group">
-									<label for="user-name2" class="am-form-label">昵称</label>
+									<label for="user-name2" class="am-form-label" >昵称</label>
 									<div class="am-form-content">
-										<input type="text" id="user-name2" placeholder="nickname">
+										<input type="text" id="user-name2"  name="nickname"  placeholder="{{ nickname}}">
                                           <small>昵称长度不能超过40个汉字</small>
 									</div>
 								</div>
@@ -63,7 +63,7 @@
 								<div class="am-form-group">
 									<label for="user-name" class="am-form-label">姓名</label>
 									<div class="am-form-content">
-										<input type="text" id="user-name2" placeholder="name">
+										<input type="text" id="user-name2" name="name" placeholder="{{ name }}">
 
 									</div>
 								</div>
@@ -72,13 +72,13 @@
 									<label class="am-form-label">性别</label>
 									<div class="am-form-content sex">
 										<label class="am-radio-inline">
-											<input type="radio" name="radio10" value="male" data-am-ucheck> 男
+											<input type="radio" name="name" value="male" data-am-ucheck> 男
 										</label>
 										<label class="am-radio-inline">
-											<input type="radio" name="radio10" value="female" data-am-ucheck> 女
+											<input type="radio" name="name" value="female"   data-am-ucheck> 女
 										</label>
 										<label class="am-radio-inline">
-											<input type="radio" name="radio10" value="secret" data-am-ucheck> 保密
+											<input type="radio" name="name" value="secret"  data-am-ucheck> 保密
 										</label>
 									</div>
 								</div>
@@ -111,14 +111,14 @@
 								<div class="am-form-group">
 									<label for="user-phone" class="am-form-label">电话</label>
 									<div class="am-form-content">
-										<input id="user-phone" placeholder="telephonenumber" type="tel">
+										<input id="user-phone" placeholder="{{ phone }}" name="phone" type="tel">
 
 									</div>
 								</div>
 								<div class="am-form-group">
 									<label for="user-email" class="am-form-label">电子邮件</label>
 									<div class="am-form-content">
-										<input id="user-email" placeholder="Email" type="email">
+										<input id="user-email" placeholder="{{ email }}" name="email" type="email">
 
 									</div>
 								</div>
@@ -149,7 +149,9 @@
 									</div>
 								</div>
 								<div class="info-btn">
-									<div class="am-btn am-btn-danger">保存修改</div>
+									<div class="am-btn am-btn-danger">
+                                        <button type="submit">保存修改</button>
+                                    </div>
 								</div>
 
 							</form>
@@ -180,7 +182,7 @@
 				</div>
 			</div>
 
-			{% include 'include/aside.html' %}
+			{% include 'personal/person_base/aside.html' %}
 		</div>
 
 {% endblock %}
