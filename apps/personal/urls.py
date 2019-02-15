@@ -1,24 +1,15 @@
-"""Online_Retailers URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.conf.urls import url, include
 from personal import views
 
 urlpatterns = [
+    url(r'^personal/', views.personal_view, name='personal'),
+    url(r'^information/',views.information_view,name='information'),
     url(r'^address/',views.address_view,name='address'),
     url(r'^bill/',views.bill_view,name='bill'),
+    url(r'^order_manage/',views.order_manage,name='order_manage'),
+    url(r'^orderinfo/',views.orderinfo_view,name='orderinfo'),
+
 ]
 

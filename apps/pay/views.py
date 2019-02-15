@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from Online_Retailers import settings
+from pay.models import OrderUser
 
 '''
 支付模块
@@ -23,21 +24,24 @@ alipay = AliPay(
     debug=True  # 默认False  配合沙箱模式使用
 )
 # @login_required(login_url='/account/login')
+
 def pay_view(request):
     '''
     用于创建用于支付的对象
     :param request:
     :return:
     '''
-
+    order_number = 5464885
+    # 通过订单号获取支付金额
+    order = OrderUser.objects.filter(oid=order_number).first()
     # 电脑网站支付，需要跳转到https://openapi.alipay.com/gateway.do? + order_string
     order_string = alipay.api_alipay_trade_page_pay(
     	# 订单号
-        out_trade_no='5463456',
+        out_trade_no=order_number,
         # 商品总价
-        total_amount=str(100),  # 将Decimal类型转换为字符串交给支付宝
+        total_amount=str(order.total_price),  # 将Decimal类型转换为字符串交给支付宝
         # 订单标题
-        subject="天猫商城-{}".format(123456),
+        subject="商城平台,订单号---{}".format(order_number),
         # 支付成功之后 前端跳转的界面
         return_url='http://127.0.0.1:8000',
         # 支付成功后台跳转接口
@@ -47,6 +51,9 @@ def pay_view(request):
     url = settings.ALI_PAY_URL + "?" + order_string
     return redirect(url)
 
+
+
+# 后端回调不可用
 @csrf_exempt
 def aliapy_back_url(request):
     '''

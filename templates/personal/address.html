@@ -15,8 +15,8 @@
     <script src="{% static 'AmazeUI-2.4.2/assets/js/amazeui.js' %}"></script>
 {% endblock %}
 {% block content %}
-    {% include 'personal/person_base/person_header.html' %}
-    {% include 'personal/person_base/person_nav.html' %}
+        {% include 'include/head.html' %}
+        {% include 'include/nav_bar.html' %}
     <b class="line"></b>
 
     <div class="center">
@@ -186,10 +186,9 @@
                 <div class="clear"></div>
 
             </div>
-            {% include 'personal/person_base/person_footer.html' %}
+            {% include 'include/footer.html' %}
         </div>
-
-        {% include 'personal/person_base/person_aside.html' %}
+        {% include 'include/aside.html' %}
     </div>
 {% endblock %}
 
