@@ -1,31 +1,19 @@
 from django.db import models
 
 from django.contrib.auth.models import AbstractUser
-# Create your models here.
-# from django.contrib.auth.models import AbstractUser
-from Online_Retailers import settings
-# class UserProfile(AbstractUser):
-#     """
-#     用户
-#     """
-#     # nickname = models.CharField(max_length=30, null=True, blank=True, verbose_name='昵称')
-#     name = models.CharField(max_length=30, null=True, blank=True, verbose_name="姓名")
-#     gender = models.CharField(max_length=6, choices=(("male", u"男"), ("female", "女")), default="female", verbose_name="性别")
-#     birthday = models.DateField(null=True, blank=True, verbose_name="出生年月")
-#     payment = models.CharField(max_length=50, null=True, blank=True, verbose_name="支付密码")
-#     mobile = models.CharField(null=True, blank=True, max_length=11, verbose_name="电话")
-#     member = models.CharField(max_length=6, choices=((1,"普通用户"), (2, "VIP会员"), (3, "超级会员")), default=1, verbose_name="会员等级")
-#     class Meta:
-#         verbose_name = "管理员"
-#         verbose_name_plural = verbose_name
-#         db_table = 'auth_user'
+
 
 class User(models.Model):
     uid = models.AutoField(primary_key=True, verbose_name="用户ID")
+<<<<<<< HEAD
+    username = models.CharField(max_length=16, unique=True, verbose_name="用户名")
+    phone=models.IntegerField(default=123)
+=======
     name = models.CharField(max_length=255,null=True,verbose_name='用户姓名')
     sex = models.CharField(max_length=11,choices=(('male','男'),('female','女'),('secret','保密')),null=False,verbose_name='性别')
     birthday = models.CharField(max_length=255,verbose_name='生日',default='1970-10-10')
     nickname = models.CharField(max_length=16, unique=True, verbose_name="用户昵称")
+>>>>>>> origin/develop
     password = models.CharField(max_length=256, verbose_name="密码")
     email = models.CharField(max_length=64, unique=True, verbose_name="邮箱地址")
     phone = models.IntegerField(unique=True,null=True)
@@ -41,5 +29,11 @@ class User(models.Model):
         verbose_name_plural = verbose_name
 
 
+class Address(models.Model):
+    address_id=models.AutoField(primary_key=True)
+    detail=models.CharField(max_length=256)
+    uid=models.ForeignKey(to=User,on_delete=models.CASCADE, db_column='uid')
 
+    class Meta:
+        db_table='address'
 
