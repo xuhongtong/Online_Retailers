@@ -38,10 +38,8 @@ def search(request):
         'bid':bid,
         'bname':bname,
     }
-
-    return render(request, 'search/search.html',context)
-
-# 分页功能
+    return render(request, 'search/search.html', context)
+# 分类功能
 @login_required
 def page_divide(request):
     phone_name_list=JdShop.objects.all()

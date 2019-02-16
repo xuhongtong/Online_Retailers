@@ -34,7 +34,7 @@ EXT_APPS = [
     'xadmin',
     'crispy_forms',
     'reversion',
-    'captcha',
+    'captcha'
 ]
 
 # 注册自定义app
@@ -45,7 +45,8 @@ CUSTOM_APPS = [
     'shop',
     'shopcart',
     'comment',
-
+    'order'
+    'pay',
 ]
 
 # 拼接apps
@@ -86,26 +87,29 @@ WSGI_APPLICATION = 'Online_Retailers.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'online_retailers',
-        'USER': 'tom',
+        'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': '192.168.50.7',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'online_retailers',
-#         'USER': 'root',
-#         'PASSWORD': 'root',
-#         'HOST': '127.0.0.1',
+#         'USER': 'tom',
+#         'PASSWORD': '123456',
+#         'HOST': '192.168.50.7',
 #         'PORT': '3306',
 #     }
 # }
+
 
 
 # Password validation
@@ -174,3 +178,23 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # 验证码
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+
+
+
+# ======================== start 支付模块 ============================
+# 注册应用时支付宝生成的app_id
+APP_ID = '2016092200574031'
+# 支付网关
+ALI_PAY_URL = 'https://openapi.alipaydev.com/gateway.do'
+# 设置自己的私钥
+APP_PRIVATE_STRING  = open(BASE_DIR + '/key/app_private_key.pem').read()
+# 将自己的公钥放在支付宝上
+ALIPAY_PUBLIC_KEY_STRING = open(BASE_DIR + '/key/app_public_key.pem').read()
+# ==========================end 支付宝相关配置 ================
+
+
+
+
+
+
+
