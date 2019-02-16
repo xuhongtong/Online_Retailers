@@ -2,6 +2,8 @@ import os
 import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import captcha
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # 忽略apps目录的存在(注册app不用apps.account，直接用account其他导包也一样)
@@ -39,6 +41,7 @@ EXT_APPS = [
 
 # 注册自定义app
 CUSTOM_APPS = [
+    'haystack',
     'account',
     'main',
     'search',
@@ -114,7 +117,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -192,7 +194,23 @@ APP_PRIVATE_STRING  = open(BASE_DIR + '/key/app_private_key.pem').read()
 ALIPAY_PUBLIC_KEY_STRING = open(BASE_DIR + '/key/app_public_key.pem').read()
 # ==========================end 支付宝相关配置 ================
 
+# =================全文检索框架配置 start=============
+# 搜索引擎
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        # 使用whoosh引擎
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        # 索引文件路径
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+# 当添加、修改、删除数据时，自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
+# 搜索框架
+#设置每页显示的数目，默认为20，可以自己修改
+HAYSTACK_SEARCH_RESULTS_PER_PAGE  = 6
+# =================全文检索框架配置 end=============
 
 
 

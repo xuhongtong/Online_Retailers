@@ -62,11 +62,11 @@
 									<dl id="select1">
 										<dt class="am-badge am-round">品牌</dt>	
 									
-										 <div class="dd-conent">										
-											<dd class="select-all selected"><a href="{% url 'search' %}?id={{ bid }}&brand_name">全部</a></dd>
+										 <div class="dd-conent">
 
+											<dd class="select-all selected"><a href="#">全部</a></dd>
                                              {% for brand in brand_list %}
-                                            <dd><a href="{% url 'search' %}?id={{ brand.third_cate_id.third_cate_id}}&brand_name={{ brand.brand_name }}">{{ brand.brand_name }}</a></dd>
+                                            <dd><a href="{% url 'search' %}?id={{ brand.third_cate_id.third_cate_id}}&keyword={{ brand.brand_name }}">{{ brand.brand_name }}</a></dd>
                                              {% endfor %}
 										 </div>
 						
@@ -83,7 +83,7 @@
 									<li class="big"><a title="评价" href="{% url 'search' %}?id={{ bid }}&pj=1&brand_name={{ bname }}">评价为主</a></li>
 								</div>
 								<div class="clear"></div>
-
+{#        要分页的商品列表                        #}
 								<ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
                                     {% for shop in contacts %}
 									<li>
@@ -158,15 +158,15 @@
 							<!--分页功能 -->
 							<ul class="am-pagination am-pagination-right">
                     {% if contacts.has_previous  %}
-                        <li ><a  href="?&page={{ contacts.previous_page_number }}">&laquo;上一页</a></li>
+                        <li ><a  href="?&page={{ contacts.previous_page_number }}&keyword={{ keyword }}">&laquo;上一页</a></li>
                     {% else %}
                         <li class="am-disabled"><a>&laquo;上一页</a></li>
                     {% endif %}
                     {% for pindex in pages %}
-                        <li {% if pindex == contacts.number %}class="am-active"{% endif %}><a href="?page={{  pindex }}" >{{ pindex }}</a></li>
+                        <li {% if pindex == contacts.number %}class="am-active"{% endif %}><a href="?page={{  pindex }}&keyword={{ keyword }}" >{{ pindex }}</a></li>
                     {% endfor %}
                     {% if contacts.has_next %}
-                        <li><a href="?page={{ contacts.next_page_number }}">下一页&raquo;</a></li>
+                        <li><a href="?page={{ contacts.next_page_number }}&keyword={{ keyword }}">下一页&raquo;</a></li>
                     {% else %}
                         <li class="am-disabled"><a>下一页&raquo;</a></li>
                     {% endif %}

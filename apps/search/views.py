@@ -1,5 +1,6 @@
 import urllib
 
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 # Create your views here.
@@ -63,6 +64,5 @@ def search(request):
     #     'page_num': contacts,
     # }
     return render(request,'search/search.html',locals())
-
 
 
