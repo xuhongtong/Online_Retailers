@@ -84,8 +84,6 @@ def information_view(request):
         except Exception as e:
             print(e)
 
-
-
 # 安全设置
 def safety_view(request):
     '''
