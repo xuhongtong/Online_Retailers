@@ -10,7 +10,7 @@ class Order(models.Model):
     total_money=models.DecimalField(max_digits = 7,decimal_places = 2,default=0)
     # # create_date=models.DateTimeField(auto_now_add=True)
     # # pay_date=models.DateTimeField(auto_now_add=True)
-    status=models.BooleanField(default=1)
+    status=models.BooleanField(default=0)
 
     class Meta:
         db_table='order'
