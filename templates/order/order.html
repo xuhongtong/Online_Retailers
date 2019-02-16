@@ -25,23 +25,25 @@
 						<div class="clear"></div>
 						<ul>
 							<div class="per-border"></div>
+{#                            {% for address in address_list %}#}
 							<li class="user-addresslist defaultAddr">
 
 								<div class="address-left">
 									<div class="user DefaultAddr">
 
 										<span class="buy-address-detail">   
-                   <span class="buy-user">艾迪 </span>
-										<span class="buy-phone">15888888888</span>
+                                        <span class="buy-user">{{ user.name }} </span>
+										<span class="buy-phone">{{ user.phone }}</span>
 										</span>
 									</div>
 									<div class="default-address DefaultAddr">
 										<span class="buy-line-title buy-line-title-type">收货地址：</span>
 										<span class="buy--address-detail">
-								   <span class="province">湖北</span>省
-										<span class="city">武汉</span>市
-										<span class="dist">洪山</span>区
-										<span class="street">雄楚大道666号(中南财经政法大学)</span>
+{#								        <span class="province">湖北</span>省#}
+{#										<span class="city">武汉</span>市#}
+{#										<span class="dist">洪山</span>区#}
+{#										<span class="street">雄楚大道666号(中南财经政法大学)</span>#}
+                                            {{ address_list.detail }}
 										</span>
 
 										</span>
@@ -63,7 +65,9 @@
 								</div>
 
 							</li>
+{#                            {% endfor %}#}
 							<div class="per-border"></div>
+
 							<li class="user-addresslist">
 								<div class="address-left">
 									<div class="user DefaultAddr">
