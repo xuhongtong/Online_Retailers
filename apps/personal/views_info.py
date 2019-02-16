@@ -1,4 +1,6 @@
 # 个人信息
+import datetime
+
 from django.shortcuts import redirect, render
 
 from account.models import User
@@ -11,22 +13,22 @@ def information_view(request):
     :return:
     '''
     if request.method == 'GET':
-        year_list = [i for i in range(1970,2020)]
-        month_list = [i for i in range(1,13)]
-        day_list = [i for i in range(1,32)]
         uid = request.session.get('userid')
         user = User.objects.filter(uid=uid).first()
-        if user.birthday:
-            year = user.birthday.split('-')[0]
-            month = user.birthday.split('-')[1]
-            day = user.birthday.split('-')[2]
+        birthday = User.objects.filter(uid=uid).values_list('birthday').first()[0]
+        str_birthday = datetime.datetime.strftime(birthday, '%Y-%m-%d')
+        year = str_birthday.split('-')[0]
+        month = str_birthday.split('-')[1]
+        day = str_birthday.split('-')[2]
         content = {'nickname': user.nickname,
                    'name': user.name,
                    'email': user.email,
                    'sex': user.sex,
                    'phone': user.phone,
-                   # 'year':year,'month':month,'day':day,
-                   'year_list':year_list,'month_list':month_list,'day_list':day_list,
+                   'birthday': user.birthday,
+                   'year': year,
+                   'month': month,
+                   'day': day,
                    }
         return render(request, 'personal/information.html', content)
     elif request.method == 'POST':
@@ -54,9 +56,11 @@ def information_view(request):
         day = request.POST.get('day')
         birthday = year + '-' + month + '-' + day
         try:
-            if birthday !='1970-1-1':
-                User.objects.filter(uid=uid).update(nickname=nickname, name=name, sex=sex, phone=phone, email=email,birthday=birthday)
-                return redirect('information')
+            if birthday == '1970-1-1':
+                birthday = user.birthday
+            User.objects.filter(uid=uid).update(nickname=nickname, name=name, sex=sex, phone=phone, email=email,
+                                                birthday=birthday)
+            return redirect('information')
 
         except Exception as e:
             print(e)
