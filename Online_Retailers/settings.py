@@ -45,7 +45,7 @@ CUSTOM_APPS = [
     'shop',
     'shopcart',
     'comment',
-    'order'
+    'order',
     'pay',
 ]
 
@@ -92,9 +92,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'online_retailers',
-        'USER': 'root',
+        'USER': 'tom',
         'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
+        'HOST': '192.168.50.7',
         'PORT': '3306',
     }
 }
