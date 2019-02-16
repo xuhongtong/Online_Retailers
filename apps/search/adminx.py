@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import xadmin
-from search.models import JdBrand
+
 
 __author__ = 'yvkang'
 __date__ = '2019/2/14 0014 12:02'
-
+from search.models import JdBrand
 class JdBrandAdmin(object):
     list_display = ['brand_id','brand_name']
     # 搜索
@@ -21,6 +21,6 @@ class JdBrandAdmin(object):
     # 排序
     ordering = ['brand_id']
     #分页
-    list_per_page = 50
+    list_per_page = 20
 
 xadmin.site.register(JdBrand,JdBrandAdmin)
