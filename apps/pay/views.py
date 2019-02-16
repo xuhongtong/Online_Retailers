@@ -38,19 +38,24 @@ def pay_view(request):
     # 电脑网站支付，需要跳转到https://openapi.alipay.com/gateway.do? + order_string
     order_string = alipay.api_alipay_trade_page_pay(
     	# 订单号
-        out_trade_no=order_number,
+        out_trade_no=order_code,
         # 商品总价
         total_amount=str(order.total_money),  # 将Decimal类型转换为字符串交给支付宝
         # 订单标题
-        subject="商城平台,订单号---{}".format(order_number),
+        subject="商城平台,订单号---{}".format(order_code),
         # 支付成功之后 前端跳转的界面
         return_url='http://127.0.0.1:8000',
         # 支付成功后台跳转接口
-        notify_url=None  # 可选, 不填则使用默认notify url
+        notify_url='order_status'  # 可选, 不填则使用默认notify url
     )
     # 让用户进行支付的支付宝页面网址
     url = settings.ALI_PAY_URL + "?" + order_string
     return redirect(url)
+
+def order_status_view(request):
+    order_code = request.session
+    Order.objects.filter(order_code=order_code).update(status=1)
+    return redirect('/')
 
 
 
