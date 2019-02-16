@@ -45,7 +45,7 @@ CUSTOM_APPS = [
     'shop',
     'shopcart',
     'comment',
-    'order'
+    'order',
     'pay',
 ]
 
