@@ -34,7 +34,8 @@
 				</div>
 				<div class="topMessage favorite">
 					<div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
-			</ul>
+			    </div>
+            </ul>
 			</div>
 
 			<!--悬浮搜索框-->
@@ -201,34 +202,34 @@
 								<div class="bundle  bundle-last">
 
 									<div class="bundle-main">
+                                        {% for shop_cart in shop_carts %}
 										<ul class="item-content clearfix">
 											<div class="pay-phone">
-												<li class="td td-item">
+												<li class="td td-item" cart_id="{{ shop_cart.cart_id }}">
 													<div class="item-pic">
 														<a href="#" class="J_MakePoint">
-															<td><img src="../images/kouhong.jpg_80x80.jpg" class="itempic J_ItemImg"></a></td>
+															<td><img src="{{ shop_cart.img }}" class="itempic J_ItemImg"></a></td>
 													</div>
 													<div class="item-info">
 														<div class="item-basic-info">
-															<a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11">xxx</a>
+															<a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11">{{ shop_cart.promote_price }}</a>
 														</div>
 													</div>
 												</li>
-
 											</div>
 											<li class="td td-amount">
 												<div class="amount-wrapper ">
 													<div class="item-amount ">
 														<span class="phone-title">购买数量</span>
 														<div class="sl">
-															<span>xxx</span>
+															<span>{{ shop_cart.number }}</span>
 														</div>
 													</div>
 												</div>
 											</li>
 											<li class="td td-sum">
 												<div class="td-inner">
-													<em tabindex="0" class="J_ItemSum number">117.00</em>
+													<em tabindex="0" class="J_ItemSum number">￥{% widthratio shop_cart.promote_price 1 shop_cart.number %}</em>
 												</div>
 											</li>
 											<li class="td td-oplist">
@@ -241,6 +242,7 @@
 											</li>
 
 										</ul>
+                                        {% endfor %}
 										<div class="clear"></div>
 
 									</div>
@@ -319,7 +321,7 @@
 							<!--含运费小计 -->
 							<div class="buy-point-discharge ">
 								<p class="price g_price ">
-									合计（含运费） <span>¥</span><em class="pay-sum">244.00</em>
+									合计（含运费） <span>¥</span><em class="pay-sum">￥244</em>
 								</p>
 							</div>
 
@@ -329,7 +331,7 @@
 									<div class="box">
 										<div tabindex="0" id="holyshit267" class="realPay"><em class="t">实付款：</em>
 											<span class="price g_price ">
-                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">244.00</em>
+                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">￥11</em>
 											</span>
 										</div>
 

@@ -28,24 +28,41 @@ def search(request):
     if sort:
         shop_list=shop_list.order_by(sort)
 
-    context = {
-        'brand_list': brand_list,
-        'shop_list': shop_list,
-    }
-    return render(request, 'search/search.html', context)
-# 分类功能
-@login_required
-def page_divide(request):
-    phone_name_list=JdShop.objects.all()
-    paginator=Paginator(phone_name_list,5)
-    page=request.GET.get('page')
-    try:
-        contacts=paginator.page(page)
-    except PageNotAnInteger:
-        contacts=paginator.page(1)
-    except EmptyPage:
-        contacts=paginator.page(paginator.num_pages)
-    return render(request,'search/search.html',{'page_num':contacts})
+    # context = {
+    #     'brand_list': brand_list,
+    #     'shop_list': shop_list,
+    #     'page_num':contacts,
+    # }
+    # return render(request, 'search/search.html', context)
+# 分页功能
+    paginator = Paginator(shop_list, 8)#每页展示的数据
+    page = request.GET.get('page')
+    if page:
+        page = int(page)
+    else:
+        page = 1
+    if page > paginator.num_pages:
+        page = 1
+    contacts = paginator.page(page)
+    num_pages = paginator.num_pages
+    if num_pages < 5:
+        # 1-num_pages
+        pages = range(1, num_pages + 1)
+    elif page <= 3:
+        pages = range(1, 6)
+    elif num_pages - page <= 2:
+        # num_pages-4, num_pages
+        pages = range(num_pages - 4, num_pages + 1)
+    else:
+        # page-2, page+2
+        pages = range(page - 2, page + 3)
+    # context = {
+    #     'brand_list': brand_list,
+    #     'shop_list': shop_list,
+    #     'contacts':contacts,
+    #     'page_num': contacts,
+    # }
+    return render(request,'search/search.html',locals())
 
 
 

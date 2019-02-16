@@ -9,3 +9,5 @@ class JdBrand(models.Model):
         db_table = 'jd_brand'
         verbose_name = '商品品牌'
         verbose_name_plural = verbose_name
+
+

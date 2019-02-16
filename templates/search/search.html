@@ -9,7 +9,6 @@
     <script type="text/javascript" src="{% static 'basic/js/jquery-1.7.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 {% endblock %}
-
 {% block content %}
 {% include 'include/head.html' %}
 
@@ -86,7 +85,7 @@
 								<div class="clear"></div>
 
 								<ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
-                                    {% for shop in shop_list %}
+                                    {% for shop in contacts %}
 									<li>
                                         <a href="{% url 'detail' %}?id={{ shop.id }}">
 										<div class="i-pic limit">
@@ -157,18 +156,20 @@
 							<div class="clear"></div>
 							<!--分页功能 -->
 							<ul class="am-pagination am-pagination-right">
-                            {% if page_num.has_previous %}
-								<li class="am-disabled"><a href="{% url "paginator" %}/?page={{ page_num.previous_page_number }}">&laquo;</a></li>
-                            {% endif %}
-								<li class="am-active"><a href="{% url "paginator" %}/?page={{ page_num.previous_page_number }}">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="{{ page_num.number }}">3</a></li>
-								<li><a href="{{ page_num.number }}">4</a></li>
-								<li><a href="{{ page_num.number }}">5</a></li>
-                            {% if page_num.has_next %}
-								<li><a href="#">&raquo;</a></li>
-                            {% endif %}
-							</ul>
+                    {% if contacts.has_previous  %}
+                        <li ><a  href="?&page={{ contacts.previous_page_number }}">&laquo;上一页</a></li>
+                    {% else %}
+                        <li class="am-disabled"><a>&laquo;上一页</a></li>
+                    {% endif %}
+                    {% for pindex in pages %}
+                        <li {% if pindex == contacts.number %}class="am-active"{% endif %}><a href="?page={{  pindex }}" >{{ pindex }}</a></li>
+                    {% endfor %}
+                    {% if contacts.has_next %}
+                        <li><a href="?page={{ contacts.next_page_number }}">下一页&raquo;</a></li>
+                    {% else %}
+                        <li class="am-disabled"><a>下一页&raquo;</a></li>
+                    {% endif %}
+                </ul>
 						</div>
 					</div>
 					<div class="footer">

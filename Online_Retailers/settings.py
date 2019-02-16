@@ -39,13 +39,14 @@ EXT_APPS = [
 
 # 注册自定义app
 CUSTOM_APPS = [
+    'haystack',
     'account',
     'main',
     'search',
     'shop',
     'shopcart',
     'comment',
-
+    'order'
 ]
 
 # 拼接apps
@@ -174,3 +175,24 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # 验证码
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+
+# =================全文检索框架配置 start=============
+# 搜索引擎
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        # 使用whoosh引擎
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        # 索引文件路径
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+# 当添加、修改、删除数据时，自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# 搜索框架
+#设置每页显示的数目，默认为20，可以自己修改
+HAYSTACK_SEARCH_RESULTS_PER_PAGE  = 6
+# =================全文检索框架配置 end=============
+
+
+

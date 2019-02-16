@@ -143,8 +143,11 @@ $(function () {
         totalMoney();
     });
 
+
+    // 减少商品数量
     $reduce.click(function () {
         var $inputVal = $(this).next('input'),
+
             $count = parseInt($inputVal.val())-1,
             $priceTotalObj = $(this).parents('.order_lists').find('.sum_price'),
             $price = $(this).parents('.order_lists').find('.price').html(),  //单价
@@ -157,8 +160,20 @@ $(function () {
             $(this).addClass('reSty');
         }
         totalMoney();
+        let $cart_id=$(this).next('input').attr('cart_id'),
+        data={
+            'number':$count,
+            'cart_id':$cart_id,
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        };
+        $.get('http://127.0.0.1/shopcar/update_cart',data,function (result) {
+
+        })
+
+        })
     });
 
+    // 合计金额
     $all_sum.keyup(function () {
         var $count = 0,
             $priceTotalObj = $(this).parents('.order_lists').find('.sum_price'),
@@ -239,4 +254,3 @@ $(function () {
     }
 
 
-});
