@@ -50,6 +50,7 @@ CUSTOM_APPS = [
     'comment',
     'order',
     'pay',
+    'personal',
 ]
 
 # 拼接apps
