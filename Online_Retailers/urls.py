@@ -31,4 +31,6 @@ urlpatterns = [
     url(r'^shopcart/',include('shopcart.urls')),
     url(r'^order/',include('order.urls')),
     url(r'^captcha/',include('captcha.urls')),
+    url(r'^person/',include('personal.urls')),
+    url(r'^pay/',include('pay.urls')),
 ]

@@ -131,3 +131,4 @@ apps/captcha01/teamplates/
 apps/captcha01/tests.py
 apps/captcha01/urls.py
 apps/captcha01/views.py
+key/problem.txt

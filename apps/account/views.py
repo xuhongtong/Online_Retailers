@@ -1,10 +1,12 @@
-import hashlib
+
 from datetime import datetime
 
 from captcha.helpers import captcha_image_url
 from captcha.models import CaptchaStore
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-# from django.core.mail import send_mail
+
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponse
@@ -12,24 +14,29 @@ from django.template import loader
 from itsdangerous import URLSafeSerializer
 
 from Online_Retailers import settings
+from account.hash_secret import hash_code
 from account.models import User
 
 
-# from account.task import send_active_mail
+'''
+功能点
+登录
+注册
+异步邮件
+验证码
+改密
+'''
 
 # hash加密功能
 from account.task import send_active_mail
 
-
-def hash_code(s, salt='account'):
-    h = hashlib.sha256()
-    s += salt
-    h.update(s.encode())
-    return h.hexdigest()
-
-
-# 登陆账号
 def login_view(request):
+    '''
+    登录,
+    验证码
+    :param request:
+    :return:
+    '''
     if request.session.get('is_login'):  # 不允许重复登陆
         return redirect("index")
     if request.method == 'GET':
@@ -45,12 +52,12 @@ def login_view(request):
         key = request.POST.get('key')
         img_url = captcha_image_url(key)
         next1 = request.POST.get('next1', '/')
-        usr = request.POST.get('user-name')
+        usr = request.POST.get('nickname')
         password = request.POST.get('password')
         if usr and password and code :
             # 验证用户是否存在
-            if User.objects.filter(Q(username=usr) | Q(email=usr)).exists():
-                user = User.objects.filter(Q(username=usr) | Q(email=usr)).first()
+            if User.objects.filter(Q(nickname=usr) | Q(email=usr)).exists():
+                user = User.objects.filter(Q(nickname=usr) | Q(email=usr)).first()
                 # print(user.password)
                 # print(hash_code(password))
                 if user.password == hash_code(password):
@@ -67,7 +74,8 @@ def login_view(request):
                             # 登陆成功，记住登录状态
                             request.session['userid']=user.uid
                             request.session['is_login'] = True
-                            request.session['email'] = user.username
+                            request.session['email'] = user.nickname
+
                             return redirect(next1)
                         else:
                             # 验证失败，重新刷新验证码
@@ -88,42 +96,13 @@ def login_view(request):
             return render(request, 'account/login.html',
                           {'capt_error': '账号或密码或验证码不能为空', 'img_url': img_url, 'key': key, 'next1': next1})
 
-
-# 修改密码
-def update_view(request):
-    try:
-        if request.method == 'GET':
-            return render(request, 'account/update.html')
-        if request.method == 'POST':
-            # 获取页面用户名,锁定数据库用户信息
-            username = request.POST.get('username')
-            user = User.objects.filter(username=username).first()
-            if user:
-                oldpassword = user.password
-                password = request.POST.get('password')
-                # 验证旧密码
-                hash = hash_code(password)
-                if oldpassword == hash_code(password):
-                    newpassword = request.POST.get('newpassword')
-                    new_passwd = hash_code(newpassword)
-                    # 验证新旧密码不相同,保存新密码
-                    if new_passwd != oldpassword:
-                        user = User.objects.filter(username=username).first()
-                        user.password = new_passwd
-                        user.save()
-                        return redirect('/account/login')
-                    else:
-                        return render(request, 'account/update.html', {'msg': '新密码不能与旧密码相同，修改失败'})
-                else:
-                    return render(request, 'account/update.html', {'msg': '原密码错误，修改失败'})
-            else:
-                return render(request, 'account/update.html', {'msg': '账户不存在，修改失败'})
-    except Exception as e:
-        return render(request, 'account/404.html', {'msg': e})
-
-
-# 注册账号
 def register(request):
+    '''
+    注册账号
+    异步发送邮件
+    :param request:
+    :return:
+    '''
     if request.method == 'GET':
         return render(request, 'account/register.html')
     if request.method == 'POST':
@@ -132,7 +111,7 @@ def register(request):
         # phone = request.POST.get('phone')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
-        is_user = User.objects.filter(username=username)
+        is_user = User.objects.filter(nickname=username)
         if is_user:
             return HttpResponse('用户名已存在')
         if password1 == password2:
@@ -140,7 +119,7 @@ def register(request):
             # password1 = hash_code(password1)
             # 保存用户到数据库
 
-            user = User(email=email, username=username, password=hash_code(password1))
+            user = User(email=email, nickname=username, password=hash_code(password1))
             user.save()
             try:
                 auth_s = URLSafeSerializer(settings.SECRET_KEY, 'auth')
@@ -160,6 +139,11 @@ def register(request):
 
 # xxx/active/?token=afsfsdfs
 def active_account(request):
+    '''
+    账号激活
+    :param request:
+    :return:
+    '''
     token = request.GET.get('tooken')
     uid = cache.get(token)
     if uid:
@@ -171,10 +155,22 @@ def active_account(request):
         return redirect('/')
 
 
-# 注销账号
+
 def logout_view(request):
+    '''
+    退出登录
+    :param request:
+    :return:
+    '''
     request.session.flush()
-    return redirect('login')
+    return redirect('/')
+
+# @login_required(login_url='login')
+# def logout_view(request):
+#     # 表示登出
+#     next1 = request.META.get('HTTP_REFERER', '/')
+#     logout(request)
+#     return redirect(next1)
 
 
 # def send_active_mail(subject='', content=None, to=None):
@@ -186,8 +182,12 @@ def logout_view(request):
 #               )
 
 
-# 刷新验证码
 def refresh_code(request):
+    '''
+    刷新验证码
+    :param request:
+    :return:
+    '''
     key = CaptchaStore.generate_key()
     img_url = captcha_image_url(key)
     return JsonResponse({'key': key, 'img_url': img_url})
