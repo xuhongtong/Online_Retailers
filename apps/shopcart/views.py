@@ -41,7 +41,7 @@ def add_cart(request):
 # 购物车页面逻辑处理
 def shopcart(request):
     # 获取登陆用户购物车商品添加记录
-    shop_carts = ShopCart.objects.filter(uid=request.session.get('userid'), is_valid=1)
+    shop_carts = ShopCart.objects.filter(uid=request.session.get('userid'), is_delete=1)
     for shop_cart in shop_carts:
         shop_cart.title = JdShop.objects.filter(id=shop_cart.shop_id).values_list('title').first()[0]
         shop_cart.brand_name = JdShop.objects.filter(id=shop_cart.shop_id).values_list('brand_name').first()[0]
@@ -55,8 +55,18 @@ def shopcart(request):
     return render(request, 'shopcart/shopcart.html', context)
 
 
-#更新cart表
+# 更新cart表
+
 def update_cart(request):
-    cart_id=request.POST.get('cart_id')
-    number=request.POST.get('number')
+    cart_id = request.GET.get('cart_id')
+    number = request.GET.get('number')
     ShopCart.objects.filter(cart_id=cart_id).update(number=number)
+
+
+
+# 删除cart表
+def remove_cart(request):
+    cart_id = request.GET.get('cartid')
+    ShopCart.objects.filter(cart_id=cart_id).update(is_delete=0)
+
+

@@ -12,13 +12,16 @@
 		<script type="text/javascript" src="{% static 'js/address.js' %}"></script>
 {% endblock %}
 {% block content %}
+<<<<<<< HEAD
+		 {% include 'include/head.html' %}
+=======
 		<!--顶部导航条 -->
 		<div class="am-container header">
 			<ul class="message-l">
 				<div class="topMessage">
 					<div class="menu-hd">
-						<a href="#" target="_top" class="h">亲，请登录</a>
-						<a href="#" target="_top">免费注册</a>
+						<a href="{% url 'login' %}" target="_top" class="h">亲，请登录</a>
+						<a href="{% url 'register' %}" target="_top">免费注册</a>
 					</div>
 				</div>
 			</ul>
@@ -34,8 +37,7 @@
 				</div>
 				<div class="topMessage favorite">
 					<div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
-			    </div>
-            </ul>
+			</ul>
 			</div>
 
 			<!--悬浮搜索框-->
@@ -55,6 +57,7 @@
 				</div>
 			</div>
 
+>>>>>>> origin/develop
 			<div class="clear"></div>
 			<div class="concent">
 				<!--地址 -->
@@ -91,7 +94,7 @@
 									<ins class="deftip">默认地址</ins>
 								</div>
 								<div class="address-right">
-									<a href="../person/address.html">
+									<a href="../personal/address.html">
 										<span class="am-icon-angle-right am-icon-lg"></span></a>
 								</div>
 								<div class="clear"></div>
@@ -164,9 +167,9 @@
 					<div class="logistics">
 						<h3>选择支付方式</h3>
 						<ul class="pay-list">
-							<li class="pay card"><img src="../images/wangyin.jpg" />银联<span></span></li>
-							<li class="pay qq"><img src="../images/weizhifu.jpg" />微信<span></span></li>
-							<li class="pay taobao"><img src="../images/zhifubao.jpg" />支付宝<span></span></li>
+							<li class="pay card"><img src="{% static 'images/wangyin.jpg' %}" />银联<span></span></li>
+							<li class="pay qq"><img src="{% static 'images/weizhifu.jpg' %}" />微信<span></span></li>
+							<li class="pay taobao"><img src="{% static 'images/zhifubao.jpg' %}" />支付宝<span></span></li>
 						</ul>
 					</div>
 					<div class="clear"></div>
@@ -208,15 +211,22 @@
 												<li class="td td-item" cart_id="{{ shop_cart.cart_id }}">
 													<div class="item-pic">
 														<a href="#" class="J_MakePoint">
-															<td><img src="{{ shop_cart.img }}" class="itempic J_ItemImg"></a></td>
+															<td><img width="50px" height="50px" src="{{ shop_cart.img }}" class="itempic J_ItemImg"></a></td>
 													</div>
 													<div class="item-info">
 														<div class="item-basic-info">
-															<a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11">{{ shop_cart.promote_price }}</a>
+															<a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11">{{ shop_cart.title }}</a>
 														</div>
 													</div>
 												</li>
 											</div>
+                                            <li class="td td-price">
+													<div class="item-price price-promo-promo">
+														<div class="price-content">
+															<em class="J_Price price-now">{{ shop_cart.promote_price }}</em>
+														</div>
+													</div>
+												</li>
 											<li class="td td-amount">
 												<div class="amount-wrapper ">
 													<div class="item-amount ">
@@ -331,7 +341,7 @@
 									<div class="box">
 										<div tabindex="0" id="holyshit267" class="realPay"><em class="t">实付款：</em>
 											<span class="price g_price ">
-                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">￥11</em>
+                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">{{ order.total_money }}</em>
 											</span>
 										</div>
 
@@ -359,7 +369,7 @@
 
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
-											<a id="J_Go" href="success.html" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+											<a id="J_Go" href="{% url 'pay' %}" class="btn-go" tabindex="0" title="点击此按钮，提交订单">提交订单</a>
 										</div>
 									</div>
 									<div class="clear"></div>

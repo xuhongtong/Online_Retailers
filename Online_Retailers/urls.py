@@ -27,9 +27,11 @@ urlpatterns = [
     url(r'^account/',include('account.urls')),
     url(r'',include('main.urls')),
     url(r'^search',include('search.urls')),
-    url(r'^search',include('haystack.urls')), # 全文检索框架搜索引擎url
+    # url(r'^search',include('haystack.urls')), # 全文检索框架搜索引擎url
     url(r'^shop/',include('shop.urls')),
     url(r'^shopcart/',include('shopcart.urls')),
     url(r'^order/',include('order.urls')),
     url(r'^captcha/',include('captcha.urls')),
+    url(r'^person/',include('personal.urls')),
+    url(r'^pay/',include('pay.urls')),
 ]

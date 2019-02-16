@@ -39,14 +39,14 @@ EXT_APPS = [
 
 # 注册自定义app
 CUSTOM_APPS = [
-    'haystack',
     'account',
     'main',
     'search',
     'shop',
     'shopcart',
     'comment',
-    'order'
+    'order',
+    'pay',
 ]
 
 # 拼接apps
@@ -87,6 +87,7 @@ WSGI_APPLICATION = 'Online_Retailers.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -97,16 +98,18 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'online_retailers',
-#         'USER': 'root',
-#         'PASSWORD': 'root',
-#         'HOST': '127.0.0.1',
+#         'USER': 'tom',
+#         'PASSWORD': '123456',
+#         'HOST': '192.168.50.7',
 #         'PORT': '3306',
 #     }
 # }
+
 
 
 # Password validation
@@ -176,23 +179,22 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # 验证码
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 
-# =================全文检索框架配置 start=============
-# 搜索引擎
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        # 使用whoosh引擎
-        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
-        # 索引文件路径
-        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
-    }
-}
-# 当添加、修改、删除数据时，自动生成索引
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
-# 搜索框架
-#设置每页显示的数目，默认为20，可以自己修改
-HAYSTACK_SEARCH_RESULTS_PER_PAGE  = 6
-# =================全文检索框架配置 end=============
+
+# ======================== start 支付模块 ============================
+# 注册应用时支付宝生成的app_id
+APP_ID = '2016092200574031'
+# 支付网关
+ALI_PAY_URL = 'https://openapi.alipaydev.com/gateway.do'
+# 设置自己的私钥
+APP_PRIVATE_STRING  = open(BASE_DIR + '/key/app_private_key.pem').read()
+# 将自己的公钥放在支付宝上
+ALIPAY_PUBLIC_KEY_STRING = open(BASE_DIR + '/key/app_public_key.pem').read()
+# ==========================end 支付宝相关配置 ================
+
+
+
+
 
 
 

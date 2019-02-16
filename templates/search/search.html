@@ -63,10 +63,10 @@
 										<dt class="am-badge am-round">品牌</dt>	
 									
 										 <div class="dd-conent">										
-											<dd class="select-all selected"><a href="#">全部</a></dd>
+											<dd class="select-all selected"><a href="{% url 'search' %}?id={{ bid }}&brand_name">全部</a></dd>
 
                                              {% for brand in brand_list %}
-                                            <dd><a href="{% url 'search' %}?id={{ brand.third_cate_id.third_cate_id}}&keyword={{ brand.brand_name }}">{{ brand.brand_name }}</a></dd>
+                                            <dd><a href="{% url 'search' %}?id={{ brand.third_cate_id.third_cate_id}}&brand_name={{ brand.brand_name }}">{{ brand.brand_name }}</a></dd>
                                              {% endfor %}
 										 </div>
 						
@@ -77,10 +77,10 @@
                         </div>
 							<div class="search-content">
 								<div class="sort">
-									<li class="first"><a title="综合">综合排序</a></li>
-									<li><a title="销量">销量排序</a></li>
-									<li><a title="价格">价格优先</a></li>
-									<li class="big"><a title="评价" href="#">评价为主</a></li>
+									<li class="first"><a title="综合" href="{% url 'search' %}?id={{ bid }}&brand_name={{ bname }}">综合排序</a>
+									<li><a title="销量" href="{% url 'search' %}?id={{ bid }}&px=1&brand_name={{ bname }}">销量排序</a></li>
+									<li><a title="价格" href="{% url 'search' %}?id={{ bid }}&pc=1&brand_name={{ bname }}">价格优先</a></li>
+									<li class="big"><a title="评价" href="{% url 'search' %}?id={{ bid }}&pj=1&brand_name={{ bname }}">评价为主</a></li>
 								</div>
 								<div class="clear"></div>
 
@@ -102,6 +102,7 @@
                                             </a>
 									</li>
                                     {% endfor %}
+
 
 
 								</ul>
@@ -200,7 +201,7 @@
 			<li><a href="home2.html"><i class="am-icon-home "></i>首页</a></li>
 			<li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
 			<li><a href="shopcart.html"><i class="am-icon-shopping-basket"></i>购物车</a></li>	
-			<li><a href="../person/index.html"><i class="am-icon-user"></i>我的</a></li>
+			<li><a href="../personal/index.html"><i class="am-icon-user"></i>我的</a></li>
 		</div>
 
 		<!--菜单 -->

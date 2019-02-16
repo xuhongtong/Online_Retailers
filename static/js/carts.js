@@ -24,6 +24,8 @@ $(function () {
         if ($(this).is(':checked')) {
             $checkboxs.prop("checked", true);
             $checkboxs.next('label').addClass('mark');
+
+
         } else {
             $checkboxs.prop("checked", false);
             $checkboxs.next('label').removeClass('mark');
@@ -41,6 +43,11 @@ $(function () {
                 $sonCheckBox.each(function () {
                     if ($(this).is(':checked')) {
                         num++;
+                        // let data={
+                        //     carid:$carid,
+                        //     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                        // };
+
                     }
                 });
                 if (num == len) {
@@ -53,9 +60,11 @@ $(function () {
                 $wholeChexbox.next('label').removeClass('mark');
             }
         })
-    })
+    });
 
     //=======================================每个店铺checkbox与全选checkbox的关系/每个店铺与其下商品样式的变化===================================================
+
+
 
     //店铺有一个未选中，全局全选按钮取消对勾，若店铺全选中，则全局全选按钮打对勾。
     $shopCheckbox.each(function () {
@@ -130,6 +139,7 @@ $(function () {
         $all_sum = $('.sum');
     $plus.click(function () {
         var $inputVal = $(this).prev('input'),
+            $cart_id=$(this).prev('input').attr('cart_id'),
             $count = parseInt($inputVal.val())+1,
             $obj = $(this).parents('.amount_box').find('.reduce'),
             $priceTotalObj = $(this).parents('.order_lists').find('.sum_price'),
@@ -141,13 +151,20 @@ $(function () {
             $obj.removeClass('reSty');
         }
         totalMoney();
+        let data={
+            number:$count,
+            cart_id:$cart_id,
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        };
+        $.get('http://127.0.0.1:8000/shopcart/update_cart',data,function (result) {
+            if (result && result.status === 200) {
+                                }
+        })
     });
 
-
-    // 减少商品数量
     $reduce.click(function () {
         var $inputVal = $(this).next('input'),
-
+            $cart_id=$(this).next('input').attr('cart_id'),
             $count = parseInt($inputVal.val())-1,
             $priceTotalObj = $(this).parents('.order_lists').find('.sum_price'),
             $price = $(this).parents('.order_lists').find('.price').html(),  //单价
@@ -160,22 +177,21 @@ $(function () {
             $(this).addClass('reSty');
         }
         totalMoney();
-        let $cart_id=$(this).next('input').attr('cart_id'),
-        data={
-            'number':$count,
-            'cart_id':$cart_id,
+        let data={
+            number:$count,
+            cart_id:$cart_id,
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
         };
-        $.get('http://127.0.0.1/shopcar/update_cart',data,function (result) {
-
+        $.get('http://127.0.0.1:8000/shopcart/update_cart',data,function (result) {
+            if (result && result.status === 200) {
+                                }
         })
 
         })
-    });
 
-    // 合计金额
     $all_sum.keyup(function () {
         var $count = 0,
+
             $priceTotalObj = $(this).parents('.order_lists').find('.sum_price'),
             $price = $(this).parents('.order_lists').find('.price').html(),  //单价
             $priceTotal = 0;
@@ -188,7 +204,8 @@ $(function () {
         $(this).attr('value',$count);
         $priceTotalObj.html('￥'+$priceTotal);
         totalMoney();
-    })
+
+    });
 
     //======================================移除商品========================================
 
@@ -221,6 +238,13 @@ $(function () {
         closeM();
         $sonCheckBox = $('.son_check');
         totalMoney();
+        var $cartid=$(this).attr('cartid');
+        let data={
+            cartid:$cartid,
+        }
+        $.get('http://127.0.0.1:8000/shopcart/remove_cart',data,function (result) {
+
+        })
     })
 
     //======================================总计==========================================
@@ -253,4 +277,30 @@ $(function () {
         }
     }
 
-
+    $('.calBtn').click(function () {
+        let cars=[];
+            $('.son_check').each(function (index, ele) {
+                //获取被选中的元素的input的num 和 car_id
+                if ($(ele).prop('checked')) {
+                    let car_id = $(this).attr('carid');
+                    // let shop_id = $(this).attr('shopid');
+                    cars.push({car_id: car_id})
+                }
+        });
+        if(cars.length>0){
+                cars_str=JSON.stringify(cars);
+                URL='http://127.0.0.1:8000/order/create_order';
+                let num = $('.total_text').text();
+                let data = {
+                    cars_str:cars_str,
+                    num:num,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                };
+                $.get(URL,data,function (result) {
+                    if(result.status===200){
+                        window.location.href='/order/order/?order_id='+result.oid
+                    }
+                })
+            }
+    })
+});

@@ -2,13 +2,21 @@
 {% block title %}购物车{% endblock %}
 {% load staticfiles %}
 {% block css %}
+
+
+    <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'basic/css/demo.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/cartstyle.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/optstyle.css' %}" rel="stylesheet" type="text/css" />
+{##}
+{#    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>#}
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/carts.css' %}">
     <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
     <script src="{% static 'js/carts.js' %}"></script>
 {% endblock %}
 {% block content %}
-{#{% include 'include/head.html' %}#}
+{% include 'include/head.html' %}
     <hr>
     <section class="cartMain">
         <div class="cartMain_hd">
@@ -42,9 +50,10 @@
             <div class="order_content">
                 {% for shop_cart in shop_carts %}
                 <ul class="order_lists">
+
                     <li class="list_chk">
-                        <input type="checkbox" id="checkbox_{{ shop_cart.shop_id }}" class="son_check">
-                        <label for="checkbox_{{ shop_cart.shop_id }}"></label>
+                        <input type="checkbox" id="checkbox_{{ shop_cart.shop_id }}" class="son_check" carid="{{ shop_cart.cart_id }}">
+                        <label for="checkbox_{{ shop_cart.shop_id }}" ></label>
                     </li>
                     <li class="list_con">
                         <div class="list_img"><a href="javascript:;"><img src="{{ shop_cart.img }}" alt=""></a></div>
@@ -70,6 +79,11 @@
                     <li class="list_op">
                         <p class="del"><a href="javascript:;" class="delBtn">移除商品</a></p>
                     </li>
+                    <section class="my_model">
+                        <p class="title">删除宝贝<span class="closeModel">X</span></p>
+                        <p>您确认要删除该宝贝吗？</p>
+                        <div class="opBtn"><a href="javascript:;" class="dialog-sure" cartid="{{ shop_cart.cart_id }}" shopid="{{ shop_cart.shop_id }}">确定</a><a href="javascript:;" class="dialog-close">关闭</a></div>
+                    </section>
                 </ul>
                 {% endfor %}
             </div>
@@ -79,16 +93,12 @@
         <div class="bar-wrapper">
             <div class="bar-right">
                 <div class="piece">已选商品<strong class="piece_num">0</strong>件</div>
-                <div class="totalMoney">共计: <strong class="total_text">0.00</strong></div>
-                <div class="calBtn"><a href="{% url 'order' %}">结算</a></div>
+                <div class="totalMoney">共计: <strong class="total_text" >0.00</strong></div>
+                <div class="calBtn" ><a href="javascript:;">结算</a></div>
             </div>
         </div>
     </section>
     <section class="model_bg"></section>
-    <section class="my_model">
-        <p class="title">删除宝贝<span class="closeModel">X</span></p>
-        <p>您确认要删除该宝贝吗？</p>
-        <div class="opBtn"><a href="javascript:;" class="dialog-sure">确定</a><a href="javascript:;" class="dialog-close">关闭</a></div>
-    </section>
+
 
 {% endblock %}
