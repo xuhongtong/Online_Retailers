@@ -95,3 +95,6 @@ def email_view(request):
                   recipient_list=[email]
                   )
         return render(request, 'msg.html')
+
+def question_view(request):
+    return render(request,'personal/question.html')

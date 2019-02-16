@@ -129,7 +129,7 @@ def register(request):
                 active_url = f'http://127.0.0.1:8000/account/active/?tooken={token}'
                 content = loader.render_to_string('account/mail.html', request=request,
                                                   context={'username': username, 'active_url': active_url})
-                send_active_mail(subject='手机交易平台激活邮件', content=content, to=[email])
+                send_active_mail.delay(subject='手机交易平台激活邮件', content=content, to=[email])
                 return render(request, 'account/active_email.html')
             except Exception as e:
                     print(e)
