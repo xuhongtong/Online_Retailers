@@ -15,6 +15,6 @@ class ShopcartAdmin(object):
     refresh_times = (5, 10)
     list_editable = ['number','uid','shop_id']
     ordering = ['cart_id']
-    list_per_page = 50
+    list_per_page = 20
 
 xadmin.site.register(ShopCart,ShopcartAdmin)
