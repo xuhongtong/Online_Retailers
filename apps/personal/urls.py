@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'password_update/',views_safety.password_update_view,name='password_update'),
     # 设置支付密码
     url(r'^setpay/',views_safety.setpay_view,name='setpay'),
+    # 安全问题
+    url(r'^question/',views_safety.question_view,name='question'),
 
     # 地址管理
     url(r'^address/',views_address.address_view,name='address'),

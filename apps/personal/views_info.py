@@ -1,6 +1,7 @@
 # 个人信息
 import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from account.models import User
@@ -54,13 +55,11 @@ def information_view(request):
         year = request.POST.get('year')
         month = request.POST.get('month')
         day = request.POST.get('day')
-        birthday = year + '-' + month + '-' + day
-        try:
-            if birthday == '1970-1-1':
-                birthday = user.birthday
-            User.objects.filter(uid=uid).update(nickname=nickname, name=name, sex=sex, phone=phone, email=email,
-                                                birthday=birthday)
-            return redirect('information')
+        if year and month and day:
+            birthday = year + '-' + month + '-' + day
+        else:
+            birthday = user.birthday
+        User.objects.filter(uid=uid).update(nickname=nickname, name=name, sex=sex, phone=phone, email=email,
+                                            birthday=birthday)
+        return redirect('information')
 
-        except Exception as e:
-            print(e)

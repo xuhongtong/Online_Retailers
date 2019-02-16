@@ -1,12 +1,9 @@
 
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
 
 '''
 个人中心
 '''
-
-
 def personal_view(request):
     '''
     个人中心入口
@@ -14,10 +11,17 @@ def personal_view(request):
     :param request:
     :return:
     '''
+
     if request.session.get('is_login'):
         return render(request, 'personal/index.html')
     else:
         return render(request, 'account/login.html')
+
+
+
+
+
+
 
 
 
