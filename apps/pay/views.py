@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from Online_Retailers import settings
+from order.models import Order
 from pay.models import OrderUser
 
 '''
@@ -31,15 +32,16 @@ def pay_view(request):
     :param request:
     :return:
     '''
-    order_number = 5464885
+    order_code=request.GET.get('order_code')
+    order_number = order_code
     # 通过订单号获取支付金额
-    order = OrderUser.objects.filter(oid=order_number).first()
+    order = Order.objects.filter(order_code=order_number).first()
     # 电脑网站支付，需要跳转到https://openapi.alipay.com/gateway.do? + order_string
     order_string = alipay.api_alipay_trade_page_pay(
     	# 订单号
         out_trade_no=order_number,
         # 商品总价
-        total_amount=str(order.total_price),  # 将Decimal类型转换为字符串交给支付宝
+        total_amount=str(order.total_money),  # 将Decimal类型转换为字符串交给支付宝
         # 订单标题
         subject="商城平台,订单号---{}".format(order_number),
         # 支付成功之后 前端跳转的界面
