@@ -33,7 +33,9 @@
                 <div class="clear"></div>
                 <div class="login-form">
                     <form action="{% url 'login' %}" method="post" data-toggle="validator" role="form">
-                        <input type="hidden" name="next1" value={{ next1 }}>
+                       {% if next1 %}
+                            <input type="hidden" name="next1" value={{ next1 }}>
+                       {% endif %}
                         {% csrf_token %}
                         <div class="user-name">
                             <label for="user"><i class="am-icon-user"></i></label>
@@ -48,7 +50,8 @@
                         </div>
                         <div class="form-group">
                             <img id="cap_img" src="{{ img_url }}">
-                            <input type="text" name="code" placeholder="请输入验证码">
+                            <input type="text" name="code" placeholder="请输入验证码" style="width: 50px">
+
                             <input id="cap_key" type="hidden" name="key" value="{{ key }}">
                             {% if capt_error %}
                                 <p style="color: red">{{ capt_error }}</p>
@@ -69,10 +72,10 @@
 
                 <div class="partner">
                     <h3>合作账号</h3>
-                    <div class="am-btn-group">
-                        <li><a href="#"><i class="am-icon-qq am-icon-sm"></i><span>QQ登录</span></a></li>
-                        <li><a href="#"><i class="am-icon-weibo am-icon-sm"></i><span>微博登录</span> </a></li>
-                        <li><a href="#"><i class="am-icon-weixin am-icon-sm"></i><span>微信登录</span> </a></li>
+                    <div class="am-btn-group" style="height: 60px">
+                        <li><a href="#"><i class="am-icon-qq am-icon-sm" style="height: 30px"></i><span>QQ登录</span></a></li>
+                        <li><a href="#"><i class="am-icon-weibo am-icon-sm" style="height: 30px"></i><span>微博登录</span> </a></li>
+                        <li><a href="#"><i class="am-icon-weixin am-icon-sm" style="height: 30px"></i><span>微信登录</span> </a></li>
                     </div>
                 </div>
             </div>

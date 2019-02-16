@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
+from account.models import User
 from order.models import Order
 from shop.models import JdShop
 from shopcart.models import ShopCart
@@ -58,9 +59,11 @@ def order(request):
         shop_cart.original_price = JdShop.objects.filter(id=shop_cart.shop_id).values_list('original_price').first()[0]
         shop_cart.img = JdShop.objects.filter(id=shop_cart.shop_id).values_list('img_url').first()[0]
     order=Order.objects.get(oid=order_id)
+    user=User.objects.get(uid=order.uid)
     # 前端需要渲染的数据
     context = {
         'shop_carts': shop_carts,
         'order':order,
+        'user':user
     }
     return render(request, 'order/order.html', context)

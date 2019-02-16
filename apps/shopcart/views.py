@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
+from django_ajax.decorators import ajax
+
 from shop.models import JdShop
 from shopcart.context_processors import count
 from shopcart.models import ShopCart
@@ -10,9 +12,13 @@ from utils.check_user import check_user_login
 
 
 # 添加购物车逻辑处理
-# @check_user_login
+@ajax
+@check_user_login
 def add_cart(request):
     result = {'status': 200, 'msg': 'ok'}
+    uid = request.session.get('userid')
+    # if not uid:
+    #
     try:
         number = request.POST.get('number')
         shop_id = request.POST.get('shop_id')
@@ -20,7 +26,7 @@ def add_cart(request):
         # 商品数量初始值为0
         update_number = 0
         # 商品存在就更新数量（这里初始值为1）
-        if ShopCart.objects.filter(shop_id=shop_id, uid=request.session.get('userid'), is_valid=1):
+        if ShopCart.objects.filter(shop_id=shop_id, uid=uid, is_valid=1):
             shop = ShopCart.objects.update(number=F('number') + number)
         # 如果商品不存在将商品数量设置为1，并保存
         else:
@@ -35,10 +41,12 @@ def add_cart(request):
     except Exception as e:
         result = {'status': 400, 'msg': '添加失败'}
 
-    return render(request, 'shopcart/shopcart.html')
+    # return render(request, 'shopcart/shopcart.html')
 
 
 # 购物车页面逻辑处理
+# @ajax
+@check_user_login
 def shopcart(request):
     # 获取登陆用户购物车商品添加记录
     shop_carts = ShopCart.objects.filter(uid=request.session.get('userid'), is_delete=1)

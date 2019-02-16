@@ -1,4 +1,7 @@
 # -*- coding:utf-8 -*-
+from django.shortcuts import redirect
+from django.urls import reverse
+
 __author__ = 'xht'
 __date__ = '2019/2/12 17:05'
 
@@ -9,9 +12,11 @@ def check_user_login(func):
     @wraps(func)
     def __wrapper(*args, **kwargs):
         request = args[0]
-        user_id = request.session.get('user_id', None)
+        path=request.path
+        user_id = request.session.get('userid', None)
         if user_id == None:
-            return HttpResponseRedirect('/user/login')
+            uri = reverse("login")
+            return redirect(f'{uri}?next={path}')
         return func(*args, **kwargs)
 
     return __wrapper

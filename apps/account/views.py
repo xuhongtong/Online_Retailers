@@ -41,7 +41,8 @@ def login_view(request):
         return redirect("index")
     if request.method == 'GET':
         # return render(request,'account/login.html')
-        next1 = request.META.get('HTTP_REFERER', '/')
+        # next1 = request.GET.get('next', '/')
+        next1=request.META.get('HTTP_REFERER','/')
 
         # 生成验证码
         key = CaptchaStore.generate_key()
