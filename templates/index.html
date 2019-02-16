@@ -62,7 +62,7 @@
                                                             <dl class="dl-sort">
                                                                 <dt><span title="蛋糕">{{ second_cate.second_cate_name }}</span></dt>
                                                                     {% for third_cate in second_cate.third_cates %}
-                                                                        <dd><a title="蒸蛋糕" href="{% url 'search' %}?id={{ third_cate.third_cate_id }}"><span>{{ third_cate.third_cate_name }}</span></a></dd>
+                                                                        <dd><a title="蒸蛋糕" href="{% url 'search' %}?id={{ third_cate.third_cate_id }}&brand_name&pt&pt2&pt3&pt4&px&pc&pj"><span>{{ third_cate.third_cate_name }}</span></a></dd>
                                                                     {% endfor %}
                                                             </dl>
                                                         {% endfor %}
@@ -262,7 +262,7 @@
 							<div class="floor-subtitle"><em class="am-icon-caret-left"></em><h3>尽在“掌握”</h3></div>
 							<div class="today-brands " style="right:0px ;top:13px">
                                 {% for brand in brands %}
-								    <a href="{% url 'search' %}?keyword={{ brand.brand_name }}">{{ brand.brand_name }}</a>|
+								    <a href="{% url 'search' %}?brand_name={{ brand.brand_name }}">{{ brand.brand_name }}</a>|
                                 {% endfor %}
 							</div>
 						</div>
@@ -271,7 +271,7 @@
 						<div class="am-u-sm-5 am-u-md-4 text-one list ">
 							<div class="word">
                                 {% for brand in brands %}
-								<a class="outer" href="{% url 'search' %}?keyword={{ brand.brand_name }}"><span class="inner"><b class="text">{{ brand.brand_name }}</b></span></a>
+								<a class="outer" href="{% url 'search' %}?brand_name={{ brand.brand_name }}"><span class="inner"><b class="text">{{ brand.brand_name }}</b></span></a>
 							    {% endfor %}
                             </div>
                             {% for sp1 in shop1 %}
