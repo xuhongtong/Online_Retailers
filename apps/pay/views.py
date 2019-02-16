@@ -40,7 +40,7 @@ def pay_view(request):
     	# 订单号
         out_trade_no=order_number,
         # 商品总价
-        total_amount=str(order.total_price),  # 将Decimal类型转换为字符串交给支付宝
+        total_amount=str(order.total_money),  # 将Decimal类型转换为字符串交给支付宝
         # 订单标题
         subject="商城平台,订单号---{}".format(order_number),
         # 支付成功之后 前端跳转的界面
