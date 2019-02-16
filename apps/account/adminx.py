@@ -34,3 +34,22 @@ class UsersAdmin(object):
     list_per_page = 50
 
 xadmin.site.register(User,UsersAdmin)
+
+
+from xadmin import views
+
+
+class BaseSetting(object):
+    enable_themes = True  # 开启主题选择
+    use_bootswatch = True
+
+
+class GlobalSettings(object):
+    site_title = "商品管理系统"  # 设置左上角title名字
+    site_footer = "小组"  # 设置底部关于版权信息
+    # 设置菜单缩放
+    menu_style = "accordion"  # 设置菜单样式
+
+
+xadmin.site.register(views.BaseAdminView, BaseSetting)
+xadmin.site.register(views.CommAdminView, GlobalSettings)

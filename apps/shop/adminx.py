@@ -24,6 +24,6 @@ class ShopAdmin(object):
     # 排序
     ordering = ['id']
     # 分页
-    list_per_page = 50
+    list_per_page = 10
 
 xadmin.site.register(JdShop,ShopAdmin)
