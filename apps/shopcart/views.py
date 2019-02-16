@@ -52,7 +52,6 @@ def shopcart(request):
     context = {
         'shop_carts': shop_carts,
     }
-
     return render(request, 'shopcart/shopcart.html', context)
 
 
@@ -69,8 +68,5 @@ def update_cart(request):
 def remove_cart(request):
     cart_id = request.GET.get('cartid')
     ShopCart.objects.filter(cart_id=cart_id).update(is_delete=0)
-
-
-
 
 
