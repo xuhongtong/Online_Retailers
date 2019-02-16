@@ -8,5 +8,6 @@ from django.conf.urls import url
 
 
 urlpatterns = [
-    url(r'', views.order, name='order'),
+    url(r'create_order', views.create_order, name='create_order'),
+    url(r'order', views.order, name='order'),
 ]

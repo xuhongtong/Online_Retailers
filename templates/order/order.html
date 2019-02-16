@@ -12,48 +12,7 @@
 		<script type="text/javascript" src="{% static 'js/address.js' %}"></script>
 {% endblock %}
 {% block content %}
-		<!--顶部导航条 -->
-		<div class="am-container header">
-			<ul class="message-l">
-				<div class="topMessage">
-					<div class="menu-hd">
-						<a href="#" target="_top" class="h">亲，请登录</a>
-						<a href="#" target="_top">免费注册</a>
-					</div>
-				</div>
-			</ul>
-			<ul class="message-r">
-				<div class="topMessage home">
-					<div class="menu-hd"><a href="#" target="_top" class="h">商城首页</a></div>
-				</div>
-				<div class="topMessage my-shangcheng">
-					<div class="menu-hd MyShangcheng"><a href="#" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
-				</div>
-				<div class="topMessage mini-cart">
-					<div class="menu-hd"><a id="mc-menu-hd" href="#" target="_top"><i class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong id="J_MiniCartNum" class="h">0</strong></a></div>
-				</div>
-				<div class="topMessage favorite">
-					<div class="menu-hd"><a href="#" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
-			</ul>
-			</div>
-
-			<!--悬浮搜索框-->
-
-			<div class="nav white">
-				<div class="logo"><img src="../images/logo.png" /></div>
-				<div class="logoBig">
-					<li><img src="../images/logobig.png" /></li>
-				</div>
-
-				<div class="search-bar pr">
-					<a name="index_none_header_sysc" href="#"></a>
-					<form>
-						<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
-						<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
-					</form>
-				</div>
-			</div>
-
+		 {% include 'include/head.html' %}
 			<div class="clear"></div>
 			<div class="concent">
 				<!--地址 -->
@@ -163,9 +122,9 @@
 					<div class="logistics">
 						<h3>选择支付方式</h3>
 						<ul class="pay-list">
-							<li class="pay card"><img src="../images/wangyin.jpg" />银联<span></span></li>
-							<li class="pay qq"><img src="../images/weizhifu.jpg" />微信<span></span></li>
-							<li class="pay taobao"><img src="../images/zhifubao.jpg" />支付宝<span></span></li>
+							<li class="pay card"><img src="{% static 'images/wangyin.jpg' %}" />银联<span></span></li>
+							<li class="pay qq"><img src="{% static 'images/weizhifu.jpg' %}" />微信<span></span></li>
+							<li class="pay taobao"><img src="{% static 'images/zhifubao.jpg' %}" />支付宝<span></span></li>
 						</ul>
 					</div>
 					<div class="clear"></div>
@@ -201,34 +160,41 @@
 								<div class="bundle  bundle-last">
 
 									<div class="bundle-main">
+                                        {% for shop_cart in shop_carts %}
 										<ul class="item-content clearfix">
 											<div class="pay-phone">
-												<li class="td td-item">
+												<li class="td td-item" cart_id="{{ shop_cart.cart_id }}">
 													<div class="item-pic">
 														<a href="#" class="J_MakePoint">
-															<td><img src="../images/kouhong.jpg_80x80.jpg" class="itempic J_ItemImg"></a></td>
+															<td><img width="50px" height="50px" src="{{ shop_cart.img }}" class="itempic J_ItemImg"></a></td>
 													</div>
 													<div class="item-info">
 														<div class="item-basic-info">
-															<a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11">xxx</a>
+															<a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11">{{ shop_cart.title }}</a>
 														</div>
 													</div>
 												</li>
-
 											</div>
+                                            <li class="td td-price">
+													<div class="item-price price-promo-promo">
+														<div class="price-content">
+															<em class="J_Price price-now">{{ shop_cart.promote_price }}</em>
+														</div>
+													</div>
+												</li>
 											<li class="td td-amount">
 												<div class="amount-wrapper ">
 													<div class="item-amount ">
 														<span class="phone-title">购买数量</span>
 														<div class="sl">
-															<span>xxx</span>
+															<span>{{ shop_cart.number }}</span>
 														</div>
 													</div>
 												</div>
 											</li>
 											<li class="td td-sum">
 												<div class="td-inner">
-													<em tabindex="0" class="J_ItemSum number">117.00</em>
+													<em tabindex="0" class="J_ItemSum number">￥{% widthratio shop_cart.promote_price 1 shop_cart.number %}</em>
 												</div>
 											</li>
 											<li class="td td-oplist">
@@ -241,6 +207,7 @@
 											</li>
 
 										</ul>
+                                        {% endfor %}
 										<div class="clear"></div>
 
 									</div>
@@ -319,7 +286,7 @@
 							<!--含运费小计 -->
 							<div class="buy-point-discharge ">
 								<p class="price g_price ">
-									合计（含运费） <span>¥</span><em class="pay-sum">244.00</em>
+									合计（含运费） <span>¥</span><em class="pay-sum">￥244</em>
 								</p>
 							</div>
 
@@ -329,7 +296,7 @@
 									<div class="box">
 										<div tabindex="0" id="holyshit267" class="realPay"><em class="t">实付款：</em>
 											<span class="price g_price ">
-                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">244.00</em>
+                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">{{ order.total_money }}</em>
 											</span>
 										</div>
 
