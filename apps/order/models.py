@@ -11,15 +11,20 @@ class Order(models.Model):
     # # create_date=models.DateTimeField(auto_now_add=True)
     # # pay_date=models.DateTimeField(auto_now_add=True)
     status=models.BooleanField(default=0)
-
+    create_time = models.DateField(auto_now_add=True, null=True)
+    is_delete=models.BooleanField(default=0)
     class Meta:
         db_table='order'
 
 
-# class OrderDetail(models.Model):
-#     id=models.AutoField(primary_key=True)
-#     oid=models.IntegerField()
-#     shop_id=models.IntegerField()
-#     shop_name=models.CharField(max_length=64)
-#     price=models.DecimalField(max_digits = 7,decimal_places = 2)
-#     count=models.IntegerField()
+class OrderDetail(models.Model):
+    id=models.AutoField(primary_key=True)
+    oid=models.IntegerField()
+    shop_id=models.IntegerField()
+    shop_name=models.CharField(max_length=256)
+    price=models.DecimalField(max_digits = 7,decimal_places = 2)
+    count=models.IntegerField()
+
+
+    class Meta:
+        db_table='order_detail'

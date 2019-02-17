@@ -283,7 +283,6 @@ $(function () {
                 //获取被选中的元素的input的num 和 car_id
                 if ($(ele).prop('checked')) {
                     let car_id = $(this).attr('carid');
-                    // let shop_id = $(this).attr('shopid');
                     cars.push({car_id: car_id})
                 }
         });

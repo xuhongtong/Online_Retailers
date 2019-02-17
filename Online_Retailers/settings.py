@@ -41,7 +41,7 @@ EXT_APPS = [
 
 # 注册自定义app
 CUSTOM_APPS = [
-    'haystack',
+    # 'haystack',
     'account',
     'main',
     'search',
@@ -195,23 +195,23 @@ APP_PRIVATE_STRING  = open(BASE_DIR + '/key/app_private_key.pem').read()
 ALIPAY_PUBLIC_KEY_STRING = open(BASE_DIR + '/key/app_public_key.pem').read()
 # ==========================end 支付宝相关配置 ================
 
-# =================全文检索框架配置 start=============
-# 搜索引擎
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        # 使用whoosh引擎
-        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
-        # 索引文件路径
-        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
-    }
-}
-# 当添加、修改、删除数据时，自动生成索引
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
-
-# 搜索框架
-#设置每页显示的数目，默认为20，可以自己修改
-HAYSTACK_SEARCH_RESULTS_PER_PAGE  = 6
-# =================全文检索框架配置 end=============
+# # =================全文检索框架配置 start=============
+# # 搜索引擎
+# HAYSTACK_CONNECTIONS = {
+#     'default': {
+#         # 使用whoosh引擎
+#         'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+#         # 索引文件路径
+#         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+#     }
+# }
+# # 当添加、修改、删除数据时，自动生成索引
+# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+#
+# # 搜索框架
+# #设置每页显示的数目，默认为20，可以自己修改
+# HAYSTACK_SEARCH_RESULTS_PER_PAGE  = 6
+# # =================全文检索框架配置 end=============
 
 
 
