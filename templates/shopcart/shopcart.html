@@ -7,7 +7,7 @@
     <link href="{% static 'AmazeUI-2.4.2/assets/css/amazeui.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'basic/css/demo.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'css/cartstyle.css' %}" rel="stylesheet" type="text/css" />
-    <link href="{% static 'css/optstyle.css' %}" rel="stylesheet" type="text/css" />
+{#    <link href="{% static 'css/optstyle.css' %}" rel="stylesheet" type="text/css" />#}
 {##}
 {#    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>#}
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
@@ -38,14 +38,14 @@
 
         <div class="cartBox">
             <div class="shop_info">
-                <div class="all_check">
-                    <!--店铺全选-->
-                    <input type="checkbox" id="shop_a" class="shopChoice">
-                    <label for="shop_a" class="shop"></label>
-                </div>
-                <div class="shop_name">
-                    店铺：<a href="javascript:;">搜猎人艺术生活</a>
-                </div>
+{#                <div class="all_check">#}
+{#                    <!--店铺全选-->#}
+{#                    <input type="checkbox" id="shop_a" class="shopChoice">#}
+{#                    <label for="shop_a" class="shop"></label>#}
+{#                </div>#}
+{#                <div class="shop_name">#}
+{#                    店铺：<a href="javascript:;">搜猎人艺术生活</a>#}
+{#                </div>#}
             </div>
             <div class="order_content">
                 {% for shop_cart in shop_carts %}
@@ -57,7 +57,7 @@
                     </li>
                     <li class="list_con">
                         <div class="list_img"><a href="javascript:;"><img src="{{ shop_cart.img }}" alt=""></a></div>
-                        <div class="list_text"><a href="javascript:;">{{ shop_cart.title }}</a></div>
+                        <div class="list_text"><a href="{% url 'detail' %}?id={{ shop_cart.shop_id }}">{{ shop_cart.title }}</a></div>
                     </li>
                     <li class="list_info">
                         <p>{{ shop_cart.brand_name }}</p>

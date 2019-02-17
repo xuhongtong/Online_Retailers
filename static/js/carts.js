@@ -243,7 +243,7 @@ $(function () {
             cartid:$cartid,
         }
         $.get('http://127.0.0.1:8000/shopcart/remove_cart',data,function (result) {
-
+            $('#car_number').text(result.shop_num);
         })
     })
 

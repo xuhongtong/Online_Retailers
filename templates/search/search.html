@@ -9,6 +9,7 @@
     <script type="text/javascript" src="{% static 'basic/js/jquery-1.7.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 {% endblock %}
+
 {% block content %}
 {% include 'include/head.html' %}
 
@@ -32,8 +33,6 @@
 						    </div>
 						</div>
 			</div>
-			
-				
 					<div class="am-g am-g-fixed">
 						<div class="am-u-sm-12 am-u-md-12">
 	                  	<div class="theme-popover">														
@@ -46,7 +45,7 @@
 							</div>
 							<ul class="select">
 								<p class="title font-normal">
-									<span class="fl">松子</span>
+									<span class="fl">手机</span>
 									<span class="total fl">搜索到<strong class="num">997</strong>件相关商品</span>
 								</p>
 								<div class="clear"></div>
@@ -62,28 +61,38 @@
 									<dl id="select1">
 										<dt class="am-badge am-round">品牌</dt>	
 									
-										 <div class="dd-conent">
-
-											<dd class="select-all selected"><a href="#">全部</a></dd>
+										 <div class="dd-conent">										
+											<dd class="select-all selected"><a href="{% url 'search' %}?id={{ bid }}&keyword&pt&pt2&pt3&pt4&px&pc&pj">全部</a></dd>
+                                    {#分类#}
                                              {% for brand in brand_list %}
-                                            <dd><a href="{% url 'search' %}?id={{ brand.third_cate_id.third_cate_id}}&keyword={{ brand.brand_name }}">{{ brand.brand_name }}</a></dd>
+                                            <dd><a href="{% url 'search' %}?id={{ brand.third_cate_id.third_cate_id}}&keyword={{ brand.brand_name }}&pt={{ bpt }}&pt2={{ bpt2 }}&pt3={{ bpt3 }}&pt4={{ bpt4 }}&px={{ px1 }}&pc={{ px2 }}&pj={{ px3 }}">{{ brand.brand_name }}</a></dd>
                                              {% endfor %}
 										 </div>
-						
 									</dl>
+                                    <dl id="select1">
+                                        <dt class="am-badge am-round">价格</dt>
+                                        <div>
+                                            <dd><a href="{% url 'search' %}?id={{ bid }}&pt=1&keyword={{ bname }}&pt2&pt3&pt4&px={{ px1 }}&pc={{ px2 }}&pj={{ px3 }}">小于1000</a></dd>
+                                            <dd><a href="{% url 'search' %}?id={{ bid }}&pt2=1&keyword={{ bname }}&pt&pt3&pt4&px={{ px1 }}&pc={{ px2 }}&pj={{ px3 }}">1000~2000</a></dd>
+                                            <dd><a href="{% url 'search' %}?id={{ bid }}&pt3=1&keyword={{ bname }}&pt&pt2&pt4&px={{ px1 }}&pc={{ px2 }}&pj={{ px3 }}">2000~3000</a></dd>
+                                            <dd><a href="{% url 'search' %}?id={{ bid }}&pt4=1&keyword={{ bname }}&pt&pt2&pt3&px={{ px1 }}&pc={{ px2 }}&pj={{ px3 }}">3000以上</a></dd>
+                                        </div>
+                                    </dl>
+
 								</li>
 							</ul>
+
 							<div class="clear"></div>
                         </div>
 							<div class="search-content">
 								<div class="sort">
-									<li class="first"><a title="综合" href="{% url 'search' %}?id={{ bid }}&brand_name={{ bname }}">综合排序</a>
-									<li><a title="销量" href="{% url 'search' %}?id={{ bid }}&px=1&brand_name={{ bname }}">销量排序</a></li>
-									<li><a title="价格" href="{% url 'search' %}?id={{ bid }}&pc=1&brand_name={{ bname }}">价格优先</a></li>
-									<li class="big"><a title="评价" href="{% url 'search' %}?id={{ bid }}&pj=1&brand_name={{ bname }}">评价为主</a></li>
+									<li class="first"><a title="综合" href="{% url 'search' %}?id={{ bid }}&keyword={{ bname }}&pt={{ bpt }}&pt2={{ bpt2 }}&pt3={{ bpt3 }}&pt4={{ bpt4 }}&px&pc&pj">综合排序</a>
+									<li><a title="销量" href="{% url 'search' %}?id={{ bid }}&px=1&keyword={{ bname }}&pt={{ bpt }}&pt2={{ bpt2 }}&pt3={{ bpt3 }}&pt4={{ bpt4 }}&pc&pj">销量排序</a></li>
+									<li><a title="价格" href="{% url 'search' %}?id={{ bid }}&pc=1&keyword={{ bname }}&pt={{ bpt }}&pt2={{ bpt2 }}&pt3={{ bpt3 }}&pt4={{ bpt4 }}&px&pj">价格优先</a></li>
+									<li class="big"><a title="评价" href="{% url 'search' %}?id={{ bid }}&pj=1&keyword={{ bname }}&pt={{ bpt }}&pt2={{ bpt2 }}&pt3={{ bpt3 }}&pt4={{ bpt4 }}&px&pc">评价为主</a></li>
 								</div>
 								<div class="clear"></div>
-{#        要分页的商品列表                        #}
+
 								<ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
                                     {% for shop in contacts %}
 									<li>
@@ -102,9 +111,6 @@
                                             </a>
 									</li>
                                     {% endfor %}
-
-
-
 								</ul>
 							</div>
 							<div class="search-side">
@@ -155,22 +161,22 @@
 
 							</div>
 							<div class="clear"></div>
-							<!--分页功能 已完成 -->
+							<!--分页功能 -->
 							<ul class="am-pagination am-pagination-right">
-                    {% if contacts.has_previous  %}
-                        <li ><a  href="?&page={{ contacts.previous_page_number }}&keyword={{ keyword }}">&laquo;上一页</a></li>
-                    {% else %}
-                        <li class="am-disabled"><a>&laquo;上一页</a></li>
-                    {% endif %}
-                    {% for pindex in pages %}
-                        <li {% if pindex == contacts.number %}class="am-active"{% endif %}><a href="?page={{  pindex }}&keyword={{ keyword }}" >{{ pindex }}</a></li>
-                    {% endfor %}
-                    {% if contacts.has_next %}
-                        <li><a href="?page={{ contacts.next_page_number }}&keyword={{ keyword }}">下一页&raquo;</a></li>
-                    {% else %}
-                        <li class="am-disabled"><a>下一页&raquo;</a></li>
-                    {% endif %}
-                </ul>
+                            {% if contacts.has_previous  %}
+                            <li ><a  href="?id={{ bid }}&page={{ contacts.previous_page_number }}&px=1&keyword={{ bname }}&pt={{ bpt }}&pt2={{ bpt2 }}&pt3={{ bpt3 }}&pt4={{ bpt4 }}">&laquo;上一页</a></li>
+                            {% else %}
+                            <li class="am-disabled"><a>&laquo;上一页</a></li>
+                            {% endif %}
+                            {% for pindex in pages %}
+                            <li {% if pindex == contacts.number %}class="am-active"{% endif %}><a href="?id={{ bid }}&px=1&keyword={{ bname }}&pt={{ bpt }}&pt2={{ bpt2 }}&pt3={{ bpt3 }}&pt4={{ bpt4 }}" >{{ pindex }}</a></li>
+                            {% endfor %}
+                            {% if contacts.has_next %}
+                            <li><a href="?id={{ bid }}&page={{ contacts.next_page_number }}&px=1&keyword={{ bname }}&pt={{ bpt }}&pt2={{ bpt2 }}&pt3={{ bpt3 }}&pt4={{ bpt4 }}">下一页&raquo;</a></li>
+                            {% else %}
+                            <li class="am-disabled"><a>下一页&raquo;</a></li>
+                            {% endif %}
+							</ul>
 						</div>
 					</div>
 					<div class="footer">
@@ -195,6 +201,7 @@
 				</div>
 
 			</div>
+
 		<!--引导 -->
 		<div class="navCir">
 			<li><a href="home2.html"><i class="am-icon-home "></i>首页</a></li>

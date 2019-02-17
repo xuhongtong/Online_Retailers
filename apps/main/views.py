@@ -8,7 +8,6 @@ from search.models import JdBrand
 from shop.models import JdShop
 
 
-
 def index(request):
     first_cates = JdFirstCate.objects.all()
     for first_cate in first_cates:
@@ -19,16 +18,17 @@ def index(request):
             second_cate.third_cates = third_cate_list
     # 获取商品数据
     shop_list = JdShop.objects.all()
+
     brand_list = JdBrand.objects.all()
     shops = shop_list.filter(id__lt=7)
     brands = brand_list.filter(brand_id__lt=4)
     shop1 = shop_list.filter(brand_name='Apple', id__lt=6)
     context = {
         'first_cates': first_cates,
-        'brand_list':brand_list,
-        'shop_list':shop_list,
+        'brand_list': brand_list,
+        'shop_list': shop_list,
         'brands': brands,
         'shops': shops,
-        'shop1':shop1,
+        'shop1': shop1,
     }
     return render(request, 'index.html', context)

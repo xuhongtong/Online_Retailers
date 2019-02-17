@@ -12,7 +12,7 @@ from utils.check_user import check_user_login
 
 
 # 添加购物车逻辑处理
-@ajax
+# @ajax
 @check_user_login
 def add_cart(request):
     result = {'status': 200, 'msg': 'ok'}
@@ -26,16 +26,18 @@ def add_cart(request):
         # 商品数量初始值为0
         update_number = 0
         # 商品存在就更新数量（这里初始值为1）
-        if ShopCart.objects.filter(shop_id=shop_id, uid=uid, is_valid=1):
+        if ShopCart.objects.filter(shop_id=shop_id, uid=uid, is_delete=1):
             shop = ShopCart.objects.update(number=F('number') + number)
-        # 如果商品不存在将商品数量设置为1，并保存
+        # 如果商品不存在将商品种类数量设置为1，并保存
         else:
             update_number = 1
+            # 添加一条购物车记录（包含商品数量、商品id和用户id）
             shop = ShopCart(number=number, shop_id=shop_id, uid=request.session.get('userid'))
             shop.save()
-        shop_num = ShopCart.objects.values_list('shop_id', flat=True).count()
+        #查询数据库当前数量
+        # shop_num = ShopCart.objects.values_list('shop_id', flat=True).count()
+        # 获取当前用户购买的商品之类数量，并以字典的形式添加到json串中
         data = count(request)
-
         result.update(data)
         return JsonResponse(result)
     except Exception as e:
@@ -74,7 +76,11 @@ def update_cart(request):
 
 # 删除cart表
 def remove_cart(request):
+    result = {'status': 200, 'msg': 'ok'}
     cart_id = request.GET.get('cartid')
     ShopCart.objects.filter(cart_id=cart_id).update(is_delete=0)
+    data = count(request)
+    result.update(data)
+    return JsonResponse(result)
 
 
