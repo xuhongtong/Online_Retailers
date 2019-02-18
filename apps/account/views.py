@@ -42,6 +42,7 @@ def login_view(request):
     if request.method == 'GET':
         # return render(request,'account/login.html')
         # next1 = request.GET.get('next', '/')
+        # 获取header中referer中的数据
         next1=request.META.get('HTTP_REFERER','/')
 
         # 生成验证码
