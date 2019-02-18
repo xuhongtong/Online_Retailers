@@ -69,53 +69,53 @@ def aliapy_back_url(request):
     '''
     pass
 
-def cancel_order(out_trade_no:int, cancel_time=None):
-    '''
-    撤销订单
-    :param out_trade_no:
-    :param cancel_time: 撤销前的等待时间(若未支付)，撤销后在商家中心-交易下的交易状态显示为"关闭"
-    :return:
-    '''
-    result = alipay.api_alipay_trade_cancel(out_trade_no=out_trade_no)
-    resp_state = result.get('msg')
-    action = result.get('action')
-    if resp_state=='Success':
-        if action=='close':
-            if cancel_time:
-                print("%s秒内未支付订单，订单已被取消！" % cancel_time)
-        elif action=='refund':
-            print('该笔交易目前状态为：',action)
-        return action
-    else:
-        print('请求失败：',resp_state)
-
-
-def need_refund(out_trade_no: str or int, refund_amount: int or float, out_request_no: str):
-    '''
-    退款操作
-    :param out_trade_no: 商户订单号
-    :param refund_amount: 退款金额，小于等于订单金额
-    :param out_request_no: 商户自定义参数，用来标识该次退款请求的唯一性,可使用 out_trade_no_退款金额*100 的构造方式
-    :return:
-    '''
-    result = init_alipay_cfg().api_alipay_trade_refund(out_trade_no=out_trade_no,
-                                                       refund_amount=refund_amount,
-                                                       out_request_no=out_request_no)
-
-    if result["code"] == "10000":
-        return result  # 接口调用成功则返回result
-    else:
-        return result["msg"]  # 接口调用失败则返回原因
-
-def refund_query(out_request_no:str, out_trade_no:str or int):
-    '''
-    退款查询：同一笔交易可能有多次退款操作（每次退一部分）
-    :param out_request_no: 商户自定义的单次退款请求标识符
-    :param out_trade_no: 商户订单号
-    :return:
-    '''
-    result = alipay.api_alipay_trade_fastpay_refund_query(out_request_no, out_trade_no=out_trade_no)
-    if result["code"] == "10000":
-        return result  #接口调用成功则返回result
-    else:
-        pass
+# def cancel_order(out_trade_no:int, cancel_time=None):
+#     '''
+#     撤销订单
+#     :param out_trade_no:
+#     :param cancel_time: 撤销前的等待时间(若未支付)，撤销后在商家中心-交易下的交易状态显示为"关闭"
+#     :return:
+#     '''
+#     result = alipay.api_alipay_trade_cancel(out_trade_no=out_trade_no)
+#     resp_state = result.get('msg')
+#     action = result.get('action')
+#     if resp_state=='Success':
+#         if action=='close':
+#             if cancel_time:
+#                 print("%s秒内未支付订单，订单已被取消！" % cancel_time)
+#         elif action=='refund':
+#             print('该笔交易目前状态为：',action)
+#         return action
+#     else:
+#         print('请求失败：',resp_state)
+#
+#
+# def need_refund(out_trade_no: str or int, refund_amount: int or float, out_request_no: str):
+#     '''
+#     退款操作
+#     :param out_trade_no: 商户订单号
+#     :param refund_amount: 退款金额，小于等于订单金额
+#     :param out_request_no: 商户自定义参数，用来标识该次退款请求的唯一性,可使用 out_trade_no_退款金额*100 的构造方式
+#     :return:
+#     '''
+#     result = init_alipay_cfg().api_alipay_trade_refund(out_trade_no=out_trade_no,
+#                                                        refund_amount=refund_amount,
+#                                                        out_request_no=out_request_no)
+#
+#     if result["code"] == "10000":
+#         return result  # 接口调用成功则返回result
+#     else:
+#         return result["msg"]  # 接口调用失败则返回原因
+#
+# def refund_query(out_request_no:str, out_trade_no:str or int):
+#     '''
+#     退款查询：同一笔交易可能有多次退款操作（每次退一部分）
+#     :param out_request_no: 商户自定义的单次退款请求标识符
+#     :param out_trade_no: 商户订单号
+#     :return:
+#     '''
+#     result = alipay.api_alipay_trade_fastpay_refund_query(out_request_no, out_trade_no=out_trade_no)
+#     if result["code"] == "10000":
+#         return result  #接口调用成功则返回result
+#     else:
+#         pass
