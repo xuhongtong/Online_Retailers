@@ -1,5 +1,5 @@
 # 安全设置
-import ajax as ajax
+# import ajax as ajax
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.template import loader
