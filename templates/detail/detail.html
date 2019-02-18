@@ -71,7 +71,7 @@
                         {#方法有2种#}
                         {#1.模板传递参数方式#}
                         {#2.ajax的dom动态添加文本内容操作#}
-                        $('#car_number').text(result.shop_num);
+                        $('#car_number').text(result.content.shop_num);
                         {#$('.car_number').text(number);#}
                     } else if (result.status === 302) {
                         window.location.href = result.content
@@ -135,12 +135,12 @@
 							</script>
 
 							<div class="tb-booth tb-pic tb-s310">
-								<a href="../images/01.jpg"><img src="{% static 'images/01_mid.jpg' %}" alt="细节展示放大镜特效" rel="../images/01.jpg" class="jqzoom" /></a>
+								<a href="{{ shop.img_url }}"><img src="{{ shop.img_url }}" alt="细节展示放大镜特效" rel="../images/01.jpg" class="jqzoom" /></a>
 							</div>
 							<ul class="tb-thumb" id="thumblist">
 								<li class="tb-selected">
 									<div class="tb-pic tb-s40">
-										<a href="#"><img src="{% static 'images/01_small.jpg' %}" mid="{% static 'images/01_mid.jpg' %}" big="{% static 'images/01.jpg' %}"></a>
+										<a href="#"><img src="{{ shop.img_url }}" mid="{% static 'images/01_mid.jpg' %}" big="{{ shop.img_url }}"></a>
 									</div>
 								</li>
 								<li>

@@ -10,7 +10,6 @@ def order_manage(request):
     :param request:
     :return:
     '''
-    is_delete=request.GET.get('is_delete')
     order_list=Order.objects.filter(uid=request.session.get('userid'))
     JdShop.objects.filter()
     for order in order_list:

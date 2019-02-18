@@ -6,22 +6,22 @@ from main.models import JdThirdCate
 from search.models import JdBrand
 from shop.models import JdShop
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-# 搜索功能
-def search(request):
+# 分类功能
+def cate_story(request):
     request.encoding = 'utf8'
     id=request.GET.get('id')
-    brand_name_keyword=request.GET.get('keyword')
+    brand_name=request.GET.get('brand_name')
     # id = int(request.GET.get('id'))
     # brand_name = request.GET.get('brand_name')
     # sort=request.GET.get('sort')
     # 展示所有商品数据
     shop_list = JdShop.objects.all()
     # 展示指定品牌商品数据
-    if brand_name_keyword:
-        shop_list = JdShop.objects.filter(brand_name__contains=brand_name_keyword)
+    if brand_name:
+        shop_list = JdShop.objects.filter(brand_name__contains=brand_name)
     # 展示所有品牌
     brand_list = JdBrand.objects.filter(third_cate_id=id)
-    bname=brand_name_keyword
+    bname=brand_name
     # # 排序
     # if sort:
     #     shop_list=shop_list.order_by(sort)

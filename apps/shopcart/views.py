@@ -12,7 +12,7 @@ from utils.check_user import check_user_login
 
 
 # 添加购物车逻辑处理
-# @ajax
+@ajax
 @check_user_login
 def add_cart(request):
     result = {'status': 200, 'msg': 'ok'}
@@ -39,7 +39,7 @@ def add_cart(request):
         # 获取当前用户购买的商品之类数量，并以字典的形式添加到json串中
         data = count(request)
         result.update(data)
-        return JsonResponse(result)
+        return result
     except Exception as e:
         result = {'status': 400, 'msg': '添加失败'}
 
