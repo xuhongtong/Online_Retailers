@@ -40,30 +40,38 @@ def login_view(request):
     if request.session.get('is_login'):  # 不允许重复登陆
         return redirect("index")
     if request.method == 'GET':
-        # return render(request,'account/login.html')
-        # next1 = request.GET.get('next', '/')
+        # 获取header中的数据
         next1=request.META.get('HTTP_REFERER','/')
 
-        # 生成验证码
+        # 生成验证码,由验证码模块完成
         key = CaptchaStore.generate_key()
         img_url = captcha_image_url(key)
+
         return render(request, 'account/login.html', context={'next1': next1, 'img_url': img_url, 'key': key})
+
     if request.method == 'POST':
+        # 获取输入的验证码
         code = request.POST.get('code')
+        # 验证码的key,从后端传到前端再传回后端的值
         key = request.POST.get('key')
-        img_url = captcha_image_url(key)
-        next1 = request.POST.get('next1', '/')
+        # 获取用户名密码
         usr = request.POST.get('nickname')
         password = request.POST.get('password')
+        # 生成验证码图片链接
+        img_url = captcha_image_url(key)
+        # 获取重定向坐标
+        next1 = request.POST.get('next1', '/')
+
         if usr and password and code :
             # 验证用户是否存在
             if User.objects.filter(Q(nickname=usr) | Q(email=usr)).exists():
+                # 通过昵称或者email来从数据库获取用户信息
                 user = User.objects.filter(Q(nickname=usr) | Q(email=usr)).first()
-                # print(user.password)
-                # print(hash_code(password))
-                if user.password == hash_code(password):
+                # 验证输入的密码和用户密码是否一致
+                if hash_code(password)  == user.password:
+                    # 验证用户账户是否已经激活
                     if user.active:
-                        # 获取对象
+                        # 获取验证码对象
                         cap_obj = CaptchaStore.objects.filter(hashkey=key).first()
                         # 获取失效时间，与当前时间进行比较
                         expiration = cap_obj.expiration
@@ -71,7 +79,6 @@ def login_view(request):
                         response = cap_obj.response
                         if datetime.now() < expiration and code.lower() == response:
                             # 验证码验证成功
-
                             # 登陆成功，记住登录状态
                             request.session['userid']=user.uid
                             request.session['is_login'] = True
@@ -82,8 +89,8 @@ def login_view(request):
                             # 验证失败，重新刷新验证码
                             key = CaptchaStore.generate_key()
                             img_url = captcha_image_url(key)
+                            return render(request,'account/login.html',{'capt_error':'验证码错误,点击刷新','key':key,'img_url':img_url})
 
-                        return redirect('index')
                     else:
                         return render(request, 'account/login.html',
                                       {'login_msg': '用户未激活', 'img_url': img_url, 'key': key, 'next1': next1})
@@ -105,11 +112,11 @@ def register(request):
     :return:
     '''
     if request.method == 'GET':
+        # 返回注册界面
         return render(request, 'account/register.html')
     if request.method == 'POST':
         email = request.POST.get('email')
         username = request.POST.get('username')
-        # phone = request.POST.get('phone')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
         is_user = User.objects.filter(nickname=username)

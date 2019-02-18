@@ -19,8 +19,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
 
+# Application definitio
 # 注册系统app
 SYS_APPS = [
     'django.contrib.admin',
@@ -180,7 +180,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # 验证码
-CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
 
 
 

@@ -45,7 +45,7 @@ def pay_view(request):
         # 订单标题
         subject="商城平台,订单号---{}".format(order_code),
         # 支付成功之后 前端跳转的界面
-        return_url='http://127.0.0.1:8000',
+        return_url='http://127.0.0.1:8000/pay/success',
         # 支付成功后台跳转接口
         notify_url='order_status'  # 可选, 不填则使用默认notify url
     )
@@ -53,9 +53,11 @@ def pay_view(request):
     url = settings.ALI_PAY_URL + "?" + order_string
     return redirect(url)
 
-def order_status_view(request):
-    order_code = request.session
-    Order.objects.filter(order_code=order_code).update(status=1)
+
+
+def success_view(request):
+    # order_code = request.
+    # Order.objects.filter(order_code=order_code).update(status=1)
     return redirect('/')
 
 
