@@ -18,6 +18,8 @@ urlpatterns = [
     url(r'^setpay/',views_safety.setpay_view,name='setpay'),
     # 安全问题
     url(r'^question/',views_safety.question_view,name='question'),
+    # 身份认证
+    url(r'idcard/',views_safety.idcard_view,name='idcard'),
 
     # 地址管理
     url(r'^address/',views_address.address_view,name='address'),

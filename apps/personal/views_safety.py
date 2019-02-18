@@ -1,4 +1,5 @@
 # 安全设置
+import ajax as ajax
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.template import loader
@@ -6,6 +7,7 @@ from django.template import loader
 from Online_Retailers import settings
 from account.hash_secret import hash_code
 from account.models import User
+from personal.models import QuestionSafety
 
 
 def safety_view(request):
@@ -18,10 +20,11 @@ def safety_view(request):
     if request.method == "GET":
         uid = request.session.get('userid')
         user = User.objects.filter(uid=uid).first()
-        content = {'nickname': user.nickname,
-                   'safety_score': user.safety_score,
-                   'email':user.email,
-                   }
+        content = {
+            'safety_score': user.safety_score,
+            'email': user.email,
+            'nickname': user.nickname,
+        }
         return render(request, 'personal/safety.html', content)
     elif request.method == 'POST':
         return redirect('safery')
@@ -63,10 +66,11 @@ def password_update_view(request):
     except Exception as e:
         return render(request, 'account/404.html', {'msg': e})
 
+
 # 设置支付密码
 def setpay_view(request):
-    if request.method=='GET':
-        return render(request,'personal/setpay.html')
+    if request.method == 'GET':
+        return render(request, 'personal/setpay.html')
 
 
 # 邮箱验证
@@ -80,12 +84,12 @@ def email_view(request):
     :param request:
     :return:
     """
-    if request.method=='GET':
+    if request.method == 'GET':
         uid = request.session.get('userid')
         user = User.objects.filter(uid=uid).first()
-        content = {'email':user.email}
-        return render(request,'personal/email.html',content)
-    if request.method=='POST':
+        content = {'email': user.email}
+        return render(request, 'personal/email.html', content)
+    if request.method == 'POST':
         email = request.POST.get('email')
         content = loader.render_to_string('account/mail.html', request=request)
         send_mail(subject='xxx线上xxx绑定邮件',
@@ -96,5 +100,14 @@ def email_view(request):
                   )
         return render(request, 'msg.html')
 
+
 def question_view(request):
-    return render(request,'personal/question.html')
+    if request.method =='GET':
+        uid = request.session.get('uid')
+        questions = User.objects.filter(uid=uid).values('questionsafety__question')
+    return render(request, 'personal/question.html')
+
+
+
+def idcard_view(request):
+    return render(request,'personal/idcard.html')

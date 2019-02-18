@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
-from django_ajax.decorators import ajax
+# from django_ajax.decorators import ajax
 
 from shop.models import JdShop
 from shopcart.context_processors import count
