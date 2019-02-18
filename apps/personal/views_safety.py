@@ -106,3 +106,8 @@ def question_view(request):
         uid = request.session.get('uid')
         questions = User.objects.filter(uid=uid).values('questionsafety__question')
     return render(request, 'personal/question.html')
+
+
+
+def idcard_view(request):
+    return render(request,'personal/idcard.html')
