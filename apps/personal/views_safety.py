@@ -1,4 +1,5 @@
 # 安全设置
+import ajax as ajax
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.template import loader
@@ -6,6 +7,7 @@ from django.template import loader
 from Online_Retailers import settings
 from account.hash_secret import hash_code
 from account.models import User
+from personal.models import QuestionSafety
 
 
 def safety_view(request):
@@ -100,4 +102,7 @@ def email_view(request):
 
 
 def question_view(request):
+    if request.method =='GET':
+        uid = request.session.get('uid')
+        questions = User.objects.filter(uid=uid).values('questionsafety__question')
     return render(request, 'personal/question.html')
