@@ -7,7 +7,7 @@ from django.template import loader
 from Online_Retailers import settings
 from account.hash_secret import hash_code
 from account.models import User
-from utils.check_user import check_user_login
+from util.check_user import check_user_login
 
 '''
 个人中心

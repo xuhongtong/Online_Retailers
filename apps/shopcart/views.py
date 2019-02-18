@@ -9,7 +9,7 @@ from django_ajax.decorators import ajax
 from shop.models import JdShop
 from shopcart.context_processors import count
 from shopcart.models import ShopCart
-from utils.check_user import check_user_login
+from util.check_user import check_user_login
 
 
 # 添加购物车逻辑处理

@@ -79,6 +79,7 @@ def login_view(request):
                         response = cap_obj.response
                         if datetime.now() < expiration and code.lower() == response:
                             # 验证码验证成功
+
                             # 登陆成功，记住登录状态
                             request.session['userid']=user.uid
                             request.session['is_login'] = True

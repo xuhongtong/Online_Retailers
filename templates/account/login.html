@@ -33,10 +33,11 @@
                 <div class="clear"></div>
                 <div class="login-form">
                     <form action="{% url 'login' %}" method="post" data-toggle="validator" role="form">
+                    {% csrf_token %}
                        {% if next1 %}
                             <input type="hidden" name="next1" value={{ next1 }}>
                        {% endif %}
-                        {% csrf_token %}
+
                         <div class="user-name">
                             <label for="user"><i class="am-icon-user"></i></label>
                             <input type="text" name="nickname" id="user" placeholder="邮箱/手机/用户名">
