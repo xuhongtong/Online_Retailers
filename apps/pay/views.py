@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from Online_Retailers import settings
+from account.models import User, Address
 from order.models import Order
 from pay.models import OrderUser
 
@@ -56,9 +57,21 @@ def pay_view(request):
 
 
 def success_view(request):
-    # order_code = request.
-    # Order.objects.filter(order_code=order_code).update(status=1)
-    return redirect('/')
+    order_code = request.GET.get('out_trade_no')
+    total_money = request.GET.get('total_amount')
+    Order.objects.filter(order_code=order_code).update(status=1)
+    order = Order.objects.filter(order_code=order_code).first()
+    user = User.objects.filter(uid=order.uid).first()
+    address = Address.objects.filter(uid=user.uid).first()
+    content = {
+        'order_code':order_code,
+        'total_money':total_money,
+        'name':user.name,
+        'phone':user.phone,
+        'address':address.detail,
+
+    }
+    return render(request,'pay/success.html',content)
 
 
 
